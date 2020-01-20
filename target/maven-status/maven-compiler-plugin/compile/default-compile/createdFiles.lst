@@ -1,0 +1,5 @@
+swingy/controller/GameController.class
+swingy/view/UserInterface.class
+swingy/Swingy.class
+swingy/model/characters/Character.class
+swingy/model/Game.class
