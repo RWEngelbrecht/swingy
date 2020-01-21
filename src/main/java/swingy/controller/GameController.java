@@ -1,9 +1,7 @@
 package swingy.controller;
 
-import swingy.view.MainMenu;
+import swingy.view.Menu;
 import swingy.view.UserInterface;
-
-import javax.swing.JFrame;
 
 public class GameController {
     private GUIController guiController;
@@ -13,7 +11,7 @@ public class GameController {
         }
     }
 
-    private void newGUIController(MainMenu frame) {
+    private void newGUIController(Menu frame) {
         guiController = new GUIController(frame);
     }
 

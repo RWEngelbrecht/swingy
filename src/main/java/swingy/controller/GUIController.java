@@ -1,11 +1,10 @@
 package swingy.controller;
 
-import javax.swing.*;
-import swingy.view.MainMenu;
+import swingy.view.Menu;
 
 public class GUIController {
-    private MainMenu menu;
-    public GUIController(MainMenu frame) {
+    private Menu menu;
+    public GUIController(Menu frame) {
             menu = frame;
     }
 
