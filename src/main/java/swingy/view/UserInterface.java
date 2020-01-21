@@ -1,37 +1,42 @@
 package swingy.view;
 
-import javax.swing.*;
+import swingy.controller.GameController;
 
-public class UserInterface  {
-    private Menu frame;
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class UserInterface {
+    private static Menu frame;
     public int interfaceType;
-//    private GameController gameController = new GameController();
+    private static String command;
+    private static GameController gameController;
     public UserInterface(final String type) {
+        // Check in what mode app is started. gui: 1, console: 0
+        if (type.equalsIgnoreCase("gui")) {
+            interfaceType = 1;
+            gameController = new GameController(this);
+        } else if (type.equalsIgnoreCase("console")) {
+            interfaceType = 0;
+        }
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                if (type.equalsIgnoreCase("gui")) {
-                    interfaceType = 1;
-                    frame = new Menu("Swingy: Origin of the Revengening Infinite The Movie The Game");
-                    frame.displayOutput("Welcome to swingy!\nWould you like to:\n\t1 - Start a new game\n\t2 - Load an existing game");
-                } else if (type.equalsIgnoreCase("console")) {
-                    interfaceType = 0;
-                    System.out.println("Welcome to Swingy: Origin of the Revengening Infinite The Movie The Game");
+                if (interfaceType == 1) {
+                    // Instantiate gui
+                    frame = new Menu("Swingy: Origin of the Revengening Infinite The Movie The Game", gameController);
+//                    frame.displayOutput("Welcome to swingy!\n");
+                } else if (interfaceType == 0) {
+                    System.out.println("Welcome to Swingy: Origin of the Infinite Revengening The Movie The Game");
                 }
             }
         });
     }
 
     public int getInterfaceType() {
-        return this.interfaceType;
+        return interfaceType;
     }
 
-//    public void getInterface(int type) {
-//        if (type == 1) {
-//            this.getFrame();
-//        }
-//    }
-
     public Menu getFrame() {
-        return frame;
+        return this.frame;
     }
 }
