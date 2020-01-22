@@ -24,7 +24,6 @@ public class UserInterface {
                 if (interfaceType == 1) {
                     // Instantiate gui
                     frame = new Menu("Swingy: Origin of the Revengening Infinite The Movie The Game", gameController);
-//                    frame.displayOutput("Welcome to swingy!\n");
                 } else if (interfaceType == 0) {
                     System.out.println("Welcome to Swingy: Origin of the Infinite Revengening The Movie The Game");
                 }
@@ -32,11 +31,7 @@ public class UserInterface {
         });
     }
 
-    public int getInterfaceType() {
-        return interfaceType;
-    }
+    public int getInterfaceType() { return interfaceType; }
 
-    public Menu getFrame() {
-        return this.frame;
-    }
+    public Menu getFrame() { return this.frame; }
 }

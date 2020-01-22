@@ -1,32 +1,47 @@
 package swingy.view;
 
+import org.intellij.lang.annotations.Flow;
 import swingy.controller.GameController;
 import swingy.model.Game;
 
 import javax.swing.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 // TODO: Add validation
+// TODO: Have 2 textFields on same toolbar, take player name and class with one actionEvent
 public class Menu extends JFrame {
     private JPanel mainPanel = new JPanel();
     private JPanel charCreatePanel = new JPanel();
+    private JPanel gamePanel = new JPanel();
 
-    private static JTextArea outputField = new JTextArea();
+    private static JTextArea outputField = new JTextArea(26, 20);
     private static JPanel mainToolbar = new JPanel();
     private static JPanel charCreateTools = new JPanel();
+
+    private static JPanel freeRoamTools = new JPanel();
+    private static JButton north = new JButton("North");
+    private static JButton east = new JButton("East");
+    private static JButton west = new JButton("West");
+    private static JButton south = new JButton("South");
+
     private static GameController gameController;
     private static String outputText = new String("Create New Character:");
+    private final JTextField textField = new JTextField(20);
+    private final JButton submitName = new JButton("Confirm");
+    private final JButton submitClass = new JButton("Confirm");
+    private final JButton finish = new JButton("Start Game");
     private static JLabel label;
-    private static String charName = new String();
+    private static String charName;
 
     public Menu(String title, final GameController gameController) {
         // Creates JFrame with given title
         super(title);
         // Instantiate gameController so view can interact with model
         this.gameController = gameController;
-
         setSize(600, 500);
         final Container con = this.getContentPane();
         // Button that will generate character creation screen
@@ -35,30 +50,46 @@ public class Menu extends JFrame {
         JButton loadGame = new JButton("Load Game");
         label = new JLabel("Swingy");
         label.setHorizontalAlignment(SwingConstants.CENTER);
-        label.setFont(new Font("James", Font.LAYOUT_LEFT_TO_RIGHT, 150));
+        label.setFont(new Font("Comic Sans", Font.LAYOUT_LEFT_TO_RIGHT, 150));
 
         mainToolbar.setLayout(new FlowLayout(FlowLayout.CENTER));
         // Add buttons to toolbar
         mainToolbar.add(newGame);
         mainToolbar.add(loadGame);
+
         charCreateTools.setLayout(new FlowLayout(FlowLayout.CENTER));
+
         mainPanel.setLayout(new BorderLayout());
         mainPanel.setBounds(150, 150, 100, 50);
+        mainPanel.add(label, BorderLayout.CENTER);
+        mainPanel.add(mainToolbar, BorderLayout.SOUTH);
+
+        con.add(mainPanel);
 
         // Non-editable textfield to wherein to display instructions/story/art
-        outputField.setRows(26);
+//        outputField.setRows(26);
         outputField.setEditable(false);
         // Action listener that generates character creation page
         newGame.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-//                mainPanel.add(outputField, BorderLayout.CENTER);
                 con.removeAll();
                 con.add(charCreatePanel);
                 displayCharCreation(outputText);
                 // Doesn't do anything yet.
-                gameController.interpretMenuCommand("newGame");
+//                gameController.validateInput("newGame");
             }
         });
+
+        finish.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                con.removeAll();
+                con.add(gamePanel);
+                gamePanel.revalidate();
+                gamePanel.repaint();
+                displayGame(gameController.getGame());
+            }
+        });
+
         // TODO: Action Listener that will generate page with saved game states from text file
         loadGame.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -66,9 +97,17 @@ public class Menu extends JFrame {
             }
         });
 
-        mainPanel.add(label, BorderLayout.CENTER);
-        mainPanel.add(mainToolbar, BorderLayout.SOUTH);
-        con.add(mainPanel);
+        gamePanel.setLayout(new BorderLayout());
+        gamePanel.setBounds(150, 150, 100, 50);
+
+        freeRoamTools.setLayout(new FlowLayout(FlowLayout.LEADING));
+        freeRoamTools.add(north);
+        freeRoamTools.add(east);
+        freeRoamTools.add(west);
+        freeRoamTools.add(south);
+
+        gamePanel.add(outputField, BorderLayout.NORTH);
+        gamePanel.add(freeRoamTools, BorderLayout.SOUTH);
 
         charCreatePanel.setLayout(new BorderLayout());
         charCreatePanel.setBounds(150, 150, 100, 50);
@@ -80,57 +119,22 @@ public class Menu extends JFrame {
         setVisible(true);
     }
 
-    private static void displayCharCreation(final String output) {
-//        toolbar.removeAll();
+    private void displayCharCreation(final String output) {
+
         label = new JLabel("Choose a name");
-        final JButton submitName = new JButton("Confirm");
-        final JButton submitClass = new JButton("Confirm");
-        final JButton finish = new JButton("Start Game");
-        final JTextField textField = new JTextField(20);
 
         charCreateTools.add(label);
-        submitName.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                charName = new String(textField.getText());
-                textField.setText("");
-                charCreateTools.removeAll();
-                label = new JLabel("Choose a class");
-                charCreateTools.add(label);
-                charCreateTools.add(textField);
-                charCreateTools.add(submitClass);
-                displayOutput(outputText.concat("\n\nChoose a class:" +
-                        "\n\t 1 - Warrior"+
-                        "\n\t 2 - Mage"+
-                        "\n\t 3 - Paladin"));
+        submitName.addActionListener(new CharNameActionListener());
+        submitClass.addActionListener(new CharClassActionListener());
 
-                charCreateTools.revalidate();
-                charCreateTools.repaint();
-            }
-        });
-
-        submitClass.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                String response = new String(textField.getText());
-                textField.setText("");
-                if (response.equals("1"))
-                    gameController.newHero(charName, "warrior");
-                else if (response.equals("2"))
-                    gameController.newHero(charName, "mage");
-                else if (response.equals("3"))
-                    gameController.newHero(charName, "paladin");
-                charCreateTools.removeAll();
-                charCreateTools.add(finish);
-                displayOutput("Magnificent! You are now ready to delve into Swingy: Origin of the Infinite Revengening The Movie The Game");
-                charCreateTools.revalidate();
-                charCreateTools.repaint();
-            }
-        });
-
-        finish.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                displayGame(gameController.getGame());
-            }
-        });
+//        finish.addActionListener(new ActionListener() {
+//            public void actionPerformed(ActionEvent e) {
+//                con.removeAll();
+////                gamePanel.add(outputField, BorderLayout.CENTER);
+////                con.add(gamePanel);
+//                displayGame(gameController.getGame());
+//            }
+//        });
 
         charCreateTools.add(textField);
         charCreateTools.add(submitName);
@@ -141,6 +145,11 @@ public class Menu extends JFrame {
 
     private static void displayGame(Game game) {
         gameController.generateMap();
+
+
+//        freeRoamTools.revalidate();
+//        freeRoamTools.repaint();
+//        displayOutput("ITs dead, jim");
     }
 
     public static void displayOutput(String output) {
@@ -149,4 +158,47 @@ public class Menu extends JFrame {
         outputField.repaint();
     }
 
+    private class CharNameActionListener implements ActionListener {
+        @NotEmpty
+        @NotBlank
+        private String name;
+
+        public void actionPerformed(ActionEvent e) {
+            name = textField.getText();
+            charName = name;
+            System.out.println("Menu: CharNameAL: name = "+this.name);
+            gameController.validateInput(charName, "heroName");
+            textField.setText("");
+            charCreateTools.removeAll();
+            label = new JLabel("Choose a class");
+            charCreateTools.add(label);
+            charCreateTools.add(textField);
+            charCreateTools.add(submitClass);
+            displayOutput(outputText.concat("\n\nChoose a class:" +
+                    "\n\t 1 - Warrior"+
+                    "\n\t 2 - Mage"+
+                    "\n\t 3 - Paladin"));
+
+            charCreateTools.revalidate();
+            charCreateTools.repaint();
+        }
+    }
+
+    private class CharClassActionListener implements ActionListener {
+        @NotBlank
+        @NotEmpty
+        private String charClass;
+
+        public void actionPerformed(ActionEvent e) {
+            charClass = textField.getText();
+            textField.setText("");
+            gameController.newHero(charName, charClass);
+            charCreateTools.removeAll();
+            charCreateTools.add(finish);
+            displayOutput("You are now ready to delve into Swingy: Origin of the Infinite Revengening The Movie The Game");
+            charCreateTools.revalidate();
+            charCreateTools.repaint();
+        }
+    }
 }
+
