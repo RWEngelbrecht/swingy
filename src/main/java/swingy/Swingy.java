@@ -27,4 +27,4 @@ public class Swingy {
 
 }
 
-// LOAD CHARACTER FROM INPUT: <name>,<class>,<x>,<y>,<weapon>,<armor>
+// LOAD CHARACTER FROM INPUT: <name>,<class>,<xp>,<atk>,<def>,<weapon>,<armor>
