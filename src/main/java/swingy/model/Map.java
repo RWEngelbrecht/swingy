@@ -6,7 +6,6 @@ public class Map {
     private int map[][];
     public Map(int heroLevel) {
         int size = (heroLevel-1)*5+10-(heroLevel%2);
-        System.out.println("Map: size = "+size);
         map = new int[size][size];
         this.populateMap();
     }

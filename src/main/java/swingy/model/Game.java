@@ -33,11 +33,7 @@ public class Game {
         }
     }
 
-    public Hero getHero() {
-        return this.hero;
-    }
+    public Hero getHero() { return this.hero; }
 
-    public static boolean gameIsActive() {
-        return isActive;
-    }
+    public static boolean gameIsActive() { return isActive; }
 }

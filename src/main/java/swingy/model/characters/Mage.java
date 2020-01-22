@@ -1,7 +1,7 @@
 package swingy.model.characters;
 
-public class Warrior extends Hero {
-    public Warrior(String name, String charClass) {
+public class Mage extends Hero {
+    public Mage(String name, String charClass) {
         super(name, charClass);
         this.xp = 0;
         this.hp = 40;

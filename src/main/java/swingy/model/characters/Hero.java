@@ -13,6 +13,8 @@ public abstract class Hero {
         this.charClass = charClass;
     }
 
+    public String getName() { return this.name; }
+    public String getHeroClass() { return this.charClass; }
     public abstract int getHp();
-    public int getLevel() { return this.lvl; }
+    public abstract int getLevel();
 }
