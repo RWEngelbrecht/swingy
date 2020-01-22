@@ -31,17 +31,31 @@ public class GameController {
     }
 
     public void newHero(String characterName, String characterClass) {
-        game.addHero(heroFactory.newHero(characterName, characterClass));
+        String charClass;
+        if (controllerType == 1) {
+            charClass = new String(guiController.getClassFromGui(characterClass));
+        } else {
+            if (characterClass.equals("1"))
+                charClass = new String("Warrior");
+            else if (characterClass.equals("2"))
+                charClass = new String("Mage");
+            else if (characterClass.equals("3"))
+                charClass = new String("Paladin");
+            else
+                charClass = new String("Warrior");
+        }
+        game.addHero(heroFactory.newHero(characterName, charClass));
     }
 
     public void generateMap() {
         game.makeMap();
+        System.out.println("Our hero "+game.getHero().getName()+" the "+game.getHero().getHeroClass()+" sets off on their adventure!");
 //        game.printMap();
     }
 
-    public void interpretMenuCommand(String command) {
+    public void validateInput(String value, String context) {
         if (controllerType == 1) {
-            guiController.interpretMenuCommand(command);
+            guiController.validateInput(value, context);
         }
     }
 
