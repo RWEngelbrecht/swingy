@@ -50,7 +50,14 @@ public class GameController {
             else
                 charClass = new String("Warrior");
         }
-        game.addHero(heroFactory.newHero(characterName, charClass));
+        Hero hero = heroFactory.newHero(characterName, charClass);
+        game.addHero(hero);
+    }
+
+    public void loadHero(String heroInfo) {
+        //TODO: CREATE LOADHERO
+        Hero hero = heroFactory.loadHero(heroInfo);
+        game.addHero(hero);
     }
 
     public void generateMap() {
@@ -90,5 +97,12 @@ public class GameController {
             return guiController.getSavesForGui(saveFile);
         }
         return null;
+    }
+
+    public void loadGame(String gameNumberStr) {
+        ArrayList<String> saveGames = getSavedGames();
+        int gameNumberInt = Integer.parseInt(gameNumberStr) - 1;
+        String gameToLoad = saveGames.get(gameNumberInt);
+        loadHero(gameToLoad);
     }
 }

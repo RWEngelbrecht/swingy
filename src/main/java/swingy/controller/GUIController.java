@@ -51,7 +51,6 @@ public class GUIController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     public static void validateInput(String value, String context) {
