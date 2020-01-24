@@ -19,7 +19,9 @@ import java.util.ArrayList;
 public class GUIMenu extends JFrame {
     private JPanel mainPanel = new JPanel();
     private JPanel charCreatePanel = new JPanel();
+//    private JPanel loadGamePanel = new JPanel();
     private JPanel gamePanel = new JPanel();
+
 
     private static JTextArea outputField = new JTextArea(26, 20);
     private static JPanel mainToolbar = new JPanel();
@@ -100,12 +102,19 @@ public class GUIMenu extends JFrame {
         loadGame.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 con.removeAll();
+                LoadMenu loadMenu = new LoadMenu(gameController);
+                con.add(loadMenu);
                 ArrayList<String> savedGames = gameController.getSavesForGui();
+                String saveStates = new String();
                 //TODO: Display save states, add listeners to select save, load save
-                for (String str : savedGames) {
-                    System.out.println("GUIMenu: "+str);
+                if (!savedGames.isEmpty()) {
+                    for (int i = 0; i < savedGames.size(); i++) {
+                        saveStates = saveStates.concat((i+1)+" - "+savedGames.get(i)+"\n");
+                    }
+                    loadMenu.displayOutput(saveStates);
+                } else {
+                    loadMenu.displayOutput("You have no loadable games");
                 }
-//                con.add()
             }
         });
 
