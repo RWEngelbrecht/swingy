@@ -17,11 +17,26 @@ public abstract class Hero {
 
     public String getName() { return this.name; }
     public String getHeroClass() { return this.charClass; }
-    public abstract int getHp();
-    public abstract int getLevel();
-    public abstract int getXp();
-    public abstract int getAtk();
-    public abstract int getDef();
+    public int getHp() { return this.hp; }
+    public int getLevel() { return this.lvl; }
+    public int getXp() { return this.xp; }
+    public int getAtk() { return this.atk; }
+    public int getDef() { return this.def; }
+
+    public void setHp(int newHp) { hp = newHp; }
+    public void setXp(int newXp) { xp = newXp; }
+    public void setLvl(int newLvl) { lvl = newLvl; }
+    public void setAtk(int newAtk) { lvl = newAtk; }
+    public void setDef(int newDef) { def = newDef; }
+
+    public void hpUp(int increase) { hp += increase; }
+    public void hpDown(int decrease) { hp -= decrease; }
+    public void xpUp(int increase) { xp += increase; }
+    public void lvlUp() { lvl++; }
+    public void atkUp(int increase) { atk += increase; }
+    public void atkDown(int decrease) { atk -= decrease; }
+    public void defUp(int increase) { def += increase; }
+    public void defDown(int decrease) { def -= decrease; }
 
     public String getAllInfo() {
         String lvl = Integer.toString(this.getLevel());
@@ -29,7 +44,6 @@ public abstract class Hero {
         String hp = Integer.toString(this.getHp());
         String atk = Integer.toString(this.getAtk());
         String def = Integer.toString(this.getDef());
-
 
         String allInfo = this.getName();
         allInfo = allInfo.concat(","+getHeroClass());
