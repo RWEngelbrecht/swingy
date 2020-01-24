@@ -18,4 +18,25 @@ public class HeroFactory {
         }
         return null;
     }
+
+    public Hero loadHero(String heroInfo) {
+        String[] stats = heroInfo.split(",");
+        String name = stats[0],
+                heroClass = stats[1];
+
+        int lvl = Integer.parseInt(stats[2]),
+            xp = Integer.parseInt(stats[3]),
+            hp = Integer.parseInt(stats[4]),
+            atk = Integer.parseInt(stats[5]),
+            def = Integer.parseInt(stats[6]);
+
+        Hero hero = newHero(name, heroClass);
+        hero.setLvl(lvl);
+        hero.setXp(xp);
+        hero.setHp(hp);
+        hero.setAtk(atk);
+        hero.setDef(def);
+
+        return hero;
+    }
 }
