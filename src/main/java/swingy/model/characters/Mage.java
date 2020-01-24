@@ -10,10 +10,4 @@ public class Mage extends Hero {
         this.def = 3;
     }
 
-    public int getHp() { return this.hp; }
-    public int getLevel() { return this.lvl; }
-    public int getXp() { return this.xp; }
-    public int getAtk() { return this.atk; }
-    public int getDef() { return this.def; }
-
 }

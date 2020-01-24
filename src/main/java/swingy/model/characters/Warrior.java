@@ -9,10 +9,4 @@ public class Warrior extends Hero {
         this.atk = 7;
         this.def = 4;
     }
-
-    public int getHp() { return this.hp; }
-    public int getLevel() { return this.lvl; }
-    public int getXp() { return this.xp; }
-    public int getAtk() { return this.atk; }
-    public int getDef() { return this.def; }
 }
