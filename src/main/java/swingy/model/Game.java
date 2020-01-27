@@ -22,6 +22,10 @@ public class Game {
         map = new Map(hero.getLevel());
     }
 
+    public void moveHero(String direction) {
+        map.moveHero(direction);
+    }
+
     public void printMap() {
 //        System.out.println("Game: mapsize = "+map.getMapSize());
         int mapRaw[][] = map.getMap();
