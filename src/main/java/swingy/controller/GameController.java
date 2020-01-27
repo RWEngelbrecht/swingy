@@ -1,21 +1,15 @@
 package swingy.controller;
 
-import swingy.model.ConsoleInterpreter;
 import swingy.model.DataHandler;
 import swingy.model.HeroFactory;
 import swingy.model.characters.Hero;
 import swingy.view.ConsoleMenu;
-import swingy.view.GUIMenu;
 import swingy.view.UserInterface;
 import swingy.model.Game;
 
 import javax.validation.constraints.NotBlank;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 // Either holds instance of GUIController or acts as controller for all console-related actions.
 // Also interacts with Game
