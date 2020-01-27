@@ -48,27 +48,34 @@ public class DataHandler {
         }
     }
 
-    public ArrayList<String> getSavesForGui(File saveFile) {
+    public ArrayList<String> getPrintableSaves(File saveFile) {
 
+        @NotNull
         ArrayList<String> saveGames = getSavedGames(saveFile);
-        ArrayList<String> guiSaveGames = new ArrayList<String>();
-        String[] savePieces;
-        String patchedPieces;
+        System.out.println("DataHandler: saveGames.size() == "+saveGames.size());
+        if (saveGames.size() > 0) {
+            ArrayList<String> guiSaveGames = new ArrayList<String>();
+            String[] savePieces;
+            String patchedPieces;
 
-        for (String saveGame : saveGames) {
-            savePieces = saveGame.split(",");
-            patchedPieces = savePieces[0];
-            patchedPieces = patchedPieces.concat(" Class: "+savePieces[1]);
-            patchedPieces = patchedPieces.concat(" Level: "+savePieces[2]);
-            patchedPieces = patchedPieces.concat(" Exp: "+savePieces[3]);
-            patchedPieces = patchedPieces.concat(" Health: "+savePieces[4]);
-            patchedPieces = patchedPieces.concat(" Atk: "+savePieces[5]);
-            patchedPieces = patchedPieces.concat(" Def: "+savePieces[6]);
+            for (String saveGame : saveGames) {
+                if (saveGame.length() > 0)
+                {
+                    savePieces = saveGame.split(",");
+                    patchedPieces = savePieces[0];
+                    patchedPieces = patchedPieces.concat(" Class: "+savePieces[1]);
+                    patchedPieces = patchedPieces.concat(" Level: "+savePieces[2]);
+                    patchedPieces = patchedPieces.concat(" Exp: "+savePieces[3]);
+                    patchedPieces = patchedPieces.concat(" Health: "+savePieces[4]);
+                    patchedPieces = patchedPieces.concat(" Atk: "+savePieces[5]);
+                    patchedPieces = patchedPieces.concat(" Def: "+savePieces[6]);
 
-            guiSaveGames.add(patchedPieces);
+                    guiSaveGames.add(patchedPieces);
+                }
+            }
+            return guiSaveGames;
         }
-
-        return guiSaveGames;
+        return null;
     }
 
     public ArrayList<String> getSavedGames(File saveFile) {
