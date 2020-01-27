@@ -8,6 +8,7 @@ import java.util.Scanner;
 
 public class UserInterface {
     private static GUIMenu frame;
+    private static ConsoleMenu consoleMenu;
     public int interfaceType;
     private static String command;
     private static GameController gameController;
@@ -25,16 +26,14 @@ public class UserInterface {
                     // Instantiate gui
                     frame = new GUIMenu("Swingy: Origin of the Revengening Infinite The Movie The Game", gameController);
                 }
-                else if (interfaceType == 0) {
-                    gameController.interpretConsole();
-                }
             }
         });
         gameController.createSaveFile();
-        System.out.println("UserInterface: Interface created");
     }
 
     public int getInterfaceType() { return interfaceType; }
 
     public GUIMenu getFrame() { return this.frame; }
+
+    public ConsoleMenu getConsoleMenu() { return this.consoleMenu; }
 }
