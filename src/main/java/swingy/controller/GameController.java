@@ -9,7 +9,10 @@ import swingy.view.UserInterface;
 import swingy.model.Game;
 
 import javax.validation.constraints.NotBlank;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -43,12 +46,17 @@ public class GameController {
     }
 
     public void interpretConsole() {
-        Scanner scanner = new Scanner(System.in);
-        ConsoleMenu consoleMenu = new ConsoleMenu();
-        consoleMenu.getMenuControls("main");
+//        Scanner scanner = new Scanner(System.in);
+        ConsoleMenu consoleMenu = new ConsoleMenu(this);
         String command;
-        while ((command = scanner.nextLine()) != null) {
-
+        try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+            while (consoleMenu.getMenuState() >= 0 && consoleMenu.getMenuState() <= 3) {
+                command = reader.readLine();
+                consoleMenu.generateMenu(command);
+            }
+        } catch (IOException e) {
+            System.out.println("Error: Invalid input.");
         }
     }
 
@@ -70,6 +78,7 @@ public class GameController {
         game.addHero(hero);
     }
 
+    //TODO: fix load on empty
     public void loadHero(String heroInfo) {
         Hero hero = heroFactory.loadHero(heroInfo);
         game.addHero(hero);
@@ -103,8 +112,8 @@ public class GameController {
         return dataHandler.getSavedGames(saveFile);
     }
 
-    public ArrayList<String> getSavesForGui() {
-        return dataHandler.getSavesForGui(saveFile);
+    public ArrayList<String> getPrintableSaves() {
+        return dataHandler.getPrintableSaves(saveFile);
     }
 
     public void loadGame(String gameNumberStr) {
@@ -112,5 +121,9 @@ public class GameController {
         int gameNumberInt = Integer.parseInt(gameNumberStr) - 1;
         String gameToLoad = saveGames.get(gameNumberInt);
         loadHero(gameToLoad);
+    }
+
+    public void moveHero(String direction) {
+        game.moveHero(direction);
     }
 }
