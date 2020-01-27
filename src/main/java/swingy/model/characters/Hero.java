@@ -26,7 +26,7 @@ public abstract class Hero {
     public void setHp(int newHp) { hp = newHp; }
     public void setXp(int newXp) { xp = newXp; }
     public void setLvl(int newLvl) { lvl = newLvl; }
-    public void setAtk(int newAtk) { lvl = newAtk; }
+    public void setAtk(int newAtk) { atk = newAtk; }
     public void setDef(int newDef) { def = newDef; }
 
     public void hpUp(int increase) { hp += increase; }
