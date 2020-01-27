@@ -4,6 +4,7 @@ import org.jetbrains.annotations.NotNull;
 import swingy.controller.GameController;
 
 import javax.swing.*;
+import java.util.Scanner;
 
 public class UserInterface {
     private static GUIMenu frame;
@@ -14,17 +15,19 @@ public class UserInterface {
         // Check in what mode app is started. gui: 1, console: 0
         if (type.equalsIgnoreCase("gui")) {
             interfaceType = 1;
-            gameController = new GameController(this);
         } else if (type.equalsIgnoreCase("console")) {
             interfaceType = 0;
         }
+        gameController = new GameController(this);
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 if (interfaceType == 1) {
                     // Instantiate gui
                     frame = new GUIMenu("Swingy: Origin of the Revengening Infinite The Movie The Game", gameController);
-                } else if (interfaceType == 0) {
-                    System.out.println("Welcome to Swingy: Origin of the Infinite Revengening The Movie The Game");
+                }
+                else if (interfaceType == 0) {
+
+                    gameController.interpretConsole();
                 }
             }
         });
