@@ -37,4 +37,13 @@ public class Map {
     public int[][] getMap() {
         return map;
     }
+
+    public void moveHero(String direction) {
+        int spaces = 0;
+        if (direction.equalsIgnoreCase("north") || direction.equalsIgnoreCase("east"))
+            spaces = 1;
+        else if (direction.equalsIgnoreCase("south") || direction.equalsIgnoreCase("west"))
+            spaces = -1;
+        System.out.println("Map: spaces = "+spaces);
+    }
 }
