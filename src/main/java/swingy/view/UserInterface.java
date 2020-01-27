@@ -26,7 +26,6 @@ public class UserInterface {
                     frame = new GUIMenu("Swingy: Origin of the Revengening Infinite The Movie The Game", gameController);
                 }
                 else if (interfaceType == 0) {
-
                     gameController.interpretConsole();
                 }
             }
