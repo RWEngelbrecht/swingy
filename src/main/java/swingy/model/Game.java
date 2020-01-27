@@ -22,8 +22,8 @@ public class Game {
         map = new Map(hero.getLevel());
     }
 
-    public void moveHero(String direction) {
-        map.moveHero(direction);
+    public int moveHero(String direction) {
+        return map.moveHero(direction);
     }
 
     public void printMap() {
@@ -40,4 +40,10 @@ public class Game {
     public Hero getHero() { return this.hero; }
 
     public static boolean gameIsActive() { return isActive; }
+
+    public void fight() {
+    }
+
+    public void run() {
+    }
 }
