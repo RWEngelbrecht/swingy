@@ -29,6 +29,10 @@ public class GamePanel extends JPanel {
         setBounds(150, 150, 100, 50);
 
         freeRoamTools.setLayout(new FlowLayout(FlowLayout.LEADING));
+        north.addActionListener(new moveActionListener("north"));
+        east.addActionListener(new moveActionListener("east"));
+        west.addActionListener(new moveActionListener("west"));
+        south.addActionListener(new moveActionListener("south"));
         freeRoamTools.add(north);
         freeRoamTools.add(east);
         freeRoamTools.add(west);
@@ -67,7 +71,19 @@ public class GamePanel extends JPanel {
     private class exitActionListener implements ActionListener {
 
         public void actionPerformed(ActionEvent e) {
-            
+
+        }
+    }
+
+    private class moveActionListener implements ActionListener {
+        String direction;
+
+        public moveActionListener(String direction) {
+            this.direction = direction;
+        }
+
+        public void actionPerformed(ActionEvent e) {
+            gameController.moveHero(direction);
         }
     }
 }
