@@ -8,7 +8,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-//TODO: Display game from here or  GUIMenu class?
+//TODO: back button for when no load games exist
 public class LoadMenu extends JPanel {
     private static GameController gameController;
     private JTextArea output = new JTextArea(26, 20);
@@ -37,7 +37,6 @@ public class LoadMenu extends JPanel {
         output.setText(outputText);
         output.revalidate();
         output.repaint();
-
     }
 
     private class loadGameActionListener implements ActionListener {
