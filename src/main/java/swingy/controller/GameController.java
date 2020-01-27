@@ -1,5 +1,6 @@
 package swingy.controller;
 
+import swingy.model.ConsoleInterpreter;
 import swingy.model.DataHandler;
 import swingy.model.HeroFactory;
 import swingy.model.characters.Hero;
@@ -25,16 +26,19 @@ public class GameController {
 
     private static DataHandler dataHandler = new DataHandler();
     private static HeroFactory heroFactory = new HeroFactory();
+    private static ConsoleMenu consoleMenu;
     private static File saveFile;
 
 
     public GameController(UserInterface userInterface) {
         controllerType = userInterface.getInterfaceType();
-//        if (controllerType == 1) {
-//            System.out.println("from gameController: creating new GUIController");
-//            newGUIController(userInterface.getFrame());
-//        }
-        game = new Game(this);
+        if (controllerType == 0) {
+            consoleMenu = new ConsoleMenu(this);
+            game = new Game(this);
+            consoleMenu.start();
+        } else {
+            game = new Game(this);
+        }
     }
 
 //    private void newGUIController(GUIMenu frame) {
@@ -45,19 +49,39 @@ public class GameController {
         return this.game;
     }
 
-    public void interpretConsole() {
-//        Scanner scanner = new Scanner(System.in);
-        ConsoleMenu consoleMenu = new ConsoleMenu(this);
-        String command;
-        try {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-            while (consoleMenu.getMenuState() >= 0 && consoleMenu.getMenuState() <= 3) {
-                command = reader.readLine();
-                consoleMenu.generateMenu(command);
+    public void interpretConsole(String command, int menuType) {
+        if (menuType == 0) {
+            if (command.equals("1")) {
+                consoleMenu.printCreateChar();
+//                consoleMenu.setMenuState(1);
+//                consoleMenu.createNewHero();
+            } else if (command.equals("2")) {
+                ArrayList<String> saves = getPrintableSaves();
+                consoleMenu.printLoadHero(saves);
             }
-        } catch (IOException e) {
-            System.out.println("Error: Invalid input.");
+        } else if (menuType == 1) {
+            consoleMenu.createNewHero();
+            generateMap();
+            consoleMenu.startGame();
         }
+        else if (menuType == 2) {
+
+        }
+        else if (menuType == 3) {
+            //TODO:
+            int positionState = 0;
+            game.printMap();
+            if (command.equalsIgnoreCase("fight") || command.equalsIgnoreCase("run")) {
+                fightOrFlight(command);
+            } else if (command.equalsIgnoreCase("equip")) {
+                equipArtifact();
+            } else {
+                positionState = moveHero(command);
+                System.out.println("GameController: positionState = "+positionState);
+            }
+            consoleMenu.continueGame(positionState);
+        } else if (menuType == 4)
+            System.exit(0);
     }
 
     public void newHero(@NotBlank String characterName, @NotBlank String characterClass) {
@@ -123,7 +147,20 @@ public class GameController {
         loadHero(gameToLoad);
     }
 
-    public void moveHero(String direction) {
-        game.moveHero(direction);
+    public int moveHero(String direction) {
+        return game.moveHero(direction);
+    }
+
+    public void fightOrFlight(String command) {
+        if (command.equalsIgnoreCase("fight")) {
+            game.fight();
+        } else {
+            game.run();
+        }
+    }
+
+    // TODO: randomly generate weapon/armor, equip and update atk/def
+    public void equipArtifact() {
+
     }
 }
