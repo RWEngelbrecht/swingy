@@ -1,5 +1,6 @@
 package swingy.model;
 
+import org.jetbrains.annotations.NotNull;
 import swingy.model.characters.Hero;
 import swingy.model.characters.Mage;
 import swingy.model.characters.Paladin;
@@ -19,7 +20,7 @@ public class HeroFactory {
         return null;
     }
 
-    public Hero loadHero(String heroInfo) {
+    public Hero loadHero(@NotNull String heroInfo) {
         String[] stats = heroInfo.split(",");
         String name = stats[0],
                 heroClass = stats[1];
