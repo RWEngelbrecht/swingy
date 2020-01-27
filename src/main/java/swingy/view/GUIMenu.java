@@ -19,20 +19,10 @@ import java.util.ArrayList;
 public class GUIMenu extends JFrame {
     private JPanel mainPanel = new JPanel();
     private JPanel charCreatePanel = new JPanel();
-//    private JPanel loadGamePanel = new JPanel();
-    private JPanel gamePanel = new JPanel();
-
 
     private static JTextArea outputField = new JTextArea(26, 20);
     private static JPanel mainToolbar = new JPanel();
     private static JPanel charCreateTools = new JPanel();
-
-    private static JTextArea gameOutput = new JTextArea(26, 20);
-    private static JPanel freeRoamTools = new JPanel();
-    private static JButton north = new JButton("North");
-    private static JButton east = new JButton("East");
-    private static JButton west = new JButton("West");
-    private static JButton south = new JButton("South");
 
     private static GameController gameController;
     private static String outputText = new String("Create New Character:");
@@ -91,10 +81,9 @@ public class GUIMenu extends JFrame {
         finish.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 con.removeAll();
+                GamePanel gamePanel = new GamePanel(gameController, gameController.getGame());
                 con.add(gamePanel);
-                gamePanel.revalidate();
-                gamePanel.repaint();
-                displayGame(gameController.getGame());
+                gamePanel.displayGame();
             }
         });
 
@@ -102,7 +91,7 @@ public class GUIMenu extends JFrame {
         loadGame.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 con.removeAll();
-                LoadMenu loadMenu = new LoadMenu(gameController);
+                LoadMenu loadMenu = new LoadMenu(gameController, con);
                 con.add(loadMenu);
                 ArrayList<String> savedGames = gameController.getSavesForGui();
                 String saveStates = new String();
@@ -117,19 +106,6 @@ public class GUIMenu extends JFrame {
                 }
             }
         });
-
-        gamePanel.setLayout(new BorderLayout());
-        gamePanel.setBounds(150, 150, 100, 50);
-
-        freeRoamTools.setLayout(new FlowLayout(FlowLayout.LEADING));
-        freeRoamTools.add(north);
-        freeRoamTools.add(east);
-        freeRoamTools.add(west);
-        freeRoamTools.add(south);
-
-        gameOutput.setEditable(false);
-        gamePanel.add(gameOutput, BorderLayout.NORTH);
-        gamePanel.add(freeRoamTools, BorderLayout.SOUTH);
 
         charCreatePanel.setLayout(new BorderLayout());
         charCreatePanel.setBounds(150, 150, 100, 50);
@@ -157,11 +133,6 @@ public class GUIMenu extends JFrame {
         displayOutput(outputField, output);
     }
 
-    private void displayGame(final Game game) {
-        gameController.generateMap();
-
-        this.displayOutput(gameOutput, "You find yourself in the middle of a field.");
-    }
 
     public void displayOutput(@NotNull JTextArea outputField , String output) {
         outputField.setText(output);

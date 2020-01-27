@@ -15,9 +15,11 @@ public class LoadMenu extends JPanel {
     private JPanel toolbar = new JPanel();
     private JTextField commandText = new JTextField(20);
     private JButton loadBt = new JButton("Load");
+    private Container con;
 
-    public LoadMenu(GameController gameController) {
+    public LoadMenu(GameController gameController, Container container) {
         this.gameController = gameController;
+        con = container;
         setLayout(new BorderLayout());
 
         toolbar.setLayout(new FlowLayout(FlowLayout.CENTER));
@@ -35,14 +37,18 @@ public class LoadMenu extends JPanel {
         output.setText(outputText);
         output.revalidate();
         output.repaint();
+
     }
 
     private class loadGameActionListener implements ActionListener {
 
         public void actionPerformed(ActionEvent e) {
-            String command = commandText.getText();
+            String command = getCommandText();
             gameController.loadGame(command);
-            gameController.generateMap();
+            con.removeAll();
+            GamePanel gamePanel = new GamePanel(gameController, gameController.getGame());
+            con.add(gamePanel);
+            gamePanel.displayGame();
         }
     }
 
