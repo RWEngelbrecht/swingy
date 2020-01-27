@@ -87,16 +87,14 @@ public class GUIMenu extends JFrame {
             }
         });
 
-        // TODO: Action Listener that will generate page with saved game states from text file
         loadGame.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 con.removeAll();
                 LoadMenu loadMenu = new LoadMenu(gameController, con);
                 con.add(loadMenu);
-                ArrayList<String> savedGames = gameController.getSavesForGui();
+                ArrayList<String> savedGames = gameController.getPrintableSaves();
                 String saveStates = new String();
-                //TODO: Display save states, add listeners to select save, load save
-                if (!savedGames.isEmpty()) {
+                if (savedGames != null) {
                     for (int i = 0; i < savedGames.size(); i++) {
                         saveStates = saveStates.concat((i+1)+" - "+savedGames.get(i)+"\n");
                     }
