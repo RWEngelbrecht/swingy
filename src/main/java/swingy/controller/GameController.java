@@ -9,7 +9,6 @@ import swingy.view.UserInterface;
 import swingy.model.Game;
 
 import javax.validation.constraints.NotBlank;
-import java.io.Console;
 import java.io.File;
 import java.util.ArrayList;
 
@@ -32,87 +31,87 @@ public class GameController {
         if (controllerType == 0) {
             consoleHandler = new ConsoleHandler(this);
             consoleMenu = new ConsoleMenu(this);
-            game = new Game(this);
-            consoleHandler.start();
-        } else {
-            game = new Game(this);
         }
+        game = new Game(this);
     }
-
-//    private void newGUIController(GUIMenu frame) {
-//        guiController = new GUIController(frame);
-//    }
 
     public Game getGame() {
-        return this.game;
+        return game;
     }
-    // TODO: change to seperate methods — this is too complicated
+
+    public void consoleGenerateMainMenu() {
+        consoleMenu.start();
+    }
+
     public void consoleMainMenuControls(String command) {
         if (command.equals("1")) {
             consoleHandler.startCreateHero();
         } else if (command.equals("2")) {
-            ArrayList<String> saves = getPrintableSaves();
-            consoleHandler.startLoadHero(saves);
+            consoleHandler.startLoadHero();
+        } else if (command.equalsIgnoreCase("exit")) {
+            System.exit(1);
         }
     }
 
-    public void consoleCreateHeroControls(String command) {
-
+    public void consoleCreateHeroControls() {
+        String heroName = consoleMenu.getHeroName();
+        String heroClass = consoleMenu.getHeroClass();
+        if (consoleHandler.checkHeroName(heroName) && consoleHandler.checkHeroClass(heroClass)) {
+            newHero(heroName, heroClass);
+            consoleHandler.startGame();
+        }
     }
 
-    public void interpretConsole(String command, int menuType) {
-        if (menuType == 0) {
-//            if (command.equals("1")) {
-//                consoleMenu.printCreateChar();
-////                consoleMenu.setMenuState(1);
-////                consoleMenu.createNewHero();
-//            } else if (command.equals("2")) {
-//                ArrayList<String> saves = getPrintableSaves();
-//                consoleMenu.printLoadHero(saves);
-//            }
-        } else if (menuType == 1) {
-            consoleMenu.createNewHero();
-            generateMap();
-            consoleMenu.startGame();
-        }
-        else if (menuType == 2) {
+    public void consoleLoadHeroControls(ArrayList<String> saves) {
+        consoleMenu.printLoadHero(saves);
+        String loadNumber = consoleMenu.getLoadNumber();
+        loadGame(loadNumber);
+        consoleHandler.startGame();
+    }
 
+    public void consoleStartGame() {
+        consoleMenu.startGame();
+    }
+
+    public void consoleGameControls(String command) {
+        int positionState = 0;
+        game.printMap();
+        System.out.println("GameController: consoleGameControls: command == "+command);
+        if (command.equalsIgnoreCase("fight") || command.equalsIgnoreCase("run")) {
+            fightOrFlight(command);
+        } else if (command.equalsIgnoreCase("equip")) {
+            equipArtifact();
+        } else if (command.equalsIgnoreCase("exit")) {
+            System.exit(1);
+        } else if (command.equalsIgnoreCase("save")) {
+            saveGame();
+        } else {
+            positionState = moveHero(command);
         }
-        else if (menuType == 3) {
-            int positionState = 0;
-            game.printMap();
-            if (command.equalsIgnoreCase("fight") || command.equalsIgnoreCase("run")) {
-                fightOrFlight(command);
-            } else if (command.equalsIgnoreCase("equip")) {
-                equipArtifact();
-            } else {
-                positionState = moveHero(command);
-                System.out.println("GameController: positionState = "+positionState);
-            }
-            consoleMenu.continueGame(positionState);
-        } else if (menuType == 4)
-            System.exit(0);
+        consoleHandler.continueGame(positionState);
+    }
+
+    public void reactEmptySpace() {
+        consoleMenu.emptySpace();
+        consoleMenu.freeRoam();
+    }
+
+    public void reactEnemySpace() {
+        consoleMenu.enemySpace();
+        consoleMenu.freeRoam();
+    }
+
+    public void reactArtifactSpace() {
+        consoleMenu.artifactSpace();
+        consoleMenu.freeRoam();
     }
 
     public void newHero(@NotBlank String characterName, @NotBlank String characterClass) {
-        String charClass;
-        if (controllerType == 1) {
-            charClass = new String(dataHandler.getClassFromGui(characterClass));
-        } else {
-            if (characterClass.equals("1"))
-                charClass = new String("Warrior");
-            else if (characterClass.equals("2"))
-                charClass = new String("Mage");
-            else if (characterClass.equals("3"))
-                charClass = new String("Paladin");
-            else
-                charClass = new String("Warrior");
-        }
+        String charClass = new String(dataHandler.getClass(characterClass));
         Hero hero = heroFactory.newHero(characterName, charClass);
         game.addHero(hero);
     }
 
-    //TODO: fix load on empty
     public void loadHero(String heroInfo) {
         Hero hero = heroFactory.loadHero(heroInfo);
         game.addHero(hero);
@@ -130,16 +129,14 @@ public class GameController {
 //        }
 //    }
 
-    public void createSaveFile(/*Hero hero*/) {
+    public void createSaveFile() {
         saveFile = dataHandler.createSaveFile();
     }
 
     public void saveGame() {
-//        if (controllerType == 1) {
-            System.out.println("GameController: save game reached");
-            Hero hero = game.getHero();
-            dataHandler.saveGame(saveFile, hero);
-//        }
+        System.out.println("GameController: save game reached");
+        Hero hero = game.getHero();
+        dataHandler.saveGame(saveFile, hero);
     }
 
     public ArrayList<String> getSavedGames() {
