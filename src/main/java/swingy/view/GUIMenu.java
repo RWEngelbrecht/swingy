@@ -14,7 +14,6 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
 
-// TODO: Add validation
 // TODO: Have 2 textFields on same toolbar, take player name and class with one actionEvent
 public class GUIMenu extends JFrame {
     private JPanel mainPanel = new JPanel();
