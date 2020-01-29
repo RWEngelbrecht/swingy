@@ -11,7 +11,7 @@ public class ConsoleHandler {
     }
 
     public void startCreateHero() {
-        
+
     }
 
     public void startLoadHero(ArrayList<String> saves) {
