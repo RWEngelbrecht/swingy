@@ -1,5 +1,6 @@
 package swingy.controller;
 
+import org.jetbrains.annotations.NotNull;
 import swingy.model.ConsoleHandler;
 import swingy.model.DataHandler;
 import swingy.model.HeroFactory;
@@ -26,7 +27,7 @@ public class GameController {
     private static File saveFile;
 
 
-    public GameController(UserInterface userInterface) {
+    public GameController(@NotNull UserInterface userInterface) {
         controllerType = userInterface.getInterfaceType();
         if (controllerType == 0) {
             consoleHandler = new ConsoleHandler(this);
@@ -43,7 +44,7 @@ public class GameController {
         consoleMenu.start();
     }
 
-    public void consoleMainMenuControls(String command) {
+    public void consoleMainMenuControls(@NotNull String command) {
         if (command.equals("1")) {
             consoleHandler.startCreateHero();
         } else if (command.equals("2")) {
@@ -73,10 +74,9 @@ public class GameController {
         consoleMenu.startGame();
     }
 
-    public void consoleGameControls(String command) {
+    public void consoleGameControls(@NotNull String command) {
         int positionState = 0;
         game.printMap();
-        System.out.println("GameController: consoleGameControls: command == "+command);
         if (command.equalsIgnoreCase("fight") || command.equalsIgnoreCase("run")) {
             fightOrFlight(command);
         } else if (command.equalsIgnoreCase("equip")) {
@@ -96,13 +96,13 @@ public class GameController {
         consoleMenu.freeRoam();
     }
 
-    public void reactEnemySpace() {
-        consoleMenu.enemySpace();
+    public void reactEnemySpace(String enemyString) {
+        consoleMenu.enemySpace(enemyString);
         consoleMenu.freeRoam();
     }
 
-    public void reactArtifactSpace() {
-        consoleMenu.artifactSpace();
+    public void reactArtifactSpace(String artifactString) {
+        consoleMenu.artifactSpace(artifactString);
         consoleMenu.freeRoam();
     }
 
@@ -160,7 +160,7 @@ public class GameController {
         return game.moveHero(direction);
     }
 
-    public void fightOrFlight(String command) {
+    public void fightOrFlight(@NotNull String command) {
         if (command.equalsIgnoreCase("fight")) {
             game.fight();
         } else {
@@ -168,8 +168,16 @@ public class GameController {
         }
     }
 
-    // TODO: randomly generate weapon/armor, equip and update atk/def
-    public void equipArtifact() {
-
+    public String getCurrEnemy() {
+        return game.getCurrEnemy();
     }
+
+    public String getCurrArtifact() {
+        return game.getCurrArtifact();
+    }
+
+    public void equipArtifact() {
+        game.equipArtifact();
+    }
+
 }
