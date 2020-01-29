@@ -89,18 +89,16 @@ public class GUIMenu extends JFrame {
 
         loadGame.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                con.removeAll();
-                LoadMenu loadMenu = new LoadMenu(gameController, con);
-                con.add(loadMenu);
                 ArrayList<String> savedGames = gameController.getPrintableSaves();
                 String saveStates = new String();
                 if (savedGames != null) {
+                    LoadMenu loadMenu = new LoadMenu(gameController, con);
+                    con.removeAll();
+                    con.add(loadMenu);
                     for (int i = 0; i < savedGames.size(); i++) {
                         saveStates = saveStates.concat((i+1)+" - "+savedGames.get(i)+"\n");
                     }
                     loadMenu.displayOutput(saveStates);
-                } else {
-                    loadMenu.displayOutput("You have no loadable games");
                 }
             }
         });
