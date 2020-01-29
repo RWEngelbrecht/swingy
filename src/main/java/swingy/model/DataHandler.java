@@ -17,7 +17,7 @@ public class DataHandler {
         menuMap.put("3", "Paladin");
     }
 
-    public String getClassFromGui(@NotNull String key) {
+    public String getClass(@NotNull String key) {
         return menuMap.get(key);
     }
 
