@@ -6,6 +6,7 @@ swingy/view/LoadMenu$1.class
 swingy/view/GUIMenu$2.class
 swingy/view/GUIMenu$CharClassActionListener.class
 swingy/model/InputValidator.class
+swingy/model/ConsoleHandler.class
 swingy/view/ConsoleMenu.class
 swingy/view/GUIMenu$CharNameActionListener.class
 swingy/view/LoadMenu$loadGameActionListener.class
