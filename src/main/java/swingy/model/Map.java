@@ -59,7 +59,7 @@ public class Map {
         System.out.println("Map: pos of hero: y: "+pos[0]+" x: "+pos[1]);
         if (direction.equalsIgnoreCase("north")) {
             if (pos[0] + 1 < size)
-                locationStatus = map[pos[0] + 1][pos[1]];
+                locationStatus = map[pos[0] - 1][pos[1]];
         }
         else if (direction.equalsIgnoreCase("east")) {
             if (pos[1] + 1 < size)
@@ -67,7 +67,7 @@ public class Map {
         }
         else if (direction.equalsIgnoreCase("south")) {
             if (pos[0] - 1 > 0)
-                locationStatus = map[pos[0] - 1][pos[1]];
+                locationStatus = map[pos[0] + 1][pos[1]];
         }
         else if (direction.equalsIgnoreCase("west")) {
             if (pos[1] - 1 > 0)
