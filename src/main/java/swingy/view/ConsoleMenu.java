@@ -10,7 +10,6 @@ import java.io.InputStreamReader;
 import java.nio.Buffer;
 import java.util.ArrayList;
 
-//TODO: Clear console before println
 
 public class ConsoleMenu {
     // menuState:  mainMenu = 0; charCreate = 1; loadChar = 2; gameMenu = 3; quit = 4
@@ -144,10 +143,10 @@ public class ConsoleMenu {
         System.out.println("There is nothing here...");
     }
 
-    public void enemySpace() {
+    public void enemySpace(String enemyString) {
 //        System.out.print("\033[H\033[2J");
 //        System.out.flush();
-        System.out.println("You come across a fascist!\n Do you want to fight or run away?");
+        System.out.println(enemyString+"\n Do you want to fight or run away?");
         String command = "0";
         try {
             while (!command.equalsIgnoreCase("fight") &&
@@ -161,11 +160,11 @@ public class ConsoleMenu {
         }
     }
 
-    public void artifactSpace() {
+    public void artifactSpace(String artifactString) {
         String command = "0";
 //        System.out.print("\033[H\033[2J");
 //        System.out.flush();
-        System.out.println("You come across a spoon!\nDo you equip or ignore it?");
+        System.out.println(artifactString+"\nDo you equip or ignore it?");
         try {
             while (!command.equalsIgnoreCase("equip") &&
                     !command.equalsIgnoreCase("ignore") &&
