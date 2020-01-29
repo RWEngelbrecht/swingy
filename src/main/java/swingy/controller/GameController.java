@@ -1,5 +1,6 @@
 package swingy.controller;
 
+import swingy.model.ConsoleHandler;
 import swingy.model.DataHandler;
 import swingy.model.HeroFactory;
 import swingy.model.characters.Hero;
@@ -8,6 +9,7 @@ import swingy.view.UserInterface;
 import swingy.model.Game;
 
 import javax.validation.constraints.NotBlank;
+import java.io.Console;
 import java.io.File;
 import java.util.ArrayList;
 
@@ -20,6 +22,7 @@ public class GameController {
 
     private static DataHandler dataHandler = new DataHandler();
     private static HeroFactory heroFactory = new HeroFactory();
+    private static ConsoleHandler consoleHandler;
     private static ConsoleMenu consoleMenu;
     private static File saveFile;
 
@@ -27,9 +30,10 @@ public class GameController {
     public GameController(UserInterface userInterface) {
         controllerType = userInterface.getInterfaceType();
         if (controllerType == 0) {
+            consoleHandler = new ConsoleHandler(this);
             consoleMenu = new ConsoleMenu(this);
             game = new Game(this);
-            consoleMenu.start();
+            consoleHandler.start();
         } else {
             game = new Game(this);
         }
@@ -42,17 +46,30 @@ public class GameController {
     public Game getGame() {
         return this.game;
     }
+    // TODO: change to seperate methods — this is too complicated
+    public void consoleMainMenuControls(String command) {
+        if (command.equals("1")) {
+            consoleHandler.startCreateHero();
+        } else if (command.equals("2")) {
+            ArrayList<String> saves = getPrintableSaves();
+            consoleHandler.startLoadHero(saves);
+        }
+    }
+
+    public void consoleCreateHeroControls(String command) {
+
+    }
 
     public void interpretConsole(String command, int menuType) {
         if (menuType == 0) {
-            if (command.equals("1")) {
-                consoleMenu.printCreateChar();
-//                consoleMenu.setMenuState(1);
-//                consoleMenu.createNewHero();
-            } else if (command.equals("2")) {
-                ArrayList<String> saves = getPrintableSaves();
-                consoleMenu.printLoadHero(saves);
-            }
+//            if (command.equals("1")) {
+//                consoleMenu.printCreateChar();
+////                consoleMenu.setMenuState(1);
+////                consoleMenu.createNewHero();
+//            } else if (command.equals("2")) {
+//                ArrayList<String> saves = getPrintableSaves();
+//                consoleMenu.printLoadHero(saves);
+//            }
         } else if (menuType == 1) {
             consoleMenu.createNewHero();
             generateMap();
@@ -62,7 +79,6 @@ public class GameController {
 
         }
         else if (menuType == 3) {
-            //TODO:
             int positionState = 0;
             game.printMap();
             if (command.equalsIgnoreCase("fight") || command.equalsIgnoreCase("run")) {
@@ -137,8 +153,10 @@ public class GameController {
     public void loadGame(String gameNumberStr) {
         ArrayList<String> saveGames = getSavedGames();
         int gameNumberInt = Integer.parseInt(gameNumberStr) - 1;
-        String gameToLoad = saveGames.get(gameNumberInt);
-        loadHero(gameToLoad);
+        if (saveGames.size() <= gameNumberInt + 1) {
+            String gameToLoad = saveGames.get(gameNumberInt);
+            loadHero(gameToLoad);
+        }
     }
 
     public int moveHero(String direction) {
