@@ -31,8 +31,7 @@ public class ConsoleMenu {
                 printMainMenu();
                 command = reader.readLine();
             }
-            System.out.println("ConsoleMenu: command = " + command + " menuState = " + menuState);
-            gameController.interpretConsole(command, menuState);
+            gameController.consoleMainMenuControls(command);
         } catch (IOException e) {
             System.out.println("Error: Invalid input.");
         }
