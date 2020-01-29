@@ -29,6 +29,8 @@ public class UserInterface {
             }
         });
         gameController.createSaveFile();
+        if (interfaceType == 0)
+            gameController.consoleGenerateMainMenu();
     }
 
     public int getInterfaceType() { return interfaceType; }
