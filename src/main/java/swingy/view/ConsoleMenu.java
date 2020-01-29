@@ -38,49 +38,45 @@ public class ConsoleMenu {
     }
 
     public void printMainMenu() {
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
+//        System.out.print("\033[H\033[2J");
+//        System.out.flush();
         System.out.println("Welcome to Swingy: Origin of the Infinite Revengening The Movie The Game");
         System.out.println("\n1 - Start a new game\n2 - Load a game.");
     }
 
-    //TODO: validate input
-    public void printCreateChar() {
-        System.out.println("Create new hero: ");
-        menuState = 1;
-        gameController.interpretConsole("new", menuState);
+    public void printLoadHero(ArrayList<String> saves) {
+        System.out.println("Load a hero: ");
+        if (saves != null) for (int i = 0; i < saves.size(); i++) {
+            System.out.println((i + 1) +" - "+ saves.get(i));
+        }
     }
 
-    public void printLoadHero(ArrayList<String> saves) {
-        menuState = 2;
-        System.out.println("Load a hero: ");
-        if (saves != null) {
-            for (int i = 0; i < saves.size(); i++) {
-                System.out.println((i + 1) + saves.get(i));
-            }
-        }
+    public String getLoadNumber() {
         String command = "0";
         try {
             while (Integer.parseInt(command) < 1) {
                 command = reader.readLine();
             }
-            gameController.interpretConsole(command, menuState);
+//            gameController.loadGame(command);
+            return command;
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
+        return null;
     }
 
     public String getHeroName() {
         @NotBlank
         @NotNull
-        String heroName;
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
+        String heroName = "0";
+//        System.out.print("\033[H\033[2J");
+//        System.out.flush();
+        System.out.println("Create new hero: ");
         System.out.println("Choose a name: ");
         try {
             heroName = reader.readLine();
+            if (heroName.equalsIgnoreCase("exit"))
+                gameController.consoleGameControls(heroName);
             return heroName;
         } catch (IOException e) {
             e.printStackTrace();
@@ -92,21 +88,26 @@ public class ConsoleMenu {
         @NotBlank
         @NotNull
         String heroClass = "0";
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
+//        System.out.print("\033[H\033[2J");
+//        System.out.flush();
         System.out.println("Choose a class:" +
                 "\n\t 1 - Warrior" +
                 "\n\t 2 - Mage" +
                 "\n\t 3 - Paladin");
         try {
-            while (!heroClass.equals("1") && !heroClass.equals("2") && !heroClass.equals("3")) {
-                heroClass = reader.readLine();
+            while (!heroClass.equals("1") &&
+                    !heroClass.equals("2") &&
+                    !heroClass.equals("3") &&
+                    !heroClass.equalsIgnoreCase("exit")) {
                 System.out.print("\033[H\033[2J");
                 System.out.flush();
                 System.out.println("Choose a class:" +
                         "\n\t 1 - Warrior" +
                         "\n\t 2 - Mage" +
                         "\n\t 3 - Paladin");
+                heroClass = reader.readLine();
+                if (heroClass.equalsIgnoreCase("exit"))
+                    gameController.consoleGameControls(heroClass);
             }
             return heroClass;
         } catch (IOException e) {
@@ -115,18 +116,9 @@ public class ConsoleMenu {
         return null;
     }
 
-    public void createNewHero() {
-        String heroName = getHeroName();
-        String heroClass = getHeroClass();
-        gameController.newHero(heroName, heroClass);
-//        gameController.generateMap();
-//        gameController.interpretConsole("start", menuState);
-    }
-
     public void startGame() {
-        menuState = 3;
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
+//        System.out.print("\033[H\033[2J");
+//        System.out.flush();
         System.out.println("You find yourself in the middle of a field...");
         System.out.println("Type \'north\', \'east\', \'south\' or \'west\' to move in a direction.\nOr type \'exit\' to quit.");
         String command = "0";
@@ -134,56 +126,75 @@ public class ConsoleMenu {
             while (!command.equals("north") &&
                     !command.equals("south") &&
                     !command.equals("east") &&
-                    !command.equals("west")) {
+                    !command.equals("west") &&
+                    !command.equalsIgnoreCase("exit") &&
+                    !command.equalsIgnoreCase("save")) {
                 command = reader.readLine();
             }
-            gameController.interpretConsole(command, menuState);
+            gameController.consoleGameControls(command);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
     }
 
-    public void continueGame(int state) {
-        //state: open field = 0, enemy = 2, artifact = 3
-        //TODO: move directions on 0; fight or run on 2; pick up or ignore on 3
+    public void emptySpace() {
+//        System.out.print("\033[H\033[2J");
+//        System.out.flush();
+        System.out.println("There is nothing here...");
+    }
+
+    public void enemySpace() {
+//        System.out.print("\033[H\033[2J");
+//        System.out.flush();
+        System.out.println("You come across a fascist!\n Do you want to fight or run away?");
         String command = "0";
         try {
-            if (state == 0) {
-                System.out.println("There is nothing here...");
-            } else if (state == 2) {
-//                System.out.print("\033[H\033[2J");
-//                System.out.flush();
-                System.out.println("You come across a fascist!\n Do you want to fight or run away?");
-                while (!command.equalsIgnoreCase("fight") &&
-                        !command.equalsIgnoreCase("run")) {
-                    command = reader.readLine();
-                }
-                gameController.fightOrFlight(command);
-            } else if (state == 3) {
-//                System.out.print("\033[H\033[2J");
-//                System.out.flush();
-                System.out.println("You come across a spoon!\nDo you equip or ignore it?");
-                while (!command.equalsIgnoreCase("equip") &&
-                        !command.equalsIgnoreCase("ignore")) {
-                    command = reader.readLine();
-                }
-                if (command.equalsIgnoreCase("equip"))
-                    gameController.interpretConsole(command, menuState);
-            }
-//            System.out.print("\033[H\033[2J");
-//            System.out.flush();
-            System.out.println("Type \'north\', \'east\', \'south\' or \'west\' to move in a direction.\nOr type \'exit\' to quit.");
-            while (!command.equals("north") &&
-                    !command.equals("south") &&
-                    !command.equals("east") &&
-                    !command.equals("west")) {
+            while (!command.equalsIgnoreCase("fight") &&
+                    !command.equalsIgnoreCase("run") &&
+                    !command.equalsIgnoreCase("exit")) {
                 command = reader.readLine();
             }
-        }catch (IOException e) {
-                e.printStackTrace();
+            gameController.consoleGameControls(command);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        gameController.interpretConsole(command, menuState);
+    }
+
+    public void artifactSpace() {
+        String command = "0";
+//        System.out.print("\033[H\033[2J");
+//        System.out.flush();
+        System.out.println("You come across a spoon!\nDo you equip or ignore it?");
+        try {
+            while (!command.equalsIgnoreCase("equip") &&
+                    !command.equalsIgnoreCase("ignore") &&
+                    !command.equalsIgnoreCase("exit") &&
+                    !command.equalsIgnoreCase("save")) {
+                command = reader.readLine();
+            }
+            gameController.consoleGameControls(command);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void freeRoam() {
+        String command = "0";
+        System.out.println("Type \'north\', \'east\', \'south\' or \'west\' to move in a direction.\nOr type \'exit\' to quit.");
+        try{
+            while (!command.equals("north") &&
+                !command.equalsIgnoreCase("south") &&
+                !command.equalsIgnoreCase("east") &&
+                !command.equalsIgnoreCase("west") &&
+                !command.equalsIgnoreCase("exit") &&
+                !command.equalsIgnoreCase("save")) {
+                command = reader.readLine();
+            }
+            gameController.consoleGameControls(command);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public int getMenuState() {
