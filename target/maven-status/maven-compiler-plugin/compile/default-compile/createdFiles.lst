@@ -12,7 +12,6 @@ swingy/view/LoadMenu$loadGameActionListener.class
 swingy/view/GamePanel$saveActionListener.class
 swingy/view/GamePanel$moveActionListener.class
 swingy/view/UserInterface$1.class
-swingy/model/ConsoleInterpreter.class
 swingy/model/characters/Warrior.class
 swingy/Swingy.class
 swingy/view/GamePanel$1.class
