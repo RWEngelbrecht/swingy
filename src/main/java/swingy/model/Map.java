@@ -1,9 +1,13 @@
 package swingy.model;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Random;
 
 public class Map {
     private int map[][];
+    private String lastMove = "None";
+
     public Map(int heroLevel) {
         int size = (heroLevel-1)*5+10-(heroLevel%2);
         map = new int[size][size];
@@ -52,27 +56,53 @@ public class Map {
         return map;
     }
 
-    public int moveHero(String direction) {
+    public int moveHero(@NotNull String direction) {
         int size = getMapSize();
         int locationStatus = -1;
         int[] pos = getHeroPosition(size);
-        System.out.println("Map: pos of hero: y: "+pos[0]+" x: "+pos[1]);
+        int y = pos[0];
+        int x = pos[1];
+        lastMove = direction;
+
         if (direction.equalsIgnoreCase("north")) {
-            if (pos[0] + 1 < size)
-                locationStatus = map[pos[0] - 1][pos[1]];
-        }
-        else if (direction.equalsIgnoreCase("east")) {
-            if (pos[1] + 1 < size)
-                locationStatus = map[pos[0]][pos[1] + 1];
-        }
-        else if (direction.equalsIgnoreCase("south")) {
-            if (pos[0] - 1 > 0)
-                locationStatus = map[pos[0] + 1][pos[1]];
-        }
-        else if (direction.equalsIgnoreCase("west")) {
-            if (pos[1] - 1 > 0)
-                locationStatus = map[pos[0]][pos[1] - 1];
+            if (y + 1 < size) {
+                locationStatus = map[y - 1][x];
+            }
+        } else if (direction.equalsIgnoreCase("east")) {
+            if (x + 1 < size) {
+                locationStatus = map[y][x + 1];
+            }
+        } else if (direction.equalsIgnoreCase("south")) {
+            if (y - 1 > 0) {
+                locationStatus = map[y + 1][x];
+            }
+        } else if (direction.equalsIgnoreCase("west")) {
+            if (x - 1 > 0) {
+                locationStatus = map[y][x - 1];
+            }
+        } // TODO: make locationStatus 1 if player can't move in direction; Print "You can't move in that direction" from view.
+        if (locationStatus == 0 || locationStatus == 3) {
+            //just update player position
+            updateMap();
         }
         return locationStatus;
+    }
+
+    public void updateMap() {
+        int size = getMapSize();
+        int[] lastPos = getHeroPosition(size);
+        int y = lastPos[0];
+        int x = lastPos[1];
+
+        map[y][x] = 0;
+        if (lastMove.equalsIgnoreCase("north")) {
+            map[y - 1][x] = 1;
+        } else if (lastMove.equalsIgnoreCase("east")) {
+            map[y][x + 1] = 1;
+        } else if (lastMove.equalsIgnoreCase("south")) {
+            map[y + 1][x] = 1;
+        } else if (lastMove.equalsIgnoreCase("west")) {
+            map[y][x - 1] = 1;
+        }
     }
 }
