@@ -32,9 +32,13 @@ public class ConsoleHandler {
         if (positionState == 0) {
             gameController.reactEmptySpace();
         } else if (positionState == 2) {
-            gameController.reactEnemySpace();
+            String enemy = gameController.getCurrEnemy();
+            String enemyString = "You are confronted by a "+enemy;
+            gameController.reactEnemySpace(enemyString);
         } else if (positionState == 3) {
-            gameController.reactArtifactSpace();
+            String artifact = gameController.getCurrArtifact();
+            String artifactString = "You notice a "+artifact+" arbitrarily lying on the ground.";
+            gameController.reactArtifactSpace(artifactString);
         }
     }
 
