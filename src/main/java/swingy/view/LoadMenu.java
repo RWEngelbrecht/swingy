@@ -15,6 +15,7 @@ public class LoadMenu extends JPanel {
     private JPanel toolbar = new JPanel();
     private JTextField commandText = new JTextField(20);
     private JButton loadBt = new JButton("Load");
+//    private JButton noLoadsBt = new JButton("Go Back");
     private Container con;
 
     public LoadMenu(GameController gameController, Container container) {
@@ -25,9 +26,9 @@ public class LoadMenu extends JPanel {
         toolbar.setLayout(new FlowLayout(FlowLayout.CENTER));
         output.setEditable(false);
         toolbar.add(commandText);
+        loadBt.addActionListener(new loadGameActionListener());
         toolbar.add(loadBt);
 
-        loadBt.addActionListener(new loadGameActionListener());
 
         add(output, BorderLayout.NORTH);
         add(toolbar, BorderLayout.SOUTH);
@@ -43,11 +44,13 @@ public class LoadMenu extends JPanel {
 
         public void actionPerformed(ActionEvent e) {
             String command = getCommandText();
-            gameController.loadGame(command);
-            con.removeAll();
-            GamePanel gamePanel = new GamePanel(gameController, gameController.getGame());
-            con.add(gamePanel);
-            gamePanel.displayGame();
+            if (command.length() > 0) {
+                gameController.loadGame(command);
+                con.removeAll();
+                GamePanel gamePanel = new GamePanel(gameController, gameController.getGame());
+                con.add(gamePanel);
+                gamePanel.displayGame();
+            }
         }
     }
 
