@@ -4,6 +4,8 @@ package swingy.model.characters;
 public abstract class Hero {
     protected static String name;
     protected static String charClass;
+    protected static String weapon;
+    protected static String armor;
     protected static int hp;
     protected static int xp;
     protected static int lvl;
@@ -37,6 +39,15 @@ public abstract class Hero {
     public void atkDown(int decrease) { atk -= decrease; }
     public void defUp(int increase) { def += increase; }
     public void defDown(int decrease) { def -= decrease; }
+
+    public void equipWeapon(String weapon, int atkBoost) {
+        this.weapon = weapon;
+        this.atk += atkBoost;
+    }
+    public void donArmor(String armor, int defBoost) {
+        this.armor = armor;
+        this.def += defBoost;
+    }
 
     public String getAllInfo() {
         String lvl = Integer.toString(this.getLevel());
