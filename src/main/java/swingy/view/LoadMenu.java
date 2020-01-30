@@ -8,9 +8,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-//TODO: Fix problem where loading game 1 from file with multiple saves breaks swingy
 public class LoadMenu extends JPanel {
     private static GameController gameController;
+    private GamePanel gamePanel;
     private JTextArea output = new JTextArea(26, 20);
     private JPanel toolbar = new JPanel();
     private JTextField commandText = new JTextField(20);
@@ -47,12 +47,14 @@ public class LoadMenu extends JPanel {
             if (command.length() > 0) {
                 gameController.loadGame(command);
                 con.removeAll();
-                GamePanel gamePanel = new GamePanel(gameController, gameController.getGame());
+                gamePanel = new GamePanel(gameController, gameController.getGame());
                 con.add(gamePanel);
-                gamePanel.displayGame();
+                gamePanel.displayGame("You find yourself in the middle of a field...");
             }
         }
     }
+
+    public GamePanel getGamePanel() { return this.gamePanel; }
 
     public String getCommandText() {
         return commandText.getText();
