@@ -178,6 +178,12 @@ public class ConsoleMenu {
         }
     }
 
+    public void outOfBounds() {
+//        System.out.print("\033[H\033[2J");
+//        System.out.flush();
+        System.out.println("You cannot move in that direction...");
+    }
+
     public void freeRoam() {
         String command = "0";
         System.out.println("Type \'north\', \'east\', \'south\' or \'west\' to move in a direction.\nOr type \'exit\' to quit.");
