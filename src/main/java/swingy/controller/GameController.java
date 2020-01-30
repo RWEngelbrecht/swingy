@@ -1,7 +1,7 @@
 package swingy.controller;
 
 import org.jetbrains.annotations.NotNull;
-import swingy.model.ConsoleHandler;
+import swingy.model.InputHandler;
 import swingy.model.DataHandler;
 import swingy.model.HeroFactory;
 import swingy.model.characters.Hero;
@@ -24,7 +24,7 @@ public class GameController {
 
     private static DataHandler dataHandler = new DataHandler();
     private static HeroFactory heroFactory = new HeroFactory();
-    private static ConsoleHandler consoleHandler;
+    private static InputHandler inputHandler;
     private static ConsoleMenu consoleMenu;
     private static GUIMenu guiMenu;
     private static File saveFile;
@@ -51,7 +51,7 @@ public class GameController {
                 System.out.println("GameController: guiMenu NOT set");
             }
         }
-        consoleHandler = new ConsoleHandler(this);  //Might be used by both console and gui
+        inputHandler = new InputHandler(this);  //Might be used by both console and gui
         game = new Game(this);
     }
 
@@ -65,9 +65,9 @@ public class GameController {
 
     public void consoleMainMenuControls(@NotNull String command) {
         if (command.equals("1")) {
-            consoleHandler.startCreateHero();
+            inputHandler.startCreateHero();
         } else if (command.equals("2")) {
-            consoleHandler.startLoadHero();
+            inputHandler.startLoadHero();
         } else if (command.equalsIgnoreCase("exit")) {
             System.exit(1);
         }
@@ -76,9 +76,9 @@ public class GameController {
     public void consoleCreateHeroControls() {
         String heroName = consoleMenu.getHeroName();
         String heroClass = consoleMenu.getHeroClass();
-        if (consoleHandler.checkHeroName(heroName) && consoleHandler.checkHeroClass(heroClass)) {
+        if (inputHandler.checkHeroName(heroName) && inputHandler.checkHeroClass(heroClass)) {
             newHero(heroName, heroClass);
-            consoleHandler.startGame();
+            inputHandler.startGame();
         }
     }
 
@@ -86,7 +86,7 @@ public class GameController {
         consoleMenu.printLoadHero(saves);
         String loadNumber = consoleMenu.getLoadNumber();
         loadGame(loadNumber);
-        consoleHandler.startGame();
+        inputHandler.startGame();
     }
 
     public void consoleStartGame() {
@@ -109,7 +109,7 @@ public class GameController {
         } else {
             positionState = moveHero(command);
         }
-        consoleHandler.continueGame(positionState);
+        inputHandler.continueGame(positionState);
     }
 
     public void reactEmptySpace() {
