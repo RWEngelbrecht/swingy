@@ -18,6 +18,9 @@ import java.util.ArrayList;
 public class GUIMenu extends JFrame {
     private JPanel mainPanel = new JPanel();
     private JPanel charCreatePanel = new JPanel();
+    private GamePanel gamePanel;
+    private LoadMenu loadMenu;
+
 
     private static JTextArea outputField = new JTextArea(26, 20);
     private static JPanel mainToolbar = new JPanel();
@@ -80,9 +83,9 @@ public class GUIMenu extends JFrame {
         finish.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 con.removeAll();
-                GamePanel gamePanel = new GamePanel(gameController, gameController.getGame());
+                gamePanel = new GamePanel(gameController, gameController.getGame());
                 con.add(gamePanel);
-                gamePanel.displayGame();
+                gamePanel.displayGame("You find yourself in the middle of a field...");
             }
         });
 
@@ -91,7 +94,7 @@ public class GUIMenu extends JFrame {
                 ArrayList<String> savedGames = gameController.getPrintableSaves();
                 String saveStates = new String();
                 if (savedGames != null) {
-                    LoadMenu loadMenu = new LoadMenu(gameController, con);
+                    loadMenu = new LoadMenu(gameController, con);
                     con.removeAll();
                     con.add(loadMenu);
                     for (int i = 0; i < savedGames.size(); i++) {
@@ -128,11 +131,26 @@ public class GUIMenu extends JFrame {
         displayOutput(outputField, output);
     }
 
-
     public void displayOutput(@NotNull JTextArea outputField , String output) {
         outputField.setText(output);
         outputField.revalidate();
         outputField.repaint();
+    }
+
+    public void setGamePanelOutput(String gameText, int positionState) {
+        System.out.println("GUIMenu: setGamePanelOutput: gameText = "+gameText+" positionState = "+positionState);
+        if (this.gamePanel == null) {
+            gamePanel = loadMenu.getGamePanel();
+        }
+        if (positionState == 0) {
+            gamePanel.emptySpace();
+        } else if (positionState == 2) {
+            gamePanel.enemySpace(gameText);
+        } else if (positionState == 3) {
+            gamePanel.artifactSpace(gameText);
+        } else if (positionState < 0) {
+            gamePanel.outOfBounds();
+        }
     }
 
     private class CharNameActionListener implements ActionListener {
