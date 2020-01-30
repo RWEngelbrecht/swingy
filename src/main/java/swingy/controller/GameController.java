@@ -6,9 +6,11 @@ import swingy.model.DataHandler;
 import swingy.model.HeroFactory;
 import swingy.model.characters.Hero;
 import swingy.view.ConsoleMenu;
+import swingy.view.GUIMenu;
 import swingy.view.UserInterface;
 import swingy.model.Game;
 
+import javax.swing.*;
 import javax.validation.constraints.NotBlank;
 import java.io.File;
 import java.util.ArrayList;
@@ -24,15 +26,32 @@ public class GameController {
     private static HeroFactory heroFactory = new HeroFactory();
     private static ConsoleHandler consoleHandler;
     private static ConsoleMenu consoleMenu;
+    private static GUIMenu guiMenu;
     private static File saveFile;
 
 
     public GameController(@NotNull UserInterface userInterface) {
         controllerType = userInterface.getInterfaceType();
+        System.out.println("GameController: controllerType = "+controllerType);
         if (controllerType == 0) {
-            consoleHandler = new ConsoleHandler(this);
             consoleMenu = new ConsoleMenu(this);
+        } else {
+            System.out.println("GameController: guiMenu about to be set");
+//            guiMenu = userInterface.getFrame();
+            SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
+                        // Instantiate gui
+                    System.out.println("GameController: guiMenu about to be set");
+                    guiMenu = new GUIMenu("Swingy: Origin of the Revengening Infinite The Movie The Game", GameController.this);
+                }
+            });
+            if ((guiMenu != null)) {
+                System.out.println("GameController: guiMenu set");
+            } else {
+                System.out.println("GameController: guiMenu NOT set");
+            }
         }
+        consoleHandler = new ConsoleHandler(this);  //Might be used by both console and gui
         game = new Game(this);
     }
 
@@ -76,7 +95,9 @@ public class GameController {
 
     public void consoleGameControls(@NotNull String command) {
         int positionState = 0;
+
         game.printMap();
+
         if (command.equalsIgnoreCase("fight") || command.equalsIgnoreCase("run")) {
             fightOrFlight(command);
         } else if (command.equalsIgnoreCase("equip")) {
@@ -92,18 +113,39 @@ public class GameController {
     }
 
     public void reactEmptySpace() {
-        consoleMenu.emptySpace();
-        consoleMenu.freeRoam();
+        if (controllerType == 0) {
+            consoleMenu.emptySpace();
+            consoleMenu.freeRoam();
+        } else {
+            guiMenu.setGamePanelOutput("", 0);
+        }
     }
 
     public void reactEnemySpace(String enemyString) {
-        consoleMenu.enemySpace(enemyString);
-        consoleMenu.freeRoam();
+        if (controllerType == 0) {
+            consoleMenu.enemySpace(enemyString);
+            consoleMenu.freeRoam();
+        } else {
+            guiMenu.setGamePanelOutput(enemyString, 2);
+        }
     }
 
     public void reactArtifactSpace(String artifactString) {
-        consoleMenu.artifactSpace(artifactString);
-        consoleMenu.freeRoam();
+        if (controllerType == 0) {
+            consoleMenu.artifactSpace(artifactString);
+            consoleMenu.freeRoam();
+        } else {
+            guiMenu.setGamePanelOutput(artifactString, 3);
+        }
+    }
+
+    public void reactOutOfBounds() {
+        if (controllerType == 0) {
+            consoleMenu.outOfBounds();
+            consoleMenu.freeRoam();
+        } else {
+            guiMenu.setGamePanelOutput("", -1);
+        }
     }
 
     public void newHero(@NotBlank String characterName, @NotBlank String characterClass) {
@@ -150,13 +192,15 @@ public class GameController {
     public void loadGame(String gameNumberStr) {
         ArrayList<String> saveGames = getSavedGames();
         int gameNumberInt = Integer.parseInt(gameNumberStr) - 1;
-        if (saveGames.size() <= gameNumberInt + 1) {
+
+        if (gameNumberInt + 1 <= saveGames.size()) {
             String gameToLoad = saveGames.get(gameNumberInt);
             loadHero(gameToLoad);
         }
     }
 
     public int moveHero(String direction) {
+        System.out.println("GameController: moveHero: hero about to move");
         return game.moveHero(direction);
     }
 
