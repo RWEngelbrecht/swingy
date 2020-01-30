@@ -20,14 +20,14 @@ public class UserInterface {
             interfaceType = 0;
         }
         gameController = new GameController(this);
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                if (interfaceType == 1) {
-                    // Instantiate gui
-                    frame = new GUIMenu("Swingy: Origin of the Revengening Infinite The Movie The Game", gameController);
-                }
-            }
-        });
+//        SwingUtilities.invokeLater(new Runnable() {
+//            public void run() {
+//                if (interfaceType == 1) {
+//                    // Instantiate gui
+//                    frame = new GUIMenu("Swingy: Origin of the Revengening Infinite The Movie The Game", gameController);
+//                }
+//            }
+//        });
         gameController.createSaveFile();
         if (interfaceType == 0)
             gameController.consoleGenerateMainMenu();
@@ -35,7 +35,7 @@ public class UserInterface {
 
     public int getInterfaceType() { return interfaceType; }
 
-    public GUIMenu getFrame() { return this.frame; }
+    public GUIMenu getFrame() { return frame; }
 
-    public ConsoleMenu getConsoleMenu() { return this.consoleMenu; }
+    public ConsoleMenu getConsoleMenu() { return consoleMenu; }
 }
