@@ -87,10 +87,12 @@ public class Game {
         return artifacts.get(r.nextInt(2)).get(r.nextInt(5));
     }
 
+    //TODO: make fight method
     public void fight() {
         // calculate result of battle
     }
 
+    //TODO: make run method
     public void run() {
         // do not update map position
     }
