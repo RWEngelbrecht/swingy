@@ -59,17 +59,14 @@ public class ConsoleMenu {
         }
     }
 
-    //TODO: fix exit on load menu
     public String getLoadNumber() {
         String command = "0";
         try {
-            command = reader.readLine();
             while (!isNumeric(command) || command.equals("0")) {
                 if (command.equalsIgnoreCase("exit"))
                     break;
                 command = reader.readLine();
             }
-//            gameController.loadGame(command);
             return command;
         } catch (IOException e) {
             e.printStackTrace();
