@@ -96,8 +96,6 @@ public class GameController {
     public void consoleGameControls(@NotNull String command) {
         int positionState = 0;
 
-        game.printMap();
-
         if (command.equalsIgnoreCase("fight") || command.equalsIgnoreCase("run")) {
             fightOrFlight(command);
         } else if (command.equalsIgnoreCase("equip")) {
