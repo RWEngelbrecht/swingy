@@ -34,13 +34,46 @@ public class DataHandler {
         return saveFile;
     }
     //TODO: Save over existing game if same character
+    // Returns ArrayList of existing saves if they exist, else
+    public ArrayList<String> buildSaveFile(File saveFile, String heroInfo) {
+        BufferedReader reader;
+        ArrayList<String> saveLines = new ArrayList<String>();
+        String[] heroInfoPieces = heroInfo.split(",");
+        String heroInfoName = heroInfoPieces[0];
+        System.out.println("DataHandler: heroInfoName = "+heroInfoName);
+        String line;
+        boolean overwritten = false;
+        try {
+            reader = new BufferedReader(new FileReader(saveFile));
+            while ((line = reader.readLine()) != null) {
+                System.out.println("DataHandler: line = "+line);
+                heroInfoPieces = line.split(",");
+                if (heroInfoPieces[0].equals(heroInfoName)) {
+                    saveLines.add(heroInfo);
+                    overwritten = true;
+                }
+                else
+                    saveLines.add(line);
+            }
+            if (saveLines.size() == 0 || !overwritten)
+                saveLines.add(heroInfo);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return saveLines;
+    }
+
     public void saveGame(File saveFile, @NotNull Hero hero) {
         FileWriter fileWriter;
+        String heroInfo = hero.getAllInfo();
+        ArrayList<String> saveFileLines = buildSaveFile(saveFile, heroInfo);
         try {
-            fileWriter = new FileWriter(saveFile, true);
-            fileWriter.write(hero.getAllInfo()+"\n");
+            fileWriter = new FileWriter(saveFile);
+            for (String save : saveFileLines) {
+                fileWriter.write(save+"\n");
+            }
             fileWriter.close();
-            System.out.println("GUIController: hero allInfo = " +hero.getAllInfo());
+            System.out.println("GUIController: hero allInfo = " +heroInfo);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
