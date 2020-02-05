@@ -1,6 +1,5 @@
 /Users/rigardtengelbrecht/Desktop/WeThinkCode_/2ndYear/swingy/src/main/java/swingy/model/characters/Paladin.java
 /Users/rigardtengelbrecht/Desktop/WeThinkCode_/2ndYear/swingy/src/main/java/swingy/model/characters/Warrior.java
-/Users/rigardtengelbrecht/Desktop/WeThinkCode_/2ndYear/swingy/src/main/java/swingy/controller/GUIController.java
 /Users/rigardtengelbrecht/Desktop/WeThinkCode_/2ndYear/swingy/src/main/java/swingy/view/ConsoleMenu.java
 /Users/rigardtengelbrecht/Desktop/WeThinkCode_/2ndYear/swingy/src/main/java/swingy/model/characters/Hero.java
 /Users/rigardtengelbrecht/Desktop/WeThinkCode_/2ndYear/swingy/src/main/java/swingy/model/DataHandler.java
@@ -12,7 +11,7 @@
 /Users/rigardtengelbrecht/Desktop/WeThinkCode_/2ndYear/swingy/src/main/java/swingy/Swingy.java
 /Users/rigardtengelbrecht/Desktop/WeThinkCode_/2ndYear/swingy/src/main/java/swingy/view/LoadMenu.java
 /Users/rigardtengelbrecht/Desktop/WeThinkCode_/2ndYear/swingy/src/main/java/swingy/model/HeroFactory.java
-/Users/rigardtengelbrecht/Desktop/WeThinkCode_/2ndYear/swingy/src/main/java/swingy/model/ConsoleHandler.java
+/Users/rigardtengelbrecht/Desktop/WeThinkCode_/2ndYear/swingy/src/main/java/swingy/model/InputHandler.java
 /Users/rigardtengelbrecht/Desktop/WeThinkCode_/2ndYear/swingy/src/main/java/swingy/view/GamePanel.java
 /Users/rigardtengelbrecht/Desktop/WeThinkCode_/2ndYear/swingy/src/main/java/swingy/view/GUIMenu.java
 /Users/rigardtengelbrecht/Desktop/WeThinkCode_/2ndYear/swingy/src/main/java/swingy/controller/GameController.java
