@@ -37,19 +37,11 @@ public class GameController {
             consoleMenu = new ConsoleMenu(this);
         } else {
             System.out.println("GameController: guiMenu about to be set");
-//            guiMenu = userInterface.getFrame();
             SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
-                        // Instantiate gui
-                    System.out.println("GameController: guiMenu about to be set");
                     guiMenu = new GUIMenu("Swingy: Origin of the Revengening Infinite The Movie The Game", GameController.this);
                 }
             });
-            if ((guiMenu != null)) {
-                System.out.println("GameController: guiMenu set");
-            } else {
-                System.out.println("GameController: guiMenu NOT set");
-            }
         }
         inputHandler = new InputHandler(this);  //Might be used by both console and gui
         game = new Game(this);
@@ -85,7 +77,10 @@ public class GameController {
     public void consoleLoadHeroControls(ArrayList<String> saves) {
         consoleMenu.printLoadHero(saves);
         String loadNumber = consoleMenu.getLoadNumber();
-        loadGame(loadNumber);
+        if (loadNumber.equalsIgnoreCase("exit"))
+            System.exit(1);
+        else
+            loadGame(loadNumber);
         inputHandler.startGame();
     }
 
