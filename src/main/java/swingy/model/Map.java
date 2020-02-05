@@ -80,7 +80,7 @@ public class Map {
             if (x - 1 >= 0) {
                 locationStatus = map[y][x - 1];
             }
-        } // TODO: make locationStatus 1 if player can't move in direction; Print "You can't move in that direction" from view.
+        }
         if (locationStatus == 0 || locationStatus == 3) {
             //just update player position
             updateMap();
