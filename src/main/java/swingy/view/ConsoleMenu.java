@@ -22,6 +22,15 @@ public class ConsoleMenu {
         this.gameController = gameController;
     }
 
+    private static boolean isNumeric(String str) {
+        try {
+            Integer.parseInt(str);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
     public void start() {
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -50,10 +59,14 @@ public class ConsoleMenu {
         }
     }
 
+    //TODO: fix exit on load menu
     public String getLoadNumber() {
         String command = "0";
         try {
-            while (Integer.parseInt(command) < 1) {
+            command = reader.readLine();
+            while (!isNumeric(command) || command.equals("0")) {
+                if (command.equalsIgnoreCase("exit"))
+                    break;
                 command = reader.readLine();
             }
 //            gameController.loadGame(command);
