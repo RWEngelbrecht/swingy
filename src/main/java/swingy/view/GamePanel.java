@@ -9,7 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.rmi.activation.ActivationInstantiator;
 
-//TODO: Visual output for movement/fighting/loot
+//TODO: MORE Visual output for movement/fighting/loot
 public class GamePanel extends JPanel {
     private static GameController gameController;
     private static JPanel freeRoamTools = new JPanel();
