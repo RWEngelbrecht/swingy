@@ -50,6 +50,7 @@ public abstract class Hero {
     }
 
     public String getAllInfo() {
+        String heroClass = getHeroClass();
         String lvl = Integer.toString(this.getLevel());
         String xp = Integer.toString(this.getXp());
         String hp = Integer.toString(this.getHp());
@@ -57,7 +58,7 @@ public abstract class Hero {
         String def = Integer.toString(this.getDef());
 
         String allInfo = this.getName();
-        allInfo = allInfo.concat(","+getHeroClass());
+        allInfo = allInfo.concat(","+heroClass);
         allInfo = allInfo.concat(","+lvl);
         allInfo = allInfo.concat(","+xp);
         allInfo = allInfo.concat(","+hp);
