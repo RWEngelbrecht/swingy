@@ -78,8 +78,8 @@ public class ConsoleMenu {
         @NotBlank
         @NotNull
         String heroName = "0";
-//        System.out.print("\033[H\033[2J");
-//        System.out.flush();
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
         System.out.println("Create new hero: ");
         System.out.println("Choose a name: ");
         try {
@@ -97,8 +97,8 @@ public class ConsoleMenu {
         @NotBlank
         @NotNull
         String heroClass = "0";
-//        System.out.print("\033[H\033[2J");
-//        System.out.flush();
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
         System.out.println("Choose a class:" +
                 "\n\t 1 - Warrior" +
                 "\n\t 2 - Mage" +
@@ -126,8 +126,8 @@ public class ConsoleMenu {
     }
 
     public void startGame() {
-//        System.out.print("\033[H\033[2J");
-//        System.out.flush();
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
         System.out.println("You find yourself in the middle of a field...");
         System.out.println("Type \'north\', \'east\', \'south\' or \'west\' to move in a direction.\nOr type \'exit\' to quit.");
         String command = "0";
@@ -154,8 +154,8 @@ public class ConsoleMenu {
     }
 
     public void enemySpace(String enemyString) {
-//        System.out.print("\033[H\033[2J");
-//        System.out.flush();
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
         System.out.println(enemyString+"\n Do you want to fight or run away?");
         String command = "0";
         try {
@@ -172,8 +172,8 @@ public class ConsoleMenu {
 
     public void artifactSpace(String artifactString) {
         String command = "0";
-//        System.out.print("\033[H\033[2J");
-//        System.out.flush();
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
         System.out.println(artifactString+"\nDo you equip or ignore it?");
         try {
             while (!command.equalsIgnoreCase("equip") &&
