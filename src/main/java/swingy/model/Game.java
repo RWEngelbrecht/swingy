@@ -2,6 +2,7 @@ package swingy.model;
 
 import swingy.controller.GameController;
 import swingy.model.characters.Hero;
+import swingy.model.npcs.Mob;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,20 +11,23 @@ import java.util.Random;
 // Keeps all information about current game i.e. the map, the hero
 public class Game {
     private static GameController gameController;
+    private static MobFactory mobFactory = new MobFactory();
     private static Hero hero;
     private static Map map;
     private static ArrayList<ArrayList<String>> artifacts;
     private static ArrayList<String> enemies;
     private static String currArtifact;
-    private static String currEnemy;
+    private static Mob currMob;
+    private static Dice dice = new Dice();
     private static boolean isActive;
+
     public Game(GameController gameController) {
         isActive = true;
         this.gameController = gameController;
 
         enemies = new ArrayList<String>(Arrays.asList(
-                "Two-Toed Sloth", "Duck With a Knife", "Government Drone",
-                "Your Demons", "Bag of Snapping Turtles"));
+                "Null Pointer Exception", "Duck With a Knife", "Government Drone",
+                "Dalek", "Bag of Snapping Turtles"));
 
         artifacts = new ArrayList<ArrayList<String>>();
 
@@ -50,7 +54,7 @@ public class Game {
     public int moveHero(String direction) {
         int locationStatus = map.moveHero(direction);
         if (locationStatus == 2) {
-            currEnemy = generateEnemy();
+            currMob = generateEnemy();
         } else if (locationStatus == 3) {
             currArtifact = generateArtifact();
         }
@@ -58,7 +62,7 @@ public class Game {
     }
 
     public String getCurrArtifact() { return currArtifact; }
-    public String getCurrEnemy() { return currEnemy; }
+    public String getCurrEnemy() { return currMob.getMobName(); }
 
     public void printMap() {
 //        System.out.println("Game: mapsize = "+map.getMapSize());
@@ -75,21 +79,33 @@ public class Game {
 
     public static boolean gameIsActive() { return isActive; }
 
-    public String generateEnemy() {
-        Random r = new Random();
+    private Mob generateEnemy() {
+        String mobString = enemies.get(dice.getZeroBound(enemies.size()));
 
-        return enemies.get(r.nextInt(enemies.size()));
+        return mobFactory.newMob(mobString);
     }
 
     private String generateArtifact() {
-        Random r = new Random();
-
-        return artifacts.get(r.nextInt(2)).get(r.nextInt(5));
+        return artifacts.get(dice.getZeroBound(2)).get(dice.getZeroBound(5));
     }
 
     //TODO: make fight method
     public void fight() {
         // calculate result of battle
+        int initiativeHero = dice.roll("d20");
+        int initiativeMob = dice.roll("d20");
+        while (initiativeHero == initiativeMob) {
+            initiativeHero = dice.roll("d20");
+            initiativeMob = dice.roll("d20");
+        }
+
+        if (currMob != null) {
+            if (initiativeHero > initiativeMob)
+                 hero.attack(currMob);
+            else
+                currMob.attack(hero);
+
+        }
     }
 
     //TODO: make run method
