@@ -33,7 +33,6 @@ public class DataHandler {
         }
         return saveFile;
     }
-    //TODO: Save over existing game if same character
     // Returns ArrayList of existing saves if they exist, else
     public ArrayList<String> buildSaveFile(File saveFile, String heroInfo) {
         BufferedReader reader;
