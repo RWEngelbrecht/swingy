@@ -1,5 +1,9 @@
 package swingy.model.characters;
 
+import swingy.model.npcs.Mob;
+
+import java.util.Random;
+
 // Superclass of all hero classes
 public abstract class Hero {
     protected static String name;
@@ -66,6 +70,11 @@ public abstract class Hero {
         allInfo = allInfo.concat(","+def);
 
         return allInfo;
+    }
+
+    public void attack(Mob currMob) {
+        Random r = new Random();
+        int atkRoll = r.nextInt(21);
     }
 }
 //<name>,<class>,<xp>,<atk>,<def>,<weapon>,<armor>
