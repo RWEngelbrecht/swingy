@@ -1,6 +1,9 @@
 package swingy.model;
 
 import org.jetbrains.annotations.NotNull;
+import swingy.model.artifacts.Armor;
+import swingy.model.artifacts.Artifact;
+import swingy.model.artifacts.Weapon;
 import swingy.model.characters.Hero;
 import swingy.model.characters.Mage;
 import swingy.model.characters.Paladin;
@@ -20,6 +23,7 @@ public class HeroFactory {
         return null;
     }
 
+    // TODO: equip saved weapon/armor
     public Hero loadHero(@NotNull String heroInfo) {
         String[] stats = heroInfo.split(",");
         String name = stats[0],
@@ -31,13 +35,17 @@ public class HeroFactory {
             atk = Integer.parseInt(stats[5]),
             def = Integer.parseInt(stats[6]);
 
+//        Artifact weapon = new Weapon(stats[7]),
+//                armor = new Armor(stats[8]);
+
         Hero hero = newHero(name, heroClass);
         hero.setLvl(lvl);
         hero.setXp(xp);
         hero.setHp(hp);
         hero.setAtk(atk);
         hero.setDef(def);
-
+//        hero.equipWeapon(weapon);
+//        hero.donArmor(armor);
         return hero;
     }
 }
