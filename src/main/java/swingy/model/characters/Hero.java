@@ -1,5 +1,6 @@
 package swingy.model.characters;
 
+import swingy.model.artifacts.Artifact;
 import swingy.model.npcs.Mob;
 
 import java.util.Random;
@@ -8,8 +9,8 @@ import java.util.Random;
 public abstract class Hero {
     protected static String name;
     protected static String charClass;
-    protected static String weapon;
-    protected static String armor;
+    protected static Artifact weapon;
+    protected static Artifact armor;
     protected static int hp;
     protected static int xp;
     protected static int lvl;
@@ -17,8 +18,8 @@ public abstract class Hero {
     protected static int def;
 
     public Hero(String name, String charClass) {
-        this.name = name;
-        this.charClass = charClass;
+        Hero.name = name;
+        Hero.charClass = charClass;
     }
 
     public String getName() { return this.name; }
@@ -44,13 +45,15 @@ public abstract class Hero {
     public void defUp(int increase) { def += increase; }
     public void defDown(int decrease) { def -= decrease; }
 
-    public void equipWeapon(String weapon, int atkBoost) {
-        this.weapon = weapon;
-        this.atk += atkBoost;
+    public void equipWeapon(Artifact weapon, int atkBoost) {
+        atk -= Hero.weapon.getAtk();
+        Hero.weapon = weapon;
+        atk += atkBoost;
     }
-    public void donArmor(String armor, int defBoost) {
-        this.armor = armor;
-        this.def += defBoost;
+    public void donArmor(Artifact armor, int defBoost) {
+        def -= Hero.armor.getDef();
+        Hero.armor = armor;
+        def += defBoost;
     }
 
     public String getAllInfo() {
@@ -73,8 +76,7 @@ public abstract class Hero {
     }
 
     public void attack(Mob currMob) {
-        Random r = new Random();
-        int atkRoll = r.nextInt(21);
+
     }
 }
 //<name>,<class>,<xp>,<atk>,<def>,<weapon>,<armor>
