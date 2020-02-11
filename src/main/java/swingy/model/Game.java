@@ -1,6 +1,9 @@
 package swingy.model;
 
 import swingy.controller.GameController;
+import swingy.model.artifacts.Armor;
+import swingy.model.artifacts.Artifact;
+import swingy.model.artifacts.Weapon;
 import swingy.model.characters.Hero;
 import swingy.model.npcs.Mob;
 
@@ -16,7 +19,7 @@ public class Game {
     private static Map map;
     private static ArrayList<ArrayList<String>> artifacts;
     private static ArrayList<String> enemies;
-    private static String currArtifact;
+    private static Artifact currArtifact;
     private static Mob currMob;
     private static Dice dice = new Dice();
     private static boolean isActive;
@@ -61,7 +64,7 @@ public class Game {
         return locationStatus;
     }
 
-    public String getCurrArtifact() { return currArtifact; }
+    public Artifact getCurrArtifact() { return currArtifact; }
     public String getCurrEnemy() { return currMob.getMobName(); }
 
     public void printMap() {
@@ -85,11 +88,18 @@ public class Game {
         return mobFactory.newMob(mobString);
     }
 
-    private String generateArtifact() {
-        return artifacts.get(dice.getZeroBound(2)).get(dice.getZeroBound(5));
+    private Artifact generateArtifact() {
+        String artifactName = artifacts.get(dice.getZeroBound(2)).get(dice.getZeroBound(5));
+        Artifact artifact;
+        if (artifacts.get(0).contains(artifactName))
+            artifact = new Weapon(artifactName);
+        else
+            artifact = new Armor(artifactName);
+        System.out.println("Game: generateArtifact: artifact = "+artifact.getArtifactName());
+        return artifact;
     }
 
-    //TODO: make fight method
+    //TODO: finish fight method
     public void fight() {
         // calculate result of battle
         int initiativeHero = dice.roll("d20");
@@ -100,6 +110,7 @@ public class Game {
         }
 
         if (currMob != null) {
+            int attackRoll = dice.roll("d6");
             if (initiativeHero > initiativeMob)
                  hero.attack(currMob);
             else
@@ -114,11 +125,11 @@ public class Game {
     }
 
     public void equipArtifact() {
-        //TODO: Specific atk/def buffs/de-buffs depending on artifact;
-        if (artifacts.get(0).contains(currArtifact)) {
-            hero.equipWeapon(currArtifact, 1);
+        System.out.println("Game: equipArtifact: artifact name = "+currArtifact.getArtifactName());
+        if (artifacts.get(0).contains(currArtifact.getArtifactName())) {
+            hero.equipWeapon(currArtifact, currArtifact.getAtk());
         } else {
-            hero.donArmor(currArtifact, 1);
+            hero.donArmor(currArtifact, currArtifact.getDef());
         }
     }
 }
