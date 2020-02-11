@@ -62,6 +62,7 @@ public class DataHandler {
         return saveLines;
     }
 
+    // TODO: add weapon/armor to save game
     public void saveGame(File saveFile, @NotNull Hero hero) {
         FileWriter fileWriter;
         String heroInfo = hero.getAllInfo();
