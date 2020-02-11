@@ -36,7 +36,7 @@ public class InputHandler {
             String enemyString = "You are confronted by a "+enemy;
             gameController.reactEnemySpace(enemyString);
         } else if (positionState == 3) {
-            String artifact = gameController.getCurrArtifact();
+            String artifact = gameController.getCurrArtifact().getArtifactName();
             String artifactString = "You notice a "+artifact+" arbitrarily lying on the ground.";
             gameController.reactArtifactSpace(artifactString);
         } else if (positionState < 0) {
