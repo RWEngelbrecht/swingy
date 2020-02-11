@@ -4,6 +4,7 @@ import org.jetbrains.annotations.NotNull;
 import swingy.model.InputHandler;
 import swingy.model.DataHandler;
 import swingy.model.HeroFactory;
+import swingy.model.artifacts.Artifact;
 import swingy.model.characters.Hero;
 import swingy.view.ConsoleMenu;
 import swingy.view.GUIMenu;
@@ -209,7 +210,7 @@ public class GameController {
         return game.getCurrEnemy();
     }
 
-    public String getCurrArtifact() {
+    public Artifact getCurrArtifact() {
         return game.getCurrArtifact();
     }
 
