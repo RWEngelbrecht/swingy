@@ -35,17 +35,19 @@ public class HeroFactory {
             atk = Integer.parseInt(stats[5]),
             def = Integer.parseInt(stats[6]);
 
-//        Artifact weapon = new Weapon(stats[7]),
-//                armor = new Armor(stats[8]);
+        Artifact weapon = new Weapon(stats[7]),
+                armor = new Armor(stats[8]);
 
+        System.out.println("HeroFactory: loadHero: weapon("+weapon.getAtk()+") = "+weapon.getArtifactName()+" armor("+armor.getDef()+") = "+armor.getArtifactName());
         Hero hero = newHero(name, heroClass);
         hero.setLvl(lvl);
         hero.setXp(xp);
         hero.setHp(hp);
         hero.setAtk(atk);
         hero.setDef(def);
-//        hero.equipWeapon(weapon);
-//        hero.donArmor(armor);
+        hero.equipWeapon(weapon, weapon.getAtk());
+        hero.donArmor(armor, armor.getDef());
+
         return hero;
     }
 }

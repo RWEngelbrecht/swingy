@@ -22,13 +22,13 @@ public abstract class Hero {
         Hero.charClass = charClass;
     }
 
-    public String getName() { return this.name; }
-    public String getHeroClass() { return this.charClass; }
-    public int getHp() { return this.hp; }
-    public int getLevel() { return this.lvl; }
-    public int getXp() { return this.xp; }
-    public int getAtk() { return this.atk; }
-    public int getDef() { return this.def; }
+    public String getName() { return name; }
+    public String getHeroClass() { return charClass; }
+    public int getHp() { return hp; }
+    public int getLevel() { return lvl; }
+    public int getXp() { return xp; }
+    public int getAtk() { return atk; }
+    public int getDef() { return def; }
 
     public void setHp(int newHp) { hp = newHp; }
     public void setXp(int newXp) { xp = newXp; }
@@ -46,9 +46,12 @@ public abstract class Hero {
     public void defDown(int decrease) { def -= decrease; }
 
     public void equipWeapon(Artifact weapon, int atkBoost) {
+        System.out.println("Hero: equipWeapon: atk before = "+ atk);
         atk -= Hero.weapon.getAtk();
+        System.out.println("Hero: equipWeapon: atk after deduction = "+ atk);
         Hero.weapon = weapon;
         atk += atkBoost;
+        System.out.println("Hero: equipWeapon: atk after new weap add = "+ atk);
     }
     public void donArmor(Artifact armor, int defBoost) {
         def -= Hero.armor.getDef();
@@ -63,6 +66,8 @@ public abstract class Hero {
         String hp = Integer.toString(this.getHp());
         String atk = Integer.toString(this.getAtk());
         String def = Integer.toString(this.getDef());
+        String weapon = Hero.weapon.getArtifactName();
+        String armor = Hero.armor.getArtifactName();
 
         String allInfo = this.getName();
         allInfo = allInfo.concat(","+heroClass);
@@ -71,6 +76,8 @@ public abstract class Hero {
         allInfo = allInfo.concat(","+hp);
         allInfo = allInfo.concat(","+atk);
         allInfo = allInfo.concat(","+def);
+        allInfo = allInfo.concat(","+weapon);
+        allInfo = allInfo.concat(","+armor);
 
         return allInfo;
     }

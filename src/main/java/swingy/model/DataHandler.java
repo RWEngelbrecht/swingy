@@ -33,6 +33,7 @@ public class DataHandler {
         }
         return saveFile;
     }
+
     // Returns ArrayList of existing saves if they exist, else
     public ArrayList<String> buildSaveFile(File saveFile, String heroInfo) {
         BufferedReader reader;
@@ -100,8 +101,11 @@ public class DataHandler {
                     patchedPieces = patchedPieces.concat(" Level: "+savePieces[2]);
                     patchedPieces = patchedPieces.concat(" Exp: "+savePieces[3]);
                     patchedPieces = patchedPieces.concat(" Health: "+savePieces[4]);
+                    patchedPieces = patchedPieces.concat(" Weapon: "+savePieces[7]);
                     patchedPieces = patchedPieces.concat(" Atk: "+savePieces[5]);
+                    patchedPieces = patchedPieces.concat(" Armor: "+savePieces[8]);
                     patchedPieces = patchedPieces.concat(" Def: "+savePieces[6]);
+
 
                     guiSaveGames.add(patchedPieces);
                 }
