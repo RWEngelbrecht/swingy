@@ -23,6 +23,7 @@ public class Game {
     private static Mob currMob;
     private static Dice dice = new Dice();
     private static boolean isActive;
+    private static boolean onEnemy = false;
 
     public Game(GameController gameController) {
         isActive = true;
@@ -92,6 +93,7 @@ public class Game {
 
     private Mob generateEnemy() {
         String mobString = enemies.get(dice.getZeroBound(enemies.size()));
+        onEnemy = true;
 
         return mobFactory.newMob(mobString);
     }
@@ -107,7 +109,10 @@ public class Game {
         return artifact;
     }
 
-    //TODO: finish fight method
+    public boolean isOnEnemy() { return onEnemy; }
+
+    // TODO: finish fight method
+    //       xp/level up on victory
     public String fight() {
 
         String outcome = "Absolutely nothing happened.";
@@ -126,13 +131,19 @@ public class Game {
             int attackRoll = dice.roll("1d6");
             if (initiativeHero > initiativeMob) {
                 int attackPower = hero.attack(attackRoll);
-
                 int mobDef = currMob.getDef();
 
                 int damage = attackPower - mobDef;
+                System.out.println("Game: Fight: atkPower = "+attackPower+" mobDef = "+mobDef+" damage = "+damage+" mobHp = "+currMob.getHp());
                 if (damage > 0) {
                     currMob.takeDamage(damage);
-                    outcome = "You did " + Integer.toString(damage) + " damage to "+currMob.getMobName();
+                    if (currMob.getHp() > 0)
+                        outcome = "You did " + Integer.toString(damage) + " damage to "+currMob.getMobName();
+                    else if (currMob.getHp() <= 0)
+                        System.out.println("WHY THE HELL IS IT SKIPPING THE ABOVE");
+                        onEnemy = false;
+                        map.updateMap();
+                        outcome = "You kill the "+currMob.getMobName()+". It will be missed by its friends and family.";
                 } else {
                     outcome = "You attacked and missed...";
                 }
@@ -146,8 +157,12 @@ public class Game {
 
 
     //TODO: make run method
-    public void run() {
+    public boolean run() {
         // do not update map position
+
+        if (dice.roll("1d2") == 1)
+            return true;
+        return false;
     }
 
     public void equipArtifact() {
