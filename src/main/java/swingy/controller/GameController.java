@@ -56,6 +56,7 @@ public class GameController {
         consoleMenu.start();
     }
 
+    // TODO: add quit to main menu everywhere
     public void consoleMainMenuControls(@NotNull String command) {
         if (command.equals("1")) {
             inputHandler.startCreateHero();
@@ -144,7 +145,7 @@ public class GameController {
 
     public void newHero(@NotBlank String characterName, @NotBlank String characterClass) {
         String charClass = new String(dataHandler.getClass(characterClass));
-        Hero hero = heroFactory.newHero(characterName, charClass);
+        Hero hero = heroFactory.newHero(characterName, charClass, "default", "default");
         game.addHero(hero);
     }
 
@@ -199,8 +200,17 @@ public class GameController {
     }
 
     public void fightOrFlight(@NotNull String command) {
+        // TODO: make something similar to freeroam controlls, but for fighting/running only
         if (command.equalsIgnoreCase("fight")) {
-            game.fight();
+//            String outcome;
+            while (game.getMobHp() > 0 && game.getHeroHp() > 0) {
+                System.out.println(game.fight());
+                System.out.println("GameController: fightOrFlight: mobHp = "+game.getMobHp());
+            }
+            if (game.getMobHp() <= 0) {
+                System.out.println("The "+game.getCurrEnemy()+" died. It will be missed by its friends and family.");
+            }
+//            System.out.println("GameController: FightOrFlight: outcome = "+outcome);
         } else {
             game.run();
         }
