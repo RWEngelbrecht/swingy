@@ -3,8 +3,6 @@ package swingy.model.characters;
 import swingy.model.artifacts.Artifact;
 import swingy.model.npcs.Mob;
 
-import java.util.Random;
-
 // Superclass of all hero classes
 public abstract class Hero {
     protected static String name;
@@ -50,7 +48,7 @@ public abstract class Hero {
         atk -= Hero.weapon.getAtk();
         System.out.println("Hero: equipWeapon: atk after deduction = "+ atk);
         Hero.weapon = weapon;
-        atk += atkBoost;
+        atk += Hero.weapon.getAtk();
         System.out.println("Hero: equipWeapon: atk after new weap add = "+ atk);
     }
     public void donArmor(Artifact armor, int defBoost) {
@@ -82,8 +80,7 @@ public abstract class Hero {
         return allInfo;
     }
 
-    public void attack(Mob currMob) {
-
+    public int attack(int atkRoll) {
+        return atkRoll + atk;
     }
 }
-//<name>,<class>,<xp>,<atk>,<def>,<weapon>,<armor>
