@@ -66,18 +66,22 @@ public class Map {
 
         if (direction.equalsIgnoreCase("north")) {
             if (y - 1 >= 0) {
+                System.out.println("Map: moving north");
                 locationStatus = map[y - 1][x];
             }
         } else if (direction.equalsIgnoreCase("east")) {
-            if (x + 1 <= size) {
+            if (x + 1 <= size -1) {
+                System.out.println("Map: moving east");
                 locationStatus = map[y][x + 1];
             }
         } else if (direction.equalsIgnoreCase("south")) {
-            if (y + 1 <= size) {
+            if (y + 1 <= size -1) {
+                System.out.println("Map: moving south");
                 locationStatus = map[y + 1][x];
             }
         } else if (direction.equalsIgnoreCase("west")) {
             if (x - 1 >= 0) {
+                System.out.println("Map: moving west");
                 locationStatus = map[y][x - 1];
             }
         }
