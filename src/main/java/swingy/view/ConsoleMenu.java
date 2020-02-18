@@ -31,6 +31,11 @@ public class ConsoleMenu {
         }
     }
 
+    private static void flushConsole() {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
+    }
+
     public void start() {
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -46,13 +51,13 @@ public class ConsoleMenu {
     }
 
     public void printMainMenu() {
-//        System.out.print("\033[H\033[2J");
-//        System.out.flush();
+        flushConsole();
         System.out.println("Welcome to Swingy: Origin of the Infinite Revengening The Movie The Game");
         System.out.println("\n1 - Start a new game\n2 - Load a game.");
     }
 
     public void printLoadHero(ArrayList<String> saves) {
+        flushConsole();
         System.out.println("Load a hero: ");
         if (saves != null) for (int i = 0; i < saves.size(); i++) {
             System.out.println((i + 1) +" - "+ saves.get(i));
@@ -75,11 +80,10 @@ public class ConsoleMenu {
     }
 
     public String getHeroName() {
+        flushConsole();
         @NotBlank
         @NotNull
         String heroName = "0";
-//        System.out.print("\033[H\033[2J");
-//        System.out.flush();
         System.out.println("Create new hero: ");
         System.out.println("Choose a name: ");
         try {
@@ -94,11 +98,10 @@ public class ConsoleMenu {
     }
 
     public String getHeroClass() {
+        flushConsole();
         @NotBlank
         @NotNull
         String heroClass = "0";
-//        System.out.print("\033[H\033[2J");
-//        System.out.flush();
         System.out.println("Choose a class:" +
                 "\n\t 1 - Warrior" +
                 "\n\t 2 - Mage" +
@@ -108,8 +111,7 @@ public class ConsoleMenu {
                     !heroClass.equals("2") &&
                     !heroClass.equals("3") &&
                     !heroClass.equalsIgnoreCase("exit")) {
-//                System.out.print("\033[H\033[2J");
-//                System.out.flush();
+                flushConsole();
                 System.out.println("Choose a class:" +
                         "\n\t 1 - Warrior" +
                         "\n\t 2 - Mage" +
@@ -126,8 +128,7 @@ public class ConsoleMenu {
     }
 
     public void startGame() {
-//        System.out.print("\033[H\033[2J");
-//        System.out.flush();
+        flushConsole();
         System.out.println("You find yourself in the middle of a field...");
         System.out.println("Type \'north\', \'east\', \'south\' or \'west\' to move in a direction.\nOr type \'exit\' to quit.");
         String command = "0";
@@ -148,14 +149,12 @@ public class ConsoleMenu {
     }
 
     public void emptySpace() {
-//        System.out.print("\033[H\033[2J");
-//        System.out.flush();
+//        flushConsole();
         System.out.println("There is nothing here...");
     }
 
     public void enemySpace(String enemyString) {
-//        System.out.print("\033[H\033[2J");
-//        System.out.flush();
+//        flushConsole();
         System.out.println(enemyString+"\n Do you want to fight or run away?");
         String command = "0";
         try {
@@ -164,16 +163,15 @@ public class ConsoleMenu {
                     !command.equalsIgnoreCase("exit")) {
                 command = reader.readLine();
             }
-            gameController.consoleGameControls(command);
+            gameController.fightControls(command);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public void artifactSpace(String artifactString) {
+//        flushConsole();
         String command = "0";
-//        System.out.print("\033[H\033[2J");
-//        System.out.flush();
         System.out.println(artifactString+"\nDo you equip or ignore it?");
         try {
             while (!command.equalsIgnoreCase("equip") &&
@@ -189,8 +187,7 @@ public class ConsoleMenu {
     }
 
     public void outOfBounds() {
-//        System.out.print("\033[H\033[2J");
-//        System.out.flush();
+//        flushConsole();
         System.out.println("You cannot move in that direction...");
     }
 
@@ -198,7 +195,7 @@ public class ConsoleMenu {
         String command = "0";
         System.out.println("Type \'north\', \'east\', \'south\' or \'west\' to move in a direction.\nOr type \'exit\' to quit.");
         try{
-            while (!command.equals("north") &&
+            while (!command.equalsIgnoreCase("north") &&
                 !command.equalsIgnoreCase("south") &&
                 !command.equalsIgnoreCase("east") &&
                 !command.equalsIgnoreCase("west") &&
@@ -210,6 +207,31 @@ public class ConsoleMenu {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void fight() {
+        String command = "0";
+        System.out.println("Type \'fight\'to continue fight or \'run\' to flee.\nOr type \'exit\' to quit.");
+        try{
+            while (!command.equalsIgnoreCase("fight") &&
+                    !command.equalsIgnoreCase("run") &&
+                    !command.equalsIgnoreCase("exit")) {
+                command = reader.readLine();
+            }
+            gameController.fightControls(command);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void killedEnemy(String victoryMsg) {
+//        flushConsole();
+        System.out.println(victoryMsg);
+    }
+
+    public void retreated() {
+//        flushConsole();
+        System.out.println("You take a step back to reevaluate your life decisions.");
     }
 
     public int getMenuState() {
