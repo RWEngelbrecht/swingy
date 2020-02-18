@@ -103,8 +103,43 @@ public class GameController {
             saveGame();
         } else {
             positionState = moveHero(command);
+            game.printMap();
         }
         inputHandler.continueGame(positionState);
+    }
+
+    // TODO: Make sure this works with gui
+    public void fightControls(@NotNull String command) {
+        String outcome = "Absolutely nothing happened";
+        if (command.equalsIgnoreCase("fight") ) {
+            outcome = game.fight();
+            inputHandler.continueFight(outcome);
+        } else if (command.equalsIgnoreCase("run")) {
+            inputHandler.retreat(game.run());
+        } else if (command.equalsIgnoreCase("exit")) {
+            System.exit(1);
+        } else if (command.equalsIgnoreCase("save")) {
+            saveGame();
+        }
+    }
+
+    // TODO: Pretty much take this out
+    public void fightOrFlight(@NotNull String command) {
+        if (command.equalsIgnoreCase("fight")) {
+//            String outcome;
+//            while (game.getMobHp() > 0 && game.getHeroHp() > 0) {
+//            }
+//            if (game.getMobHp() <= 0) {
+//                System.out.println("The "+game.getCurrEnemy()+" died. It will be missed by its friends and family.");
+//            } else {
+//                System.out.println(game.fight());
+//                System.out.println("GameController: fightOrFlight: mobHp = "+game.getMobHp());
+//            }
+//            System.out.println("GameController: FightOrFlight: outcome = "+outcome);
+//            inputHandler.continueGame(2);
+        } else {
+            game.run();
+        }
     }
 
     public void reactEmptySpace() {
@@ -116,13 +151,36 @@ public class GameController {
         }
     }
 
+    public boolean isOnEnemy() {
+        return game.isOnEnemy();
+    }
+
     public void reactEnemySpace(String enemyString) {
+
         if (controllerType == 0) {
             consoleMenu.enemySpace(enemyString);
-            consoleMenu.freeRoam();
+//            if (isOnEnemy())
+            consoleMenu.fight();
+//            else
+//                consoleMenu.freeRoam();
         } else {
+            // TODO: do same for controllerType 1
             guiMenu.setGamePanelOutput(enemyString, 2);
         }
+    }
+
+    public void reactKilledEnemy(String killedMessage) {
+        if (controllerType == 0) {
+            consoleMenu.killedEnemy(killedMessage);
+            consoleMenu.freeRoam();
+        } else {
+            guiMenu.setGamePanelOutput(killedMessage, 0);
+        }
+    }
+
+    public void reactRetreated() {
+        if (controllerType == 0)
+            reactEmptySpace();
     }
 
     public void reactArtifactSpace(String artifactString) {
@@ -197,23 +255,6 @@ public class GameController {
     public int moveHero(String direction) {
         System.out.println("GameController: moveHero: hero about to move");
         return game.moveHero(direction);
-    }
-
-    public void fightOrFlight(@NotNull String command) {
-        // TODO: make something similar to freeroam controlls, but for fighting/running only
-        if (command.equalsIgnoreCase("fight")) {
-//            String outcome;
-            while (game.getMobHp() > 0 && game.getHeroHp() > 0) {
-                System.out.println(game.fight());
-                System.out.println("GameController: fightOrFlight: mobHp = "+game.getMobHp());
-            }
-            if (game.getMobHp() <= 0) {
-                System.out.println("The "+game.getCurrEnemy()+" died. It will be missed by its friends and family.");
-            }
-//            System.out.println("GameController: FightOrFlight: outcome = "+outcome);
-        } else {
-            game.run();
-        }
     }
 
     public String getCurrEnemy() {
