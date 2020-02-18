@@ -14,4 +14,11 @@ public class Mob {
 
     public String getMobName() { return this.name; }
 
+    public int getHp() { return this.hp; }
+
+    public int getDef() { return this.def; }
+
+    public int getAtk() { return this.atk; }
+
+    public void takeDamage(int dmg) { this.hp -= dmg; }
 }
