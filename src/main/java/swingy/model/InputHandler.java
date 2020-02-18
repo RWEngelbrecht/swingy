@@ -34,6 +34,7 @@ public class InputHandler {
         } else if (positionState == 2) {
             String enemy = gameController.getCurrEnemy();
             String enemyString = "You are confronted by a "+enemy;
+            // while reactEnemySpace does not return defeat or smthn, do reactEnemySpace
             gameController.reactEnemySpace(enemyString);
         } else if (positionState == 3) {
             String artifact = gameController.getCurrArtifact().getArtifactName();
