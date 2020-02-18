@@ -45,6 +45,27 @@ public class InputHandler {
         }
     }
 
+    public void continueFight(String battleStatus) {
+        if (gameController.isOnEnemy()) {
+//            String enemy = gameController.getCurrEnemy();
+//            String enemyFightString = "The battle with the "+enemy+" wages on...";
+            gameController.reactEnemySpace(battleStatus);
+        } else {
+            gameController.reactKilledEnemy(battleStatus);
+        }
+    }
+
+    public void retreat(boolean success) {
+        if (success)
+            gameController.reactRetreated();
+        else {
+            String enemy = gameController.getCurrEnemy();
+            String failedRetreat = "You trip over a hapless anteater and fail to escape. The "+enemy+" giggles.";
+            gameController.reactEnemySpace(failedRetreat);
+        }
+
+    }
+
     public void startLoadHero() {
         ArrayList<String> saves = gameController.getPrintableSaves();
         if (saves != null)
