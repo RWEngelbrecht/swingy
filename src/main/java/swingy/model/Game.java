@@ -78,7 +78,15 @@ public class Game {
         }
     }
 
-    public Hero getHero() { return this.hero; }
+    public Hero getHero() { return hero; }
+
+    public int getHeroHp() { return hero.getHp(); }
+    public int getMobHp() {
+        if (currMob != null)
+            return currMob.getHp();
+        else
+            return 0;
+    }
 
     public static boolean gameIsActive() { return isActive; }
 
@@ -100,24 +108,42 @@ public class Game {
     }
 
     //TODO: finish fight method
-    public void fight() {
-        // calculate result of battle
-        int initiativeHero = dice.roll("d20");
-        int initiativeMob = dice.roll("d20");
+    public String fight() {
+
+        String outcome = "Absolutely nothing happened.";
+
+        int initiativeHero = dice.roll("1d20");
+        int initiativeMob = dice.roll("1d20");
+        System.out.println("Game: initHero = "+initiativeHero+" initMob = "+initiativeMob);
+
         while (initiativeHero == initiativeMob) {
-            initiativeHero = dice.roll("d20");
-            initiativeMob = dice.roll("d20");
+            initiativeHero = dice.roll("1d20");
+            initiativeMob = dice.roll("1d20");
         }
 
         if (currMob != null) {
-            int attackRoll = dice.roll("d6");
-            if (initiativeHero > initiativeMob)
-                 hero.attack(currMob);
+
+            int attackRoll = dice.roll("1d6");
+            if (initiativeHero > initiativeMob) {
+                int attackPower = hero.attack(attackRoll);
+
+                int mobDef = currMob.getDef();
+
+                int damage = attackPower - mobDef;
+                if (damage > 0) {
+                    currMob.takeDamage(damage);
+                    outcome = "You did " + Integer.toString(damage) + " damage to "+currMob.getMobName();
+                } else {
+                    outcome = "You attacked and missed...";
+                }
+            }
             else
                 currMob.attack(hero);
 
         }
+        return outcome;
     }
+
 
     //TODO: make run method
     public void run() {
