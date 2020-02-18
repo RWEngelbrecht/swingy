@@ -38,12 +38,10 @@ public class HeroFactory {
         String weapon = stats[7],
                 armor = stats[8];
 
-        System.out.println("HeroFactory: loadHero: weapon = "+weapon+" armor("+armor+") = "+armor);
         Hero hero = newHero(name, heroClass, weapon, armor);
         hero.setLvl(lvl);
         hero.setXp(xp);
         hero.setHp(hp);
-        System.out.println("HeroFactory: hero atk = "+hero.getAtk()+" def = "+hero.getDef());
 //        hero.setAtk(atk);
 //        hero.setDef(def);
 //        hero.equipWeapon(weapon, weapon.getAtk());
