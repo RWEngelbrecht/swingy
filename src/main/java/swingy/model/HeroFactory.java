@@ -23,7 +23,6 @@ public class HeroFactory {
         return null;
     }
 
-    // TODO: equip saved weapon/armor
     public Hero loadHero(@NotNull String heroInfo) {
         String[] stats = heroInfo.split(",");
         String name = stats[0],
