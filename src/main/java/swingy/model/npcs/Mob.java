@@ -7,6 +7,7 @@ public class Mob {
     protected int hp;
     protected int atk;
     protected int def;
+    protected int xp;
 
     public void attack(Hero hero) {
 
@@ -19,6 +20,8 @@ public class Mob {
     public int getDef() { return this.def; }
 
     public int getAtk() { return this.atk; }
+
+    public int getXp() { return this.xp; }
 
     public void takeDamage(int dmg) { this.hp -= dmg; }
 }
