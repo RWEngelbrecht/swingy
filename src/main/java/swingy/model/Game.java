@@ -111,8 +111,7 @@ public class Game {
 
     public boolean isOnEnemy() { return onEnemy; }
 
-    // TODO: finish fight method
-    //       xp/level up on victory
+    // TODO: finish fight method (mob)
     public String fight() {
 
         String outcome = "Absolutely nothing happened.";
@@ -130,23 +129,7 @@ public class Game {
 
             int attackRoll = dice.roll("1d6");
             if (initiativeHero > initiativeMob) {
-                int attackPower = hero.attack(attackRoll);
-                int mobDef = currMob.getDef();
-
-                int damage = attackPower - mobDef;
-                System.out.println("Game: Fight: atkPower = "+attackPower+" mobDef = "+mobDef+" damage = "+damage+" mobHp = "+currMob.getHp());
-                if (damage > 0) {
-                    currMob.takeDamage(damage);
-                    if (currMob.getHp() > 0)
-                        outcome = "You did " + Integer.toString(damage) + " damage to "+currMob.getMobName();
-                    else if (currMob.getHp() <= 0)
-                        System.out.println("WHY THE HELL IS IT SKIPPING THE ABOVE");
-                        onEnemy = false;
-                        map.updateMap();
-                        outcome = "You kill the "+currMob.getMobName()+". It will be missed by its friends and family.";
-                } else {
-                    outcome = "You attacked and missed...";
-                }
+                outcome = heroFightMob(attackRoll);
             }
             else
                 currMob.attack(hero);
@@ -155,8 +138,29 @@ public class Game {
         return outcome;
     }
 
+    private String heroFightMob(int attackRoll) {
+        int attackPower = hero.attack(attackRoll);
+        int mobDef = currMob.getDef();
 
-    //TODO: make run method
+        int damage = attackPower - mobDef;
+        System.out.println("Game: Fight: atkPower = "+attackPower+" mobDef = "+mobDef+" damage = "+damage+" mobHp = "+getMobHp());
+        if (damage > 0) {
+            currMob.takeDamage(damage);
+            if (getMobHp() > 0)
+                return "You do " + Integer.toString(damage) + " damage to "+currMob.getMobName();
+            else {
+                onEnemy = false;
+                map.updateMap();
+                if (hero.xpUp(currMob.getXp())) {
+                    gameController.levelUp();
+                }
+                return "You kill the " + currMob.getMobName() + ". It will be missed by its friends and family.\nYou also gain "+currMob.getXp()+" XP.";
+            }
+        } else {
+            return "You attacked and missed...";
+        }
+    }
+
     public boolean run() {
         // do not update map position
 
