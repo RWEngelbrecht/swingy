@@ -36,20 +36,29 @@ public abstract class Hero {
 
     public void hpUp(int increase) { hp += increase; }
     public void hpDown(int decrease) { hp -= decrease; }
-    public void xpUp(int increase) { xp += increase; }
-    public void lvlUp() { lvl++; }
+    public boolean xpUp(int increase) {
+        xp += increase;
+        if (xp >= 100 && xp < 250) {
+            return lvlUp();
+        } else if (xp >= 250 && xp < 450) {
+            return lvlUp();
+        } else if (xp >= 450 && xp < 700) {
+            return lvlUp();
+        } else if (xp >= 700 && xp < 1000) {
+            return lvlUp();
+        }
+        return false;
+    }
+    public boolean lvlUp() { lvl++; return true;}
     public void atkUp(int increase) { atk += increase; }
     public void atkDown(int decrease) { atk -= decrease; }
     public void defUp(int increase) { def += increase; }
     public void defDown(int decrease) { def -= decrease; }
 
     public void equipWeapon(Artifact weapon, int atkBoost) {
-        System.out.println("Hero: equipWeapon: atk before = "+ atk);
         atk -= Hero.weapon.getAtk();
-        System.out.println("Hero: equipWeapon: atk after deduction = "+ atk);
         Hero.weapon = weapon;
         atk += Hero.weapon.getAtk();
-        System.out.println("Hero: equipWeapon: atk after new weap add = "+ atk);
     }
     public void donArmor(Artifact armor, int defBoost) {
         def -= Hero.armor.getDef();
@@ -83,4 +92,5 @@ public abstract class Hero {
     public int attack(int atkRoll) {
         return atkRoll + atk;
     }
+
 }
