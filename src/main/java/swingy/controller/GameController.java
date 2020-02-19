@@ -93,9 +93,10 @@ public class GameController {
     public void consoleGameControls(@NotNull String command) {
         int positionState = 0;
 
-        if (command.equalsIgnoreCase("fight") || command.equalsIgnoreCase("run")) {
-            fightOrFlight(command);
-        } else if (command.equalsIgnoreCase("equip")) {
+//        if (command.equalsIgnoreCase("fight") || command.equalsIgnoreCase("run")) {
+//            fightOrFlight(command);
+//        }
+        if (command.equalsIgnoreCase("equip")) {
             equipArtifact();
         } else if (command.equalsIgnoreCase("exit")) {
             System.exit(1);
@@ -123,23 +124,9 @@ public class GameController {
         }
     }
 
-    // TODO: Pretty much take this out
-    public void fightOrFlight(@NotNull String command) {
-        if (command.equalsIgnoreCase("fight")) {
-//            String outcome;
-//            while (game.getMobHp() > 0 && game.getHeroHp() > 0) {
-//            }
-//            if (game.getMobHp() <= 0) {
-//                System.out.println("The "+game.getCurrEnemy()+" died. It will be missed by its friends and family.");
-//            } else {
-//                System.out.println(game.fight());
-//                System.out.println("GameController: fightOrFlight: mobHp = "+game.getMobHp());
-//            }
-//            System.out.println("GameController: FightOrFlight: outcome = "+outcome);
-//            inputHandler.continueGame(2);
-        } else {
-            game.run();
-        }
+    // TODO: find better level up procedure
+    public void levelUp() {
+        inputHandler.startGame();
     }
 
     public void reactEmptySpace() {
@@ -179,8 +166,10 @@ public class GameController {
     }
 
     public void reactRetreated() {
-        if (controllerType == 0)
-            reactEmptySpace();
+        if (controllerType == 0) {
+            consoleMenu.retreated();
+            consoleMenu.freeRoam();
+        }
     }
 
     public void reactArtifactSpace(String artifactString) {
