@@ -27,7 +27,7 @@ public class Game {
 
     public Game(GameController gameController) {
         isActive = true;
-        this.gameController = gameController;
+        Game.gameController = gameController;
 
         enemies = new ArrayList<String>(Arrays.asList(
                 "Null Pointer Exception", "Duck With a Knife", "Government Drone",
@@ -48,11 +48,11 @@ public class Game {
     }
 
     public void addHero(Hero hero) {
-        this.hero = hero;
+        Game.hero = hero;
     }
 
     public void makeMap() {
-        map = new Map(1/*hero.getLevel()*/);
+        map = new Map(hero.getLevel());
     }
 
     public int moveHero(String direction) {
@@ -69,7 +69,6 @@ public class Game {
     public String getCurrEnemy() { return currMob.getMobName(); }
 
     public void printMap() {
-//        System.out.println("Game: mapsize = "+map.getMapSize());
         int mapRaw[][] = map.getMap();
         for (int i = 0; i < map.getMapSize(); i++) {
             for (int j = 0; j < map.getMapSize(); j++) {
@@ -133,7 +132,6 @@ public class Game {
             }
             else
                 currMob.attack(hero);
-
         }
         return outcome;
     }
@@ -163,10 +161,7 @@ public class Game {
 
     public boolean run() {
         // do not update map position
-
-        if (dice.roll("1d2") == 1)
-            return true;
-        return false;
+        return dice.roll("1d2") == 1;
     }
 
     public void equipArtifact() {
