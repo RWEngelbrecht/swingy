@@ -12,11 +12,6 @@ public class InputValidator {
         validatorType = type;
     }
 
-    public boolean validateWithContext(String value, String context) {
-        if (context.equals("heroName"))
-            return validateHeroName(value);
-        return false;
-    }
 
     private boolean validateHeroName(@NotEmpty String name) {
         heroName = name;
