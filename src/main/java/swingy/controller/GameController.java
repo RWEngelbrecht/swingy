@@ -40,7 +40,7 @@ public class GameController {
             System.out.println("GameController: guiMenu about to be set");
             SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
-                    guiMenu = new GUIMenu("Swingy: Origin of the Revengening Infinite The Movie The Game", GameController.this);
+                    guiMenu = new GUIMenu("Swingy: Origin of the Infinite Revengening The Movie The Game", GameController.this);
                 }
             });
         }
@@ -126,7 +126,8 @@ public class GameController {
 
     // TODO: find better level up procedure
     public void levelUp() {
-        inputHandler.startGame();
+        if (controllerType == 0)
+            inputHandler.startGame();
     }
 
     public void reactEmptySpace() {
@@ -134,7 +135,7 @@ public class GameController {
             consoleMenu.emptySpace();
             consoleMenu.freeRoam();
         } else {
-            guiMenu.setGamePanelOutput("", 0);
+            guiMenu.setGamePanelOutput("There is nothing here...", 0);
         }
     }
 
@@ -166,9 +167,12 @@ public class GameController {
     }
 
     public void reactRetreated() {
+        System.out.println("GameController: reactRetreated reached");
         if (controllerType == 0) {
             consoleMenu.retreated();
             consoleMenu.freeRoam();
+        } else {
+            guiMenu.setGamePanelOutput("You take a step back to reevaluate your life decisions", 0);
         }
     }
 
@@ -235,9 +239,18 @@ public class GameController {
         ArrayList<String> saveGames = getSavedGames();
         int gameNumberInt = Integer.parseInt(gameNumberStr) - 1;
 
-        if (gameNumberInt + 1 <= saveGames.size()) {
+        if (validateSaveNumber(gameNumberStr)) {
             String gameToLoad = saveGames.get(gameNumberInt);
             loadHero(gameToLoad);
+        }
+    }
+
+    public boolean validateSaveNumber(String number) {
+        try {
+            int saveNumber = Integer.parseInt(number);
+            return saveNumber <= getSavedGames().size() && saveNumber != 0;
+        } catch (NumberFormatException e) {
+            return false;
         }
     }
 
