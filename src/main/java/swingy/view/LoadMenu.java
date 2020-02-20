@@ -29,7 +29,6 @@ public class LoadMenu extends JPanel {
         loadBt.addActionListener(new loadGameActionListener());
         toolbar.add(loadBt);
 
-
         add(output, BorderLayout.NORTH);
         add(toolbar, BorderLayout.SOUTH);
     }
@@ -44,12 +43,14 @@ public class LoadMenu extends JPanel {
 
         public void actionPerformed(ActionEvent e) {
             String command = getCommandText();
-            if (command.length() > 0) {
+            if (command.length() > 0 && gameController.validateSaveNumber(command)) {
                 gameController.loadGame(command);
                 con.removeAll();
                 gamePanel = new GamePanel(gameController, gameController.getGame());
                 con.add(gamePanel);
                 gamePanel.displayGame("You find yourself in the middle of a field...");
+            } else {
+                commandText.setText("");
             }
         }
     }
