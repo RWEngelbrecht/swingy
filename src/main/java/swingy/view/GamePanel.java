@@ -115,12 +115,12 @@ public class GamePanel extends JPanel {
         repaint();
     }
 
-    public void emptySpace() {
-        System.out.println("GamePanel: emptySpace reached");
-        displayGame("There is nothing here...");
+    public void emptySpace(String gameText) {
+        displayGame(gameText);
     }
 
     public void enemySpace(String gameText) {
+        System.out.println("GamePanel: enemySpace reached");
         displayGame(gameText);
         setFightOrFlight();
     }
@@ -144,10 +144,13 @@ public class GamePanel extends JPanel {
 
         public void actionPerformed(ActionEvent e) {
 //            positionState = gameController.moveHero(direction);
-            gameController.consoleGameControls(command);
-            if (command.equals("fight") || command.equals("run") ||
-                    command.equals("equip") || command.equals("ignore")) {
+            if (command.equals("fight") || command.equals("run")) {
+                gameController.fightControls(command);
+            } else if (command.equals("equip") || command.equals("ignore")) {
+                gameController.consoleGameControls(command);
                 setFreeRoam();
+            } else {
+                gameController.consoleGameControls(command);
             }
         }
     }
