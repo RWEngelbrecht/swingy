@@ -1,7 +1,6 @@
 package swingy.model.characters;
 
 import swingy.model.artifacts.Artifact;
-import swingy.model.npcs.Mob;
 
 // Superclass of all hero classes
 public abstract class Hero {
