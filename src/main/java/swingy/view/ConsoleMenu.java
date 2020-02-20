@@ -22,15 +22,6 @@ public class ConsoleMenu {
         this.gameController = gameController;
     }
 
-    private static boolean isNumeric(String str) {
-        try {
-            Integer.parseInt(str);
-            return true;
-        } catch (NumberFormatException e) {
-            return false;
-        }
-    }
-
     private static void flushConsole() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
@@ -51,23 +42,24 @@ public class ConsoleMenu {
     }
 
     public void printMainMenu() {
-        flushConsole();
+//        flushConsole();
         System.out.println("Welcome to Swingy: Origin of the Infinite Revengening The Movie The Game");
         System.out.println("\n1 - Start a new game\n2 - Load a game.");
     }
 
     public void printLoadHero(ArrayList<String> saves) {
-        flushConsole();
+//        flushConsole();
         System.out.println("Load a hero: ");
-        if (saves != null) for (int i = 0; i < saves.size(); i++) {
-            System.out.println((i + 1) +" - "+ saves.get(i));
+        if (saves != null)
+            for (int i = 0; i < saves.size(); i++) {
+                System.out.println((i + 1) +" - "+ saves.get(i));
         }
     }
 
     public String getLoadNumber() {
-        String command = "0";
+        String command = "";
         try {
-            while (!isNumeric(command) || command.equals("0")) {
+            while (!gameController.validateSaveNumber(command)) {
                 if (command.equalsIgnoreCase("exit"))
                     break;
                 command = reader.readLine();
@@ -80,7 +72,7 @@ public class ConsoleMenu {
     }
 
     public String getHeroName() {
-        flushConsole();
+//        flushConsole();
         @NotBlank
         @NotNull
         String heroName = "0";
@@ -98,7 +90,7 @@ public class ConsoleMenu {
     }
 
     public String getHeroClass() {
-        flushConsole();
+//        flushConsole();
         @NotBlank
         @NotNull
         String heroClass = "0";
@@ -128,7 +120,7 @@ public class ConsoleMenu {
     }
 
     public void startGame() {
-        flushConsole();
+//        flushConsole();
         System.out.println("You find yourself in the middle of a field...");
         System.out.println("Type \'north\', \'east\', \'south\' or \'west\' to move in a direction.\nOr type \'exit\' to quit.");
         String command = "0";
