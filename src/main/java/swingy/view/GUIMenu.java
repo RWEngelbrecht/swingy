@@ -143,7 +143,7 @@ public class GUIMenu extends JFrame {
             gamePanel = loadMenu.getGamePanel();
         }
         if (positionState == 0) {
-            gamePanel.emptySpace();
+            gamePanel.emptySpace(gameText);
         } else if (positionState == 2) {
             gamePanel.enemySpace(gameText);
         } else if (positionState == 3) {
