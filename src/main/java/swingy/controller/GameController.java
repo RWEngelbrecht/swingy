@@ -109,7 +109,6 @@ public class GameController {
         inputHandler.continueGame(positionState);
     }
 
-    // TODO: Make sure this works with gui
     public void fightControls(@NotNull String command) {
         String outcome = "Absolutely nothing happened";
         if (command.equalsIgnoreCase("fight") ) {
@@ -149,6 +148,7 @@ public class GameController {
     public boolean isOnEnemy() {
         return game.isOnEnemy();
     }
+    public boolean isAlive() { return game.isAlive(); }
 
     public void reactEnemySpace(String enemyString) {
 
@@ -159,7 +159,6 @@ public class GameController {
 //            else
 //                consoleMenu.freeRoam();
         } else {
-            // TODO: do same for controllerType 1
             guiMenu.setGamePanelOutput(enemyString, 2);
         }
     }
@@ -218,11 +217,13 @@ public class GameController {
 //        game.printMap();
     }
 
-//    public void validateInput(String value, String context) {
-//        if (controllerType == 1) {
-//            guiController.validateInput(value, context);
-//        }
-//    }
+    public void youDied(String deathMessage) {
+        if (controllerType == 0) {
+            consoleMenu.youDied(deathMessage);
+        } else {
+            guiMenu.setGamePanelOutput(deathMessage, 4);
+        }
+    }
 
     public void createSaveFile() {
         saveFile = dataHandler.createSaveFile();
