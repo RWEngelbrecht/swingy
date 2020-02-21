@@ -31,10 +31,10 @@ public class GamePanel extends JPanel {
     private static JButton equip = new JButton("Equip");
     private static JButton ignore = new JButton("Ignore");
 
-    private static JTextArea gameOutput = new JTextArea(26, 20);
+    private static JTextArea gameOutput = new JTextArea(32, 20);
 
     public GamePanel(GameController gameController, Game game) {
-        this.gameController = gameController;
+        GamePanel.gameController = gameController;
         gameController.generateMap();
         setLayout(new BorderLayout());
         setBounds(150, 150, 100, 50);
@@ -136,6 +136,11 @@ public class GamePanel extends JPanel {
 
     public void outOfBounds() {
         displayGame("You cannot move in that direction...");
+    }
+
+    public void youDied(String deathMessage) {
+        displayGame(deathMessage);
+
     }
 
     private class commandActionListener implements ActionListener {
