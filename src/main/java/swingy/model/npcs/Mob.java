@@ -9,8 +9,8 @@ public class Mob {
     protected int def;
     protected int xp;
 
-    public void attack(Hero hero) {
-
+    public int attack(int damage) {
+        return atk + damage;
     }
 
     public String getMobName() { return this.name; }
