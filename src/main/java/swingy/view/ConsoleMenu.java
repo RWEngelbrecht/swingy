@@ -216,9 +216,9 @@ public class ConsoleMenu {
         }
     }
 
-    public void killedEnemy(String victoryMsg) {
+    public void killedEnemy(String victoryMessage) {
 //        flushConsole();
-        System.out.println(victoryMsg);
+        System.out.println(victoryMessage);
     }
 
     public void retreated() {
@@ -226,6 +226,10 @@ public class ConsoleMenu {
         System.out.println("You take a step back to reevaluate your life decisions.");
     }
 
+    public void youDied(String deathMessage) {
+//        flushConsole();
+        System.out.println(deathMessage);
+    }
     public int getMenuState() {
         return this.menuState;
     }
