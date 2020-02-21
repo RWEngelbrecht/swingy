@@ -50,6 +50,8 @@ public class InputHandler {
 //            String enemy = gameController.getCurrEnemy();
 //            String enemyFightString = "The battle with the "+enemy+" wages on...";
             gameController.reactEnemySpace(battleStatus);
+        } else if (!gameController.isAlive()) {
+            gameController.youDied(battleStatus);
         } else {
             gameController.reactKilledEnemy(battleStatus);
         }
