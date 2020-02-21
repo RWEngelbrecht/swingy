@@ -11,21 +11,21 @@ import java.awt.event.ActionListener;
 public class LoadMenu extends JPanel {
     private static GameController gameController;
     private GamePanel gamePanel;
-    private JTextArea output = new JTextArea(26, 20);
-    private JPanel toolbar = new JPanel();
+    private JTextArea output = new JTextArea(33, 20);
     private JTextField commandText = new JTextField(20);
-    private JButton loadBt = new JButton("Load");
-//    private JButton noLoadsBt = new JButton("Go Back");
+    //    private JButton noLoadsBt = new JButton("Go Back");
     private Container con;
 
     public LoadMenu(GameController gameController, Container container) {
-        this.gameController = gameController;
+        LoadMenu.gameController = gameController;
         con = container;
         setLayout(new BorderLayout());
 
+        JPanel toolbar = new JPanel();
         toolbar.setLayout(new FlowLayout(FlowLayout.CENTER));
         output.setEditable(false);
         toolbar.add(commandText);
+        JButton loadBt = new JButton("Load");
         loadBt.addActionListener(new loadGameActionListener());
         toolbar.add(loadBt);
 
