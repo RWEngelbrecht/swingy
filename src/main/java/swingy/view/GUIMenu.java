@@ -16,14 +16,14 @@ import java.util.ArrayList;
 
 // TODO: Have 2 textFields on same toolbar, take player name and class with one actionEvent
 public class GUIMenu extends JFrame {
-    private JPanel mainPanel = new JPanel();
     private JPanel charCreatePanel = new JPanel();
+    private MainMenu mainMenu;
     private GamePanel gamePanel;
     private LoadMenu loadMenu;
 
 
-    private static JTextArea outputField = new JTextArea(26, 20);
-    private static JPanel mainToolbar = new JPanel();
+    private static JTextArea outputField = new JTextArea(140, 20);
+//    private static JPanel mainToolbar = new JPanel();
     private static JPanel charCreateTools = new JPanel();
 
     private static GameController gameController;
@@ -39,38 +39,43 @@ public class GUIMenu extends JFrame {
         // Creates JFrame with given title
         super(title);
         // Instantiate gameController so view can interact with model
-        this.gameController = gameController;
+        GUIMenu.gameController = gameController;
 
-        setSize(600, 500);
-        final Container con = this.getContentPane();
+        setSize(700, 600);
+        mainMenu = new MainMenu();
 
-        // Button that will generate character creation screen
-        JButton newGame = new JButton("New Game");
-        // Button that will generate save selection screen
-        JButton loadGame = new JButton("Load Game");
-
-        label = new JLabel("Swingy");
-        label.setHorizontalAlignment(SwingConstants.CENTER);
-        label.setFont(new Font("Comic Sans", Font.LAYOUT_LEFT_TO_RIGHT, 150));
-
-        mainToolbar.setLayout(new FlowLayout(FlowLayout.CENTER));
-        // Add buttons to toolbar
-        mainToolbar.add(newGame);
-        mainToolbar.add(loadGame);
-
+        // TODO: make charCreateTools Panel
         charCreateTools.setLayout(new FlowLayout(FlowLayout.CENTER));
-
-        mainPanel.setLayout(new BorderLayout());
-        mainPanel.setBounds(150, 150, 100, 50);
-        mainPanel.add(label, BorderLayout.CENTER);
-        mainPanel.add(mainToolbar, BorderLayout.SOUTH);
-
-        con.add(mainPanel);
 
         // Non-editable textfield to wherein to display instructions/story/art
         outputField.setEditable(false);
-        // Action listener that generates character creation page
-        newGame.addActionListener(new ActionListener() {
+
+//        finish.addActionListener(new ActionListener() {
+//            public void actionPerformed(ActionEvent e) {
+//                con.removeAll();
+//                gamePanel = new GamePanel(gameController, gameController.getGame());
+//                con.add(gamePanel);
+//                gamePanel.displayGame("You find yourself in the middle of a field...");
+//            }
+//        });
+
+        charCreatePanel.setLayout(new BorderLayout());
+        charCreatePanel.setBounds(150, 150, 100, 50);
+        charCreatePanel.add(outputField, BorderLayout.NORTH);
+        charCreatePanel.add(charCreateTools, BorderLayout.SOUTH);
+
+        setResizable(false);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        displayMainMenu();
+
+        setVisible(true);
+    }
+
+    private void displayMainMenu() {
+        final Container con = this.getContentPane();
+
+        mainMenu.newGame.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 con.removeAll();
                 con.add(charCreatePanel);
@@ -80,16 +85,7 @@ public class GUIMenu extends JFrame {
             }
         });
 
-        finish.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                con.removeAll();
-                gamePanel = new GamePanel(gameController, gameController.getGame());
-                con.add(gamePanel);
-                gamePanel.displayGame("You find yourself in the middle of a field...");
-            }
-        });
-
-        loadGame.addActionListener(new ActionListener() {
+        mainMenu.loadGame.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 ArrayList<String> savedGames = gameController.getPrintableSaves();
                 String saveStates = new String();
@@ -105,14 +101,7 @@ public class GUIMenu extends JFrame {
             }
         });
 
-        charCreatePanel.setLayout(new BorderLayout());
-        charCreatePanel.setBounds(150, 150, 100, 50);
-        charCreatePanel.add(outputField, BorderLayout.NORTH);
-        charCreatePanel.add(charCreateTools, BorderLayout.SOUTH);
-
-        setResizable(false);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setVisible(true);
+        con.add(mainMenu);
     }
 
     private void displayCharCreation(final String output) {
@@ -148,6 +137,8 @@ public class GUIMenu extends JFrame {
             gamePanel.enemySpace(gameText);
         } else if (positionState == 3) {
             gamePanel.artifactSpace(gameText);
+        } else if (positionState == 4) {
+            gamePanel.youDied(gameText);
         } else if (positionState < 0) {
             gamePanel.outOfBounds();
         }
