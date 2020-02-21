@@ -128,6 +128,13 @@ public class GameController {
     public void levelUp() {
         if (controllerType == 0)
             inputHandler.startGame();
+        else {
+            System.out.println("GameController: levelUp: You gained enough experience to now be one better.");
+            guiMenu.setGamePanelOutput(
+                    "You gained enough experience to now be one better.\n" +
+                            "You also have a bigger map to run around on", 0);
+            game.makeMap();
+        }
     }
 
     public void reactEmptySpace() {
@@ -207,7 +214,7 @@ public class GameController {
 
     public void generateMap() {
         game.makeMap();
-        System.out.println("Our hero "+game.getHero().getName()+" the "+game.getHero().getHeroClass()+" of level "+game.getHero().getLevel()+" sets off on their adventure!");
+//        System.out.println("Our hero "+game.getHero().getName()+" the "+game.getHero().getHeroClass()+" of level "+game.getHero().getLevel()+" sets off on their adventure!");
 //        game.printMap();
     }
 
