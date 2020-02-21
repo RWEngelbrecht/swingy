@@ -82,6 +82,7 @@ public class GamePanel extends JPanel {
 //        remove(enemyEncounterTools);
 //        remove(lootingTools);
 //        add(freeRoamTools, BorderLayout.SOUTH);
+        System.out.println("GamePanel: setFreeRoam reached");
         freeRoamTools.remove(fight);
         freeRoamTools.remove(run);
         freeRoamTools.remove(equip);
@@ -93,6 +94,8 @@ public class GamePanel extends JPanel {
     private void setFightOrFlight() {
 //        remove(freeRoamTools);
 //        add(enemyEncounterTools);
+        System.out.println("GamePanel: setFightOrFlight reached");
+//        freeRoamTools.
         freeRoamTools.add(fight);
         freeRoamTools.add(run);
         freeRoamTools.revalidate();
@@ -117,6 +120,7 @@ public class GamePanel extends JPanel {
 
     public void emptySpace(String gameText) {
         displayGame(gameText);
+        setFreeRoam();
     }
 
     public void enemySpace(String gameText) {
