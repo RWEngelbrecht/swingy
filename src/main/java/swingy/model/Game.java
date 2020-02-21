@@ -24,6 +24,7 @@ public class Game {
     private static Dice dice = new Dice();
     private static boolean isActive;
     private static boolean onEnemy = false;
+    private static boolean alive = true;
 
     public Game(GameController gameController) {
         isActive = true;
@@ -109,8 +110,8 @@ public class Game {
     }
 
     public boolean isOnEnemy() { return onEnemy; }
+    public boolean isAlive() { return alive; }
 
-    // TODO: finish fight method (mob)
     public String fight() {
 
         String outcome = "Absolutely nothing happened.";
@@ -131,9 +132,27 @@ public class Game {
                 outcome = heroFightMob(attackRoll);
             }
             else
-                currMob.attack(hero);
+                outcome = mobFightHero(attackRoll);
         }
         return outcome;
+    }
+
+    private String mobFightHero(int attackRoll) {
+        int attackPower = currMob.attack(attackRoll);
+        int heroDef = hero.getDef();
+
+        int damage = attackPower - heroDef;
+        if (damage > 0) {
+            hero.hpDown(damage);
+            if (hero.getHp() > 0)
+                return "You take "+damage+" damage. Maybe dodge next time?";
+            else {
+                alive = false;
+                return "YOU DIED.";
+            }
+        } else {
+            return "The "+currMob.getMobName()+" attacked and missed.";
+        }
     }
 
     private String heroFightMob(int attackRoll) {
