@@ -1,1 +1,1 @@
-jim,Paladin,1,0,40,11,10,Lightsaber,Legendary Stone Mittens
+jim,Warrior,1,35,31,10,7,Dual axes,Self Respect
