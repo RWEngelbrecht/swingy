@@ -2,9 +2,7 @@ package swingy.view;
 
 import org.jetbrains.annotations.NotNull;
 import swingy.controller.GameController;
-
-import javax.swing.*;
-import java.util.Scanner;
+import swingy.view.guimenu.GUIMenu;
 
 public class UserInterface {
     private static GUIMenu frame;
@@ -20,14 +18,6 @@ public class UserInterface {
             interfaceType = 0;
         }
         gameController = new GameController(this);
-//        SwingUtilities.invokeLater(new Runnable() {
-//            public void run() {
-//                if (interfaceType == 1) {
-//                    // Instantiate gui
-//                    frame = new GUIMenu("Swingy: Origin of the Revengening Infinite The Movie The Game", gameController);
-//                }
-//            }
-//        });
         gameController.createSaveFile();
         if (interfaceType == 0)
             gameController.consoleGenerateMainMenu();
