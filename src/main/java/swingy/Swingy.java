@@ -11,14 +11,11 @@ import javax.validation.*;
 public class Swingy {
 
     private static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-    private static UserInterface userInterface;
-//    private static GameController controller;
 
     public static void main (String[] args) {
         if (args.length > 0) {
             // Create user interface - generates gui or starts app in console
-            userInterface = new UserInterface(args[0]);
-//            controller = new GameController(userInterface);
+            UserInterface userInterface = new UserInterface(args[0]);
         } else {
             System.out.println("Your arguments are invalid");
             System.exit(1);
@@ -26,5 +23,3 @@ public class Swingy {
     }
 
 }
-
-// LOAD CHARACTER FROM INPUT: <name>,<class>,<xp>,<atk>,<def>,<weapon>,<armor>
