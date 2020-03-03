@@ -38,13 +38,13 @@ public abstract class Hero {
     public boolean xpUp(int increase) {
         xp += increase;
         if (xp >= 100 && xp < 250) {
-            return lvlUp();
+            return (lvl == 1) && lvlUp();
         } else if (xp >= 250 && xp < 450) {
-            return lvlUp();
+            return (lvl == 2) && lvlUp();
         } else if (xp >= 450 && xp < 700) {
-            return lvlUp();
+            return (lvl == 3) && lvlUp();
         } else if (xp >= 700 && xp < 1000) {
-            return lvlUp();
+            return (lvl == 4) && lvlUp();
         }
         return false;
     }
