@@ -7,7 +7,7 @@ import swingy.model.HeroFactory;
 import swingy.model.artifacts.Artifact;
 import swingy.model.characters.Hero;
 import swingy.view.ConsoleMenu;
-import swingy.view.GUIMenu;
+import swingy.view.guimenu.GUIMenu;
 import swingy.view.UserInterface;
 import swingy.model.Game;
 
@@ -90,7 +90,7 @@ public class GameController {
         consoleMenu.startGame();
     }
 
-    public void consoleGameControls(@NotNull String command) {
+    public void gameControls(@NotNull String command) {
         int positionState = 0;
 
 //        if (command.equalsIgnoreCase("fight") || command.equalsIgnoreCase("run")) {
@@ -99,7 +99,14 @@ public class GameController {
         if (command.equalsIgnoreCase("equip")) {
             equipArtifact();
         } else if (command.equalsIgnoreCase("exit")) {
-            System.exit(1);
+            System.out.println("GameController: gameControls: exit reached, doing stupid shit...");
+            if (controllerType == 1) {
+                guiMenu.displayMainMenu();
+//                guiMenu.dispose();
+//                guiMenu = new GUIMenu("Swingy: Origin of the Infinite Revengening The Movie The Game", GameController.this);
+            } else {
+                System.exit(1);
+            }
         } else if (command.equalsIgnoreCase("save")) {
             saveGame();
         } else {
@@ -123,15 +130,14 @@ public class GameController {
         }
     }
 
-    // TODO: find better level up procedure
     public void levelUp() {
         if (controllerType == 0)
             inputHandler.startGame();
         else {
-            System.out.println("GameController: levelUp: You gained enough experience to now be one better.");
+//            System.out.println("GameController: levelUp: You gained enough experience to now be one better.");
             guiMenu.setGamePanelOutput(
                     "You gained enough experience to now be one better.\n" +
-                            "You also have a bigger map to run around on", 0);
+                            "You also have a bigger map to run around on.", 0);
             game.makeMap();
         }
     }
