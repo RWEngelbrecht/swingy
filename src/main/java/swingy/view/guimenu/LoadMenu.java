@@ -1,4 +1,4 @@
-package swingy.view;
+package swingy.view.guimenu;
 
 import org.jetbrains.annotations.NotNull;
 import swingy.controller.GameController;

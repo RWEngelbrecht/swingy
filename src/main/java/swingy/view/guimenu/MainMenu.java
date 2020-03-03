@@ -1,4 +1,4 @@
-package swingy.view;
+package swingy.view.guimenu;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,7 +20,7 @@ public class MainMenu extends JPanel {
 
         label = new JLabel("Swingy");
         label.setHorizontalAlignment(SwingConstants.CENTER);
-        label.setFont(new Font("Comic Sans",Font.LAYOUT_LEFT_TO_RIGHT, 150));
+        label.setFont(new Font("Comic Sans", Font.LAYOUT_LEFT_TO_RIGHT, 150));
 
         mainToolbar.setLayout(new FlowLayout(FlowLayout.CENTER));
         // Add buttons to toolbar

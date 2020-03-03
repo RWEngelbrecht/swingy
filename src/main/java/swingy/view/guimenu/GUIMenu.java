@@ -1,9 +1,7 @@
-package swingy.view;
+package swingy.view.guimenu;
 
-import org.intellij.lang.annotations.Flow;
 import org.jetbrains.annotations.NotNull;
 import swingy.controller.GameController;
-import swingy.model.Game;
 
 import javax.swing.*;
 import javax.validation.constraints.NotBlank;
@@ -11,7 +9,6 @@ import javax.validation.constraints.NotEmpty;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 import java.util.ArrayList;
 
 // TODO: Have 2 textFields on same toolbar, take player name and class with one actionEvent
@@ -72,8 +69,10 @@ public class GUIMenu extends JFrame {
         setVisible(true);
     }
 
-    private void displayMainMenu() {
+    public void displayMainMenu() {
+        System.out.println("GUIMenu: displayMainMenu: reached.");
         final Container con = this.getContentPane();
+        con.removeAll();
 
         mainMenu.newGame.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {

@@ -1,4 +1,4 @@
-package swingy.view;
+package swingy.view.guimenu;
 
 import swingy.controller.GameController;
 import swingy.model.Game;
@@ -7,7 +7,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.rmi.activation.ActivationInstantiator;
 
 //TODO: MORE Visual output for movement/fighting/loot
 public class GamePanel extends JPanel {
@@ -156,10 +155,10 @@ public class GamePanel extends JPanel {
             if (command.equals("fight") || command.equals("run")) {
                 gameController.fightControls(command);
             } else if (command.equals("equip") || command.equals("ignore")) {
-                gameController.consoleGameControls(command);
+                gameController.gameControls(command);
                 setFreeRoam();
             } else {
-                gameController.consoleGameControls(command);
+                gameController.gameControls(command);
             }
         }
     }
