@@ -128,9 +128,8 @@ public class Game {
         if (currMob != null) {
 
             int attackRoll = dice.roll("1d6");
-            if (initiativeHero > initiativeMob) {
+            if (initiativeHero > initiativeMob)
                 outcome = heroFightMob(attackRoll);
-            }
             else
                 outcome = mobFightHero(attackRoll);
         }
@@ -168,6 +167,7 @@ public class Game {
             else {
                 onEnemy = false;
                 map.updateMap();
+                // TODO: find better level up procedure
                 if (hero.xpUp(currMob.getXp())) {
                     gameController.levelUp();
                 }
@@ -178,6 +178,7 @@ public class Game {
         }
     }
 
+    // TODO: if run fails, calculate enemy damage
     public boolean run() {
         // do not update map position
         return dice.roll("1d2") == 1;
