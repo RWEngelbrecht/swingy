@@ -7,7 +7,6 @@ import javax.validation.constraints.NotNull;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.nio.Buffer;
 import java.util.ArrayList;
 
 
@@ -81,7 +80,7 @@ public class ConsoleMenu {
         try {
             heroName = reader.readLine();
             if (heroName.equalsIgnoreCase("exit"))
-                gameController.consoleGameControls(heroName);
+                gameController.gameControls(heroName);
             return heroName;
         } catch (IOException e) {
             e.printStackTrace();
@@ -110,7 +109,7 @@ public class ConsoleMenu {
                         "\n\t 3 - Paladin");
                 heroClass = reader.readLine();
                 if (heroClass.equalsIgnoreCase("exit"))
-                    gameController.consoleGameControls(heroClass);
+                    gameController.gameControls(heroClass);
             }
             return heroClass;
         } catch (IOException e) {
@@ -133,7 +132,7 @@ public class ConsoleMenu {
                     !command.equalsIgnoreCase("save")) {
                 command = reader.readLine();
             }
-            gameController.consoleGameControls(command);
+            gameController.gameControls(command);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -172,7 +171,7 @@ public class ConsoleMenu {
                     !command.equalsIgnoreCase("save")) {
                 command = reader.readLine();
             }
-            gameController.consoleGameControls(command);
+            gameController.gameControls(command);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -195,7 +194,7 @@ public class ConsoleMenu {
                 !command.equalsIgnoreCase("save")) {
                 command = reader.readLine();
             }
-            gameController.consoleGameControls(command);
+            gameController.gameControls(command);
         } catch (IOException e) {
             e.printStackTrace();
         }
