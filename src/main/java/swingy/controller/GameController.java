@@ -101,9 +101,9 @@ public class GameController {
         } else if (command.equalsIgnoreCase("exit")) {
             System.out.println("GameController: gameControls: exit reached, doing stupid shit...");
             if (controllerType == 1) {
-                guiMenu.displayMainMenu();
-//                guiMenu.dispose();
-//                guiMenu = new GUIMenu("Swingy: Origin of the Infinite Revengening The Movie The Game", GameController.this);
+//                guiMenu.displayMainMenu();
+                guiMenu.dispose();
+                guiMenu = new GUIMenu("Swingy: Origin of the Infinite Revengening The Movie The Game", GameController.this);
             } else {
                 System.exit(1);
             }
