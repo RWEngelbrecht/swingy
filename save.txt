@@ -1,1 +1,3 @@
-jim,Warrior,1,35,31,10,7,Dual axes,Self Respect
+jim,Warrior,2,105,29,9,7,Sharp Wit,Self Respect
+bob,Paladin,1,0,40,8,8,Greathammer,Metal Breastplate
+bla,Mage,1,25,31,9,3,Staff,Tunic
