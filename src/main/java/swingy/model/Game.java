@@ -70,7 +70,7 @@ public class Game {
     public String getCurrEnemy() { return currMob.getMobName(); }
 
     public void printMap() {
-        int mapRaw[][] = map.getMap();
+        int[][] mapRaw = map.getMap();
         for (int i = 0; i < map.getMapSize(); i++) {
             for (int j = 0; j < map.getMapSize(); j++) {
                 System.out.print(mapRaw[i][j]+" ");
