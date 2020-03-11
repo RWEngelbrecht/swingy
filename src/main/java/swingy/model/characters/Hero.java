@@ -35,16 +35,19 @@ public abstract class Hero {
 
     public void hpUp(int increase) { hp += increase; }
     public void hpDown(int decrease) { hp -= decrease; }
+    // TODO: level up needs to use level*1000+(level − 1)2*450
     public boolean xpUp(int increase) {
         xp += increase;
-        if (xp >= 100 && xp < 250) {
+        if (xp >= 1000 && xp < 2450) {
             return (lvl == 1) && lvlUp();
-        } else if (xp >= 250 && xp < 450) {
+        } else if (xp >= 2450 && xp < 4800) {
             return (lvl == 2) && lvlUp();
-        } else if (xp >= 450 && xp < 700) {
+        } else if (xp >= 4800 && xp < 8050) {
             return (lvl == 3) && lvlUp();
-        } else if (xp >= 700 && xp < 1000) {
+        } else if (xp >= 8050 && xp < 12200) {
             return (lvl == 4) && lvlUp();
+        } else if (xp >= 12200) {
+            return (lvl == 5) && lvlUp();
         }
         return false;
     }

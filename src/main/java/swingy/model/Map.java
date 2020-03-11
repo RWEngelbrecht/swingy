@@ -14,6 +14,7 @@ public class Map {
         this.populateMap();
     }
 
+    // TODO: populate with static mobs/artifacts.
     public void populateMap() {
         // environment: 0; hero: 1; enemy: 2; artifact: 3;
         Random r = new Random();
@@ -56,6 +57,7 @@ public class Map {
         return map;
     }
 
+    // TODO: If reached end of map, regenerate map with hero in middle
     public int moveHero(@NotNull String direction) {
         int size = getMapSize();
         int locationStatus = -1;

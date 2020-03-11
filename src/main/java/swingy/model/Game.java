@@ -167,7 +167,6 @@ public class Game {
             else {
                 onEnemy = false;
                 map.updateMap();
-                // TODO: find better level up procedure
                 if (hero.xpUp(currMob.getXp())) {
                     gameController.levelUp();
                 }
