@@ -24,6 +24,7 @@ public class MainMenu extends JPanel {
 
         mainToolbar.setLayout(new FlowLayout(FlowLayout.CENTER));
         // Add buttons to toolbar
+        mainToolbar.removeAll();
         mainToolbar.add(newGame);
         mainToolbar.add(loadGame);
 
