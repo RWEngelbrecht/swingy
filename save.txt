@@ -1,3 +1,5 @@
 jim,Warrior,2,105,29,9,7,Sharp Wit,Self Respect
-bob,Paladin,1,0,40,8,8,Greathammer,Metal Breastplate
-bla,Mage,1,25,31,9,3,Staff,Tunic
+bob,Paladin,1,90,35,8,10,Greathammer,Legendary Stone Mittens
+bla,Mage,1,125,7,9,8,Staff,Legendary Stone Mittens
+number4,Mage,1,60,2,9,6,Staff,Self Respect
+Jim,Paladin,1,0,40,8,8,Greathammer,Metal Breastplate
