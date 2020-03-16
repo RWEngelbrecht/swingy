@@ -11,7 +11,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-// TODO: Have 2 textFields on same toolbar, take player name and class with one actionEvent
 public class GUIMenu extends JFrame {
     private CharacterCreationPanel charCreatePanel;
     private MainMenu mainMenu;
@@ -19,15 +18,9 @@ public class GUIMenu extends JFrame {
     private LoadMenu loadMenu;
 
     private static JTextArea outputField = new JTextArea(140, 20);
-//    private static JPanel mainToolbar = new JPanel();
-//    private static JPanel charCreateTools = new JPanel();
 
     private static GameController gameController;
     private static String outputText = new String("Create New Character:");
-//    private final JTextField textField = new JTextField(20);
-//    private final JButton submitName = new JButton("Confirm");
-//    private final JButton submitClass = new JButton("Confirm");
-//    private final JButton finish = new JButton("Start Game");
     private static JLabel label;
     private static String charName;
 
@@ -42,11 +35,6 @@ public class GUIMenu extends JFrame {
 
         // Non-editable textfield to wherein to display instructions/story/art
         outputField.setEditable(false);
-
-//        charCreatePanel.setLayout(new BorderLayout());
-//        charCreatePanel.setBounds(150, 150, 100, 50);
-//        charCreatePanel.add(outputField, BorderLayout.NORTH);
-//        charCreatePanel.add(charCreateTools, BorderLayout.SOUTH);
 
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -66,18 +54,9 @@ public class GUIMenu extends JFrame {
                 charCreatePanel = new CharacterCreationPanel(gameController, con);
                 System.out.println((charCreatePanel));
                 con.removeAll();
-//                charCreatePanel.finish.addActionListener(new ActionListener() {
-//                    public void actionPerformed(ActionEvent e) {
-//                        con.removeAll();
-//                        gamePanel = new GamePanel(gameController, gameController.getGame());
-//                        con.add(gamePanel);
-//                        gamePanel.displayGame("You find yourself in the middle of a field...");
-//                    }
-//                });
                 con.add(charCreatePanel);
                 charCreatePanel.displayOutput("Create new hero: \n" +
                         "Choose a name:");
-//                charCreatePanel.nameSelection();
                 // Doesn't do anything yet.
 //                gameController.validateInput("newGame");
             }
@@ -102,19 +81,6 @@ public class GUIMenu extends JFrame {
         con.add(mainMenu);
     }
 
-    public void displayCharCreation() {
-//        final Container con = this.getContentPane();
-////
-////        System.out.println("GUIMenu: displayCharCreation: reached.");
-////        con.removeAll();
-//
-//
-//
-//
-//
-//        con.add(charCreatePanel);
-    }
-
     public void displayOutput(@NotNull JTextArea outputField , String output) {
         outputField.setText(output);
         outputField.revalidate();
@@ -134,11 +100,10 @@ public class GUIMenu extends JFrame {
             gamePanel.artifactSpace(gameText);
         } else if (positionState == 4) {
             gamePanel.youDied(gameText);
+            gamePanel = null;
         } else if (positionState < 0) {
             gamePanel.outOfBounds();
         }
     }
-
-
 }
 
