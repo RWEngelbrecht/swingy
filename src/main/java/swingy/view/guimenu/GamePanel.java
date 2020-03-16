@@ -82,6 +82,8 @@ public class GamePanel extends JPanel {
     }
 
     private void setFightOrFlight() {
+        gamePanelControls.removeAll();
+        gamePanelControls.add(systemTools);
         gamePanelControls.add(fight);
         gamePanelControls.add(run);
         gamePanelControls.revalidate();
@@ -89,10 +91,8 @@ public class GamePanel extends JPanel {
     }
 
     private void setLootingMode() {
-        gamePanelControls.remove(north);
-        gamePanelControls.remove(east);
-        gamePanelControls.remove(west);
-        gamePanelControls.remove(south);
+        gamePanelControls.removeAll();
+        gamePanelControls.add(systemTools);
         gamePanelControls.add(equip);
         gamePanelControls.add(ignore);
         gamePanelControls.revalidate();
