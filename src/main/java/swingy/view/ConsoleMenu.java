@@ -11,14 +11,11 @@ import java.util.ArrayList;
 
 
 public class ConsoleMenu {
-    // menuState:  mainMenu = 0; charCreate = 1; loadChar = 2; gameMenu = 3; quit = 4
-    private int menuState;
     private static GameController gameController;
     private BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
     public ConsoleMenu(GameController gameController) {
-        menuState = 0;
-        this.gameController = gameController;
+        ConsoleMenu.gameController = gameController;
     }
 
     private static void flushConsole() {
@@ -41,13 +38,13 @@ public class ConsoleMenu {
     }
 
     public void printMainMenu() {
-//        flushConsole();
+        flushConsole();
         System.out.println("Welcome to Swingy: Origin of the Infinite Revengening The Movie The Game");
         System.out.println("\n1 - Start a new game\n2 - Load a game.");
     }
 
     public void printLoadHero(ArrayList<String> saves) {
-//        flushConsole();
+        flushConsole();
         System.out.println("Load a hero: ");
         if (saves != null)
             for (int i = 0; i < saves.size(); i++) {
@@ -71,7 +68,7 @@ public class ConsoleMenu {
     }
 
     public String getHeroName() {
-//        flushConsole();
+        flushConsole();
         @NotBlank
         @NotNull
         String heroName = "0";
@@ -89,7 +86,7 @@ public class ConsoleMenu {
     }
 
     public String getHeroClass() {
-//        flushConsole();
+        flushConsole();
         @NotBlank
         @NotNull
         String heroClass = "0";
@@ -102,11 +99,6 @@ public class ConsoleMenu {
                     !heroClass.equals("2") &&
                     !heroClass.equals("3") &&
                     !heroClass.equalsIgnoreCase("exit")) {
-                flushConsole();
-                System.out.println("Choose a class:" +
-                        "\n\t 1 - Warrior" +
-                        "\n\t 2 - Mage" +
-                        "\n\t 3 - Paladin");
                 heroClass = reader.readLine();
                 if (heroClass.equalsIgnoreCase("exit"))
                     gameController.gameControls(heroClass);
@@ -119,7 +111,7 @@ public class ConsoleMenu {
     }
 
     public void startGame() {
-//        flushConsole();
+        flushConsole();
         System.out.println("You find yourself in the middle of a field...");
         System.out.println("Type \'north\', \'east\', \'south\' or \'west\' to move in a direction.\nOr type \'exit\' to quit.");
         String command = "0";
@@ -140,18 +132,17 @@ public class ConsoleMenu {
     }
 
     public void emptySpace() {
-//        flushConsole();
+        flushConsole();
         System.out.println("There is nothing here...");
     }
 
     public void enemySpace(String enemyString) {
-//        flushConsole();
+        flushConsole();
         System.out.println(enemyString+"\n Do you want to fight or run away?");
         String command = "0";
         try {
             while (!command.equalsIgnoreCase("fight") &&
-                    !command.equalsIgnoreCase("run") &&
-                    !command.equalsIgnoreCase("exit")) {
+                    !command.equalsIgnoreCase("run")) {
                 command = reader.readLine();
             }
             gameController.fightControls(command);
@@ -161,7 +152,7 @@ public class ConsoleMenu {
     }
 
     public void artifactSpace(String artifactString) {
-//        flushConsole();
+        flushConsole();
         String command = "0";
         System.out.println(artifactString+"\nDo you equip or ignore it?");
         try {
@@ -178,7 +169,7 @@ public class ConsoleMenu {
     }
 
     public void outOfBounds() {
-//        flushConsole();
+        flushConsole();
         System.out.println("You cannot move in that direction...");
     }
 
@@ -216,24 +207,17 @@ public class ConsoleMenu {
     }
 
     public void killedEnemy(String victoryMessage) {
-//        flushConsole();
+        flushConsole();
         System.out.println(victoryMessage);
     }
 
     public void retreated() {
-//        flushConsole();
+        flushConsole();
         System.out.println("You take a step back to reevaluate your life decisions.");
     }
 
     public void youDied(String deathMessage) {
-//        flushConsole();
+        flushConsole();
         System.out.println(deathMessage);
-    }
-    public int getMenuState() {
-        return this.menuState;
-    }
-
-    public void setMenuState(int state) {
-        this.menuState = state;
     }
 }
