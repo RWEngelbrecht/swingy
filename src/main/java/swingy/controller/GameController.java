@@ -20,7 +20,6 @@ import java.util.ArrayList;
 // Also interacts with Game
 public class GameController {
     protected static Game game;
-//    private GUIController guiController;
     private int controllerType;
 
     private static DataHandler dataHandler = new DataHandler();
@@ -29,7 +28,6 @@ public class GameController {
     private static ConsoleMenu consoleMenu;
     private static GUIMenu guiMenu;
     private static File saveFile;
-
 
     public GameController(@NotNull UserInterface userInterface) {
         controllerType = userInterface.getInterfaceType();
@@ -93,17 +91,14 @@ public class GameController {
     public void gameControls(@NotNull String command) {
         int positionState = 0;
 
-//        if (command.equalsIgnoreCase("fight") || command.equalsIgnoreCase("run")) {
-//            fightOrFlight(command);
-//        }
         if (command.equalsIgnoreCase("equip")) {
             equipArtifact();
         } else if (command.equalsIgnoreCase("exit")) {
             System.out.println("GameController: gameControls: exit reached, doing stupid shit...");
             if (controllerType == 1) {
-//                guiMenu.displayMainMenu();
                 guiMenu.dispose();
                 guiMenu = new GUIMenu("Swingy: Origin of the Infinite Revengening The Movie The Game", GameController.this);
+                return;
             } else {
                 System.exit(1);
             }
@@ -111,7 +106,7 @@ public class GameController {
             saveGame();
         } else {
             positionState = moveHero(command);
-            game.printMap();
+            game.printMap();    //  MAP BEING PRINTED
         }
         inputHandler.continueGame(positionState);
     }
@@ -134,7 +129,6 @@ public class GameController {
         if (controllerType == 0)
             inputHandler.startGame();
         else {
-//            System.out.println("GameController: levelUp: You gained enough experience to now be one better.");
             guiMenu.setGamePanelOutput(
                     "You gained enough experience to now be one better.\n" +
                             "You also have a bigger map to run around on.", 0);
