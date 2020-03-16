@@ -14,6 +14,7 @@ import swingy.model.Game;
 import javax.swing.*;
 import javax.validation.constraints.NotBlank;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 // Either holds instance of GUIController or acts as controller for all console-related actions.
@@ -98,15 +99,16 @@ public class GameController {
             if (controllerType == 1) {
                 guiMenu.dispose();
                 guiMenu = new GUIMenu("Swingy: Origin of the Infinite Revengening The Movie The Game", GameController.this);
-                return;
             } else {
-                System.exit(1);
+                consoleMenu.start();
             }
+            game = new Game(this);
+            return;
         } else if (command.equalsIgnoreCase("save")) {
             saveGame();
         } else {
             positionState = moveHero(command);
-            game.printMap();    //  MAP BEING PRINTED
+//            game.printMap();    //  MAP BEING PRINTED
         }
         inputHandler.continueGame(positionState);
     }
@@ -148,16 +150,13 @@ public class GameController {
     public boolean isOnEnemy() {
         return game.isOnEnemy();
     }
-    public boolean isAlive() { return game.isAlive(); }
+//    public boolean isAlive() { return game.isAlive(); }
 
     public void reactEnemySpace(String enemyString) {
 
         if (controllerType == 0) {
             consoleMenu.enemySpace(enemyString);
-//            if (isOnEnemy())
             consoleMenu.fight();
-//            else
-//                consoleMenu.freeRoam();
         } else {
             guiMenu.setGamePanelOutput(enemyString, 2);
         }
@@ -213,13 +212,18 @@ public class GameController {
 
     public void generateMap() {
         game.makeMap();
-//        System.out.println("Our hero "+game.getHero().getName()+" the "+game.getHero().getHeroClass()+" of level "+game.getHero().getLevel()+" sets off on their adventure!");
-//        game.printMap();
     }
 
     public void youDied(String deathMessage) {
         if (controllerType == 0) {
             consoleMenu.youDied(deathMessage);
+            System.out.println("Press Enter to acknowledge your failure and go back to the Main Menu");
+            try {
+                System.in.read();
+                consoleMenu.start();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         } else {
             guiMenu.setGamePanelOutput(deathMessage, 4);
         }
@@ -263,7 +267,6 @@ public class GameController {
     }
 
     public int moveHero(String direction) {
-        System.out.println("GameController: moveHero: hero about to move");
         return game.moveHero(direction);
     }
 
