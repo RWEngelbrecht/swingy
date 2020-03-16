@@ -23,11 +23,12 @@ public class Game {
     private static Mob currMob;
     private static Dice dice = new Dice();
     private static boolean isActive;
-    private static boolean onEnemy = false;
-    private static boolean alive = true;
+    private boolean onEnemy = false;
+//    private boolean alive;
 
     public Game(GameController gameController) {
         isActive = true;
+//        alive = true;
         Game.gameController = gameController;
 
         enemies = new ArrayList<String>(Arrays.asList(
@@ -110,7 +111,7 @@ public class Game {
     }
 
     public boolean isOnEnemy() { return onEnemy; }
-    public boolean isAlive() { return alive; }
+//    public boolean isAlive() { return alive; }
 
     public String fight() {
 
@@ -146,7 +147,7 @@ public class Game {
             if (hero.getHp() > 0)
                 return "You take "+damage+" damage. Maybe dodge next time?";
             else {
-                alive = false;
+//                alive = false;
                 return "YOU DIED.";
             }
         } else {

@@ -46,11 +46,9 @@ public class InputHandler {
     }
 
     public void continueFight(String battleStatus) {
-        if (!gameController.isAlive() || battleStatus.equals("YOU DIED.")) {
+        if (battleStatus.equals("YOU DIED.")) {
             gameController.youDied(battleStatus);
         } else if (gameController.isOnEnemy()) {
-//            String enemy = gameController.getCurrEnemy();
-//            String enemyFightString = "The battle with the "+enemy+" wages on...";
             gameController.reactEnemySpace(battleStatus);
         } else {
             gameController.reactKilledEnemy(battleStatus);
