@@ -118,7 +118,6 @@ public class GamePanel extends JPanel {
     }
 
     public void enemySpace(String gameText) {
-        System.out.println("GamePanel: enemySpace reached");
         displayGame(gameText);
         setFightOrFlight();
     }
