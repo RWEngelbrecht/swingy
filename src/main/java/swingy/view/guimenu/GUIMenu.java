@@ -45,20 +45,16 @@ public class GUIMenu extends JFrame {
     }
 
     public void displayMainMenu() {
-        System.out.println("GUIMenu: displayMainMenu: reached.");
         final Container con = this.getContentPane();
         con.removeAll();
 
         mainMenu.newGame.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 charCreatePanel = new CharacterCreationPanel(gameController, con);
-                System.out.println((charCreatePanel));
                 con.removeAll();
                 con.add(charCreatePanel);
                 charCreatePanel.displayOutput("Create new hero: \n" +
-                        "Choose a name:");
-                // Doesn't do anything yet.
-//                gameController.validateInput("newGame");
+						"Choose a name:");
             }
         });
 
@@ -88,9 +84,11 @@ public class GUIMenu extends JFrame {
     }
 
     public void setGamePanelOutput(String gameText, int positionState) {
-        System.out.println("GUIMenu: setGamePanelOutput: gameText = "+gameText+" positionState = "+positionState);
         if (this.gamePanel == null) {
-            gamePanel = loadMenu.getGamePanel();
+			if (loadMenu != null)
+				gamePanel = loadMenu.getGamePanel();
+			else
+				gamePanel = charCreatePanel.getGamePanel();
         }
         if (positionState == 0) {
             gamePanel.emptySpace(gameText);
