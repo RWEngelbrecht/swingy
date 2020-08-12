@@ -108,5 +108,7 @@ public class CharacterCreationPanel extends JPanel {
             con.add(gamePanel);
             gamePanel.displayGame("You find yourself in the middle of a field...");
         }
-    }
+	}
+
+	public GamePanel getGamePanel() { return this.gamePanel; }
 }
