@@ -16,6 +16,7 @@ import javax.validation.constraints.NotBlank;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Set;
 
 // Either holds instance of GUIController or acts as controller for all console-related actions.
 // Also interacts with Game
@@ -32,11 +33,9 @@ public class GameController {
 
     public GameController(@NotNull UserInterface userInterface) {
         controllerType = userInterface.getInterfaceType();
-        System.out.println("GameController: controllerType = "+controllerType);
         if (controllerType == 0) {
             consoleMenu = new ConsoleMenu(this);
         } else {
-            System.out.println("GameController: guiMenu about to be set");
             SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
                     guiMenu = new GUIMenu("Swingy: Origin of the Infinite Revengening The Movie The Game", GameController.this);
@@ -55,7 +54,6 @@ public class GameController {
         consoleMenu.start();
     }
 
-    // TODO: add quit to main menu everywhere
     public void consoleMainMenuControls(@NotNull String command) {
         if (command.equals("1")) {
             inputHandler.startCreateHero();
@@ -199,7 +197,7 @@ public class GameController {
         }
     }
 
-    public void newHero(@NotBlank String characterName, @NotBlank String characterClass) {
+    public void newHero(@NotBlank(message="Name cannot be empty") String characterName, @NotBlank String characterClass) {
         String charClass = new String(dataHandler.getClass(characterClass));
         Hero hero = heroFactory.newHero(characterName, charClass, "default", "default");
         game.addHero(hero);
