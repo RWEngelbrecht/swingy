@@ -106,7 +106,6 @@ public class Game {
             artifact = new Weapon(artifactName);
         else
             artifact = new Armor(artifactName);
-        System.out.println("Game: generateArtifact: artifact = "+artifact.getArtifactName());
         return artifact;
     }
 
@@ -119,7 +118,6 @@ public class Game {
 
         int initiativeHero = dice.roll("1d20");
         int initiativeMob = dice.roll("1d20");
-        System.out.println("Game: initHero = "+initiativeHero+" initMob = "+initiativeMob);
 
         while (initiativeHero == initiativeMob) {
             initiativeHero = dice.roll("1d20");
@@ -160,7 +158,6 @@ public class Game {
         int mobDef = currMob.getDef();
 
         int damage = attackPower - mobDef;
-        System.out.println("Game: Fight: atkPower = "+attackPower+" mobDef = "+mobDef+" damage = "+damage+" mobHp = "+getMobHp());
         if (damage > 0) {
             currMob.takeDamage(damage);
             if (getMobHp() > 0)
@@ -185,7 +182,6 @@ public class Game {
     }
 
     public void equipArtifact() {
-        System.out.println("Game: equipArtifact: artifact name = "+currArtifact.getArtifactName());
         if (artifacts.get(0).contains(currArtifact.getArtifactName())) {
             hero.equipWeapon(currArtifact, currArtifact.getAtk());
         } else {
