@@ -192,10 +192,10 @@ public class GameController {
         }
     }
 
-    public void newHero(@NotBlank(message="Name cannot be empty") String characterName, @NotBlank String characterClass) {
-        String charClass = new String(dataHandler.getClass(characterClass));
-        Hero hero = heroFactory.newHero(characterName, charClass, "default", "default");
-        game.addHero(hero);
+    public void newHero(String characterName, String characterClass) {
+		String charClass = new String(dataHandler.getClass(characterClass));
+		Hero hero = heroFactory.newHero(characterName, charClass, "default", "default");
+		game.addHero(hero);
     }
 
     public void loadHero(String heroInfo) {
