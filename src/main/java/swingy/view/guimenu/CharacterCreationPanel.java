@@ -1,6 +1,5 @@
 package swingy.view.guimenu;
 
-import org.jetbrains.annotations.NotNull;
 import swingy.controller.GameController;
 
 import javax.swing.*;
@@ -64,7 +63,7 @@ public class CharacterCreationPanel extends JPanel {
         toolbar.repaint();
     }
 
-    public void displayOutput(@NotNull String outputText) {
+    public void displayOutput(String outputText) {
         output.setText(outputText);
         output.revalidate();
         output.repaint();
