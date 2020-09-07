@@ -63,7 +63,6 @@ public class Game {
 	}
 
 	public void loadMap(ArrayList<String> map) {
-		System.out.println("Game: calling loadMap()");
 		Game.map = new Map(hero.getLevel(), map);
 	}
 
