@@ -1,8 +1,9 @@
 package swingy.model.npcs;
 
-import swingy.model.characters.Hero;
+import org.hibernate.validator.constraints.Length;
 
 public class Mob {
+    @Length(min=1)
     protected String name;
     protected int hp;
     protected int atk;

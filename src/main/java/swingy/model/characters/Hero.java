@@ -1,10 +1,15 @@
 package swingy.model.characters;
 
+import org.hibernate.validator.constraints.Length;
 import swingy.model.artifacts.Artifact;
+
+import javax.validation.constraints.NotNull;
 
 // Superclass of all hero classes
 public abstract class Hero {
+    @Length(min=1)
     protected static String name;
+    @NotNull
     protected static String charClass;
     protected static Artifact weapon;
     protected static Artifact armor;
@@ -35,7 +40,7 @@ public abstract class Hero {
 
     public void hpUp(int increase) { hp += increase; }
     public void hpDown(int decrease) { hp -= decrease; }
-    // TODO: level up needs to use level*1000+(level − 1)2*450
+
     public boolean xpUp(int increase) {
         xp += increase;
         if (xp >= 1000 && xp < 2450) {

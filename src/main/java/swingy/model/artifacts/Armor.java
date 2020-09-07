@@ -1,7 +1,6 @@
 package swingy.model.artifacts;
 
 public class Armor extends Artifact {
-//    private int def;
 
     public Armor(String name) {
         super(name);

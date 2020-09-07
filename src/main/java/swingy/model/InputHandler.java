@@ -6,20 +6,22 @@ import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 
 public class InputHandler {
-    private static GameController gameController;
+    @NotNull
+	private static GameController gameController;
+
     public InputHandler(GameController gameController) {
-        this.gameController = gameController;
+        InputHandler.gameController = gameController;
     }
 
     public void startCreateHero() {
         gameController.consoleCreateHeroControls();
     }
 
-    public boolean checkHeroName(@NotNull String heroName) {
+    public boolean checkHeroName(String heroName) {
         return heroName.length() > 0;
     }
 
-    public boolean checkHeroClass(@NotNull String heroClass) {
+    public boolean checkHeroClass(String heroClass) {
         return heroClass.equals("1") || heroClass.equals("2") || heroClass.equals("3");
     }
 

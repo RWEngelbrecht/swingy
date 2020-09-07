@@ -7,28 +7,31 @@ import swingy.model.artifacts.Weapon;
 import swingy.model.characters.Hero;
 import swingy.model.npcs.Mob;
 
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Random;
 
 // Keeps all information about current game i.e. the map, the hero
 public class Game {
+    @NotNull
     private static GameController gameController;
     private static MobFactory mobFactory = new MobFactory();
+    @NotNull
     private static Hero hero;
-    private static Map map;
+    private static Map map = null;
+    @NotNull
     private static ArrayList<ArrayList<String>> artifacts;
+    @NotNull
     private static ArrayList<String> enemies;
     private static Artifact currArtifact;
     private static Mob currMob;
     private static Dice dice = new Dice();
+    @NotNull
     private static boolean isActive;
     private boolean onEnemy = false;
-//    private boolean alive;
 
     public Game(GameController gameController) {
         isActive = true;
-//        alive = true;
         Game.gameController = gameController;
 
         enemies = new ArrayList<String>(Arrays.asList(
@@ -54,8 +57,15 @@ public class Game {
     }
 
     public void makeMap() {
-        map = new Map(hero.getLevel());
-    }
+		if (Game.map == null) {
+			Game.map = new Map(hero.getLevel(), null);
+		}
+	}
+
+	public void loadMap(ArrayList<String> map) {
+		System.out.println("Game: calling loadMap()");
+		Game.map = new Map(hero.getLevel(), map);
+	}
 
     public int moveHero(String direction) {
         int locationStatus = map.moveHero(direction);
@@ -78,7 +88,11 @@ public class Game {
             }
             System.out.print("\n");
         }
-    }
+	}
+
+	public static int[][] getMap() {
+		return map.getMap();
+	}
 
     public Hero getHero() { return hero; }
 
@@ -110,7 +124,6 @@ public class Game {
     }
 
     public boolean isOnEnemy() { return onEnemy; }
-//    public boolean isAlive() { return alive; }
 
     public String fight() {
 
@@ -142,10 +155,11 @@ public class Game {
         int damage = attackPower - heroDef;
         if (damage > 0) {
             hero.hpDown(damage);
-            if (hero.getHp() > 0)
+            if (hero.getHp() > 0) {
+				System.out.println("You take "+damage+" damage. Maybe dodge next time?");
                 return "You take "+damage+" damage. Maybe dodge next time?";
+			}
             else {
-//                alive = false;
                 return "YOU DIED.";
             }
         } else {
@@ -175,10 +189,12 @@ public class Game {
         }
     }
 
-    // TODO: if run fails, calculate enemy damage
     public boolean run() {
-        // do not update map position
-        return dice.roll("1d2") == 1;
+		// do not update map position
+		if (dice.roll("1d2") == 1)
+			return true;
+		this.mobFightHero(dice.roll("1d6"));
+        return false;
     }
 
     public void equipArtifact() {

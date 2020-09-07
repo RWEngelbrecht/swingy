@@ -1,6 +1,7 @@
-package swingy.view;
+package swingy.model;
 
 import swingy.controller.GameController;
+import swingy.view.ConsoleMenu;
 import swingy.view.guimenu.GUIMenu;
 
 public class UserInterface {

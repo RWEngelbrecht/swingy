@@ -1,18 +1,12 @@
 package swingy.model;
 
-import org.jetbrains.annotations.NotNull;
-//import swingy.model.artifacts.Armor;
-//import swingy.model.artifacts.Artifact;
-//import swingy.model.artifacts.Weapon;
 import swingy.model.characters.Hero;
 import swingy.model.characters.Mage;
 import swingy.model.characters.Paladin;
 import swingy.model.characters.Warrior;
 
-import javax.validation.constraints.NotBlank;
-
 public class HeroFactory {
-    public Hero newHero(@NotBlank String heroName, @NotBlank String heroClass, String weapon, String armor) {
+    public Hero newHero(String heroName, String heroClass, String weapon, String armor) {
         if (heroClass.equalsIgnoreCase("warrior")) {
             return new Warrior(heroName, heroClass, weapon, armor);
         } else if (heroClass.equalsIgnoreCase("mage")) {
@@ -23,7 +17,7 @@ public class HeroFactory {
         return null;
     }
 
-    public Hero loadHero(@NotNull String heroInfo) {
+    public Hero loadHero(String heroInfo) {
         String[] stats = heroInfo.split(",");
         String name = stats[0],
                 heroClass = stats[1];
@@ -31,8 +25,6 @@ public class HeroFactory {
         int lvl = Integer.parseInt(stats[2]),
             xp = Integer.parseInt(stats[3]),
             hp = Integer.parseInt(stats[4]);
-//            atk = Integer.parseInt(stats[5]),
-//            def = Integer.parseInt(stats[6]);
 
         String weapon = stats[7],
                 armor = stats[8];
@@ -41,10 +33,6 @@ public class HeroFactory {
         hero.setLvl(lvl);
         hero.setXp(xp);
         hero.setHp(hp);
-//        hero.setAtk(atk);
-//        hero.setDef(def);
-//        hero.equipWeapon(weapon, weapon.getAtk());
-//        hero.donArmor(armor, armor.getDef());
 
         return hero;
     }

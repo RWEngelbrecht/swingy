@@ -8,7 +8,7 @@ import swingy.model.artifacts.Artifact;
 import swingy.model.characters.Hero;
 import swingy.view.ConsoleMenu;
 import swingy.view.guimenu.GUIMenu;
-import swingy.view.UserInterface;
+import swingy.model.UserInterface;
 import swingy.model.Game;
 
 import javax.swing.*;
@@ -16,7 +16,6 @@ import javax.validation.constraints.NotBlank;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Set;
 
 // Either holds instance of GUIController or acts as controller for all console-related actions.
 // Also interacts with Game
@@ -31,7 +30,7 @@ public class GameController {
     private static GUIMenu guiMenu;
     private static File saveFile;
 
-    public GameController(@NotNull UserInterface userInterface) {
+    public GameController(UserInterface userInterface) {
         controllerType = userInterface.getInterfaceType();
         if (controllerType == 0) {
             consoleMenu = new ConsoleMenu(this);
@@ -42,7 +41,7 @@ public class GameController {
                 }
             });
         }
-        inputHandler = new InputHandler(this);  //Might be used by both console and gui
+        inputHandler = new InputHandler(this);
         game = new Game(this);
     }
 
@@ -87,13 +86,12 @@ public class GameController {
         consoleMenu.startGame();
     }
 
-    public void gameControls(@NotNull String command) {
+    public void gameControls(String command) {
         int positionState = 0;
 
         if (command.equalsIgnoreCase("equip")) {
             equipArtifact();
         } else if (command.equalsIgnoreCase("exit")) {
-            System.out.println("GameController: gameControls: exit reached, doing stupid shit...");
             if (controllerType == 1) {
                 guiMenu.dispose();
                 guiMenu = new GUIMenu("Swingy: Origin of the Infinite Revengening The Movie The Game", GameController.this);
@@ -106,7 +104,7 @@ public class GameController {
             saveGame();
         } else {
             positionState = moveHero(command);
-//            game.printMap();    //  MAP BEING PRINTED
+           game.printMap();    //  MAP BEING PRINTED
         }
         inputHandler.continueGame(positionState);
     }
@@ -148,7 +146,6 @@ public class GameController {
     public boolean isOnEnemy() {
         return game.isOnEnemy();
     }
-//    public boolean isAlive() { return game.isAlive(); }
 
     public void reactEnemySpace(String enemyString) {
 
@@ -204,13 +201,25 @@ public class GameController {
     }
 
     public void loadHero(String heroInfo) {
-        Hero hero = heroFactory.loadHero(heroInfo);
+		String heroData = heroInfo.split("\t")[0];
+		String[] loadMapArr = heroInfo.split("\t");
+		ArrayList<String> loadMap = new ArrayList<String>();
+		for (int i = 1; i < loadMapArr.length; i++) {
+			loadMap.add(loadMapArr[i]);
+		}
+		System.out.println("GameController: loadHero: loadMap == "+loadMap);
+		Hero hero = heroFactory.loadHero(heroData);
         game.addHero(hero);
+		game.loadMap(loadMap);
     }
 
     public void generateMap() {
         game.makeMap();
     }
+
+	// public int[][] getMap() {
+	// 	return game.getMap();
+	// }
 
     public void youDied(String deathMessage) {
         if (controllerType == 0) {
