@@ -22,7 +22,6 @@ public class Map {
     }
 
 	private void rebuildMap(ArrayList<String> loadMap) {
-		System.out.println("Map: rebuildMap: loadMap == "+loadMap);
 		int size = getMapSize();
 
 		for (int i = 0; i < size; i++) {
