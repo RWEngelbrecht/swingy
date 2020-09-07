@@ -1,11 +1,8 @@
 package swingy.view.guimenu;
 
-import org.jetbrains.annotations.NotNull;
 import swingy.controller.GameController;
 
 import javax.swing.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,9 +17,6 @@ public class GUIMenu extends JFrame {
     private static JTextArea outputField = new JTextArea(140, 20);
 
     private static GameController gameController;
-    private static String outputText = new String("Create New Character:");
-    private static JLabel label;
-    private static String charName;
 
     public GUIMenu(String title, final GameController gameController) {
         // Creates JFrame with given title
@@ -77,7 +71,7 @@ public class GUIMenu extends JFrame {
         con.add(mainMenu);
     }
 
-    public void displayOutput(@NotNull JTextArea outputField , String output) {
+    public void displayOutput(JTextArea outputField , String output) {
         outputField.setText(output);
         outputField.revalidate();
         outputField.repaint();
