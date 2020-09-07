@@ -33,8 +33,8 @@ public class DataHandler {
             e.printStackTrace();
         }
         return saveFile;
-    }
-// TODO: fix problem where map appends to save file in stead of overwriting
+	}
+
     // Returns ArrayList of existing saves if they exist, else
     public ArrayList<String> buildSaveFile(File saveFile, String heroInfo, String map) {
         @NotNull
