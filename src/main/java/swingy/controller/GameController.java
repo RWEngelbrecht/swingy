@@ -1,6 +1,5 @@
 package swingy.controller;
 
-import org.jetbrains.annotations.NotNull;
 import swingy.model.InputHandler;
 import swingy.model.DataHandler;
 import swingy.model.HeroFactory;
@@ -53,7 +52,7 @@ public class GameController {
         consoleMenu.start();
     }
 
-    public void consoleMainMenuControls(@NotNull String command) {
+    public void consoleMainMenuControls(String command) {
         if (command.equals("1")) {
             inputHandler.startCreateHero();
         } else if (command.equals("2")) {
@@ -104,12 +103,12 @@ public class GameController {
             saveGame();
         } else {
             positionState = moveHero(command);
-           game.printMap();    //  MAP BEING PRINTED
+        //    game.printMap();    //  MAP BEING PRINTED
         }
         inputHandler.continueGame(positionState);
     }
 
-    public void fightControls(@NotNull String command) {
+    public void fightControls(String command) {
         String outcome = "Absolutely nothing happened";
         if (command.equalsIgnoreCase("fight") ) {
             outcome = game.fight();
@@ -167,7 +166,6 @@ public class GameController {
     }
 
     public void reactRetreated() {
-        System.out.println("GameController: reactRetreated reached");
         if (controllerType == 0) {
             consoleMenu.retreated();
             consoleMenu.freeRoam();
@@ -207,7 +205,6 @@ public class GameController {
 		for (int i = 1; i < loadMapArr.length; i++) {
 			loadMap.add(loadMapArr[i]);
 		}
-		System.out.println("GameController: loadHero: loadMap == "+loadMap);
 		Hero hero = heroFactory.loadHero(heroData);
         game.addHero(hero);
 		game.loadMap(loadMap);
@@ -241,7 +238,6 @@ public class GameController {
     }
 
     public void saveGame() {
-        System.out.println("GameController: save game reached");
         Hero hero = game.getHero();
         dataHandler.saveGame(saveFile, hero);
     }
