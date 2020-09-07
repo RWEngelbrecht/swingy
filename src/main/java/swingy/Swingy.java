@@ -1,12 +1,6 @@
 package swingy;
 
-import swingy.controller.GameController;
-import swingy.view.UserInterface;
-
-
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import javax.validation.*;
+import swingy.model.UserInterface;
 
 public class Swingy {
 

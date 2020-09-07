@@ -1,6 +1,5 @@
 package swingy.view;
 
-import org.jetbrains.annotations.NotNull;
 import swingy.controller.GameController;
 import swingy.view.guimenu.GUIMenu;
 
@@ -8,9 +7,9 @@ public class UserInterface {
     private static GUIMenu frame;
     private static ConsoleMenu consoleMenu;
     public int interfaceType;
-    private static String command;
-    private static GameController gameController;
-    public UserInterface(@NotNull final String type) {
+	private static GameController gameController;
+
+    public UserInterface(final String type) {
         // Check in what mode app is started. gui: 1, console: 0
         if (type.equalsIgnoreCase("gui")) {
             interfaceType = 1;
