@@ -37,7 +37,6 @@ public class DataHandler {
 
     // Returns ArrayList of existing saves if they exist, else
     public ArrayList<String> buildSaveFile(File saveFile, String heroInfo, String map) {
-        @NotNull
         BufferedReader reader;
         String line;
         ArrayList<String> saveLines = new ArrayList<String>();
@@ -91,7 +90,6 @@ public class DataHandler {
 
     public ArrayList<String> getPrintableSaves(File saveFile) {
 
-        @NotNull
         ArrayList<String> saveGames = getSavedGames(saveFile);
         if (saveGames.size() > 0) {
 			ArrayList<String> guiSaveGames = new ArrayList<String>();

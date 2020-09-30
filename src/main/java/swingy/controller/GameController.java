@@ -11,10 +11,14 @@ import swingy.model.UserInterface;
 import swingy.model.Game;
 
 import javax.swing.*;
-import javax.validation.constraints.NotBlank;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Set;
 
 // Either holds instance of GUIController or acts as controller for all console-related actions.
 // Also interacts with Game
@@ -65,10 +69,8 @@ public class GameController {
     public void consoleCreateHeroControls() {
         String heroName = consoleMenu.getHeroName();
         String heroClass = consoleMenu.getHeroClass();
-        if (inputHandler.checkHeroName(heroName) && inputHandler.checkHeroClass(heroClass)) {
-            newHero(heroName, heroClass);
-            inputHandler.startGame();
-        }
+        newHero(heroName, heroClass);
+        inputHandler.startGame();
     }
 
     public void consoleLoadHeroControls(ArrayList<String> saves) {
@@ -195,7 +197,24 @@ public class GameController {
     public void newHero(String characterName, String characterClass) {
 		String charClass = new String(dataHandler.getClass(characterClass));
 		Hero hero = heroFactory.newHero(characterName, charClass, "default", "default");
-		game.addHero(hero);
+
+		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        Validator validator = factory.getValidator();
+        Set<ConstraintViolation<Hero>> constraintViolations = validator.validate(hero);
+
+        if (constraintViolations.size() > 0) {
+            for (ConstraintViolation<Hero> violation : constraintViolations) {
+                System.out.println(violation.getMessage());
+            }
+            if (controllerType == 0) {
+                consoleGenerateMainMenu();
+            } else if (controllerType == 1) {
+                guiMenu.dispose();
+                guiMenu = new GUIMenu("Swingy: Origin of the Infinite Revengening The Movie The Game", GameController.this);
+            }
+        } else {
+            game.addHero(hero);
+        }
     }
 
     public void loadHero(String heroInfo) {
