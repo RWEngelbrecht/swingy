@@ -4,7 +4,6 @@ import swingy.controller.GameController;
 
 import javax.swing.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,7 +16,6 @@ public class CharacterCreationPanel extends JPanel {
     protected JPanel toolbar = new JPanel();
     protected JTextArea output = new JTextArea(33, 20);
     private JTextField textField = new JTextField(20);
-//    protected JButton submitName;
     protected JButton submitClass;
     protected JButton finish;
     private String charName;
@@ -70,12 +68,9 @@ public class CharacterCreationPanel extends JPanel {
     }
 
     private class CharNameActionListener implements ActionListener {
-        @NotEmpty
-        @NotBlank
-        private String name;
 
         public void actionPerformed(ActionEvent e) {
-            name = textField.getText();
+            String name = textField.getText();
             charName = name;
 //            gameController.validateInput(charName, "heroName");
             textField.setText("");
@@ -89,13 +84,18 @@ public class CharacterCreationPanel extends JPanel {
     }
 
     private class CharClassActionListener implements ActionListener {
-        @NotBlank private String charClass;
+        @NotBlank
+        private String charClass;
 
         public void actionPerformed(ActionEvent e) {
-            charClass = textField.getText();
-            textField.setText("");
-            gameController.newHero(charName, charClass);
-            charCreateFinish();
+			charClass = textField.getText();
+			if (charClass.equals("1") || charClass.equals("2") || charClass.equals("3")) {
+				textField.setText("");
+				gameController.newHero(charName, charClass);
+				charCreateFinish();
+			} else {
+				textField.setText("");
+			}
 
         }
     }

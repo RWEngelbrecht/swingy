@@ -2,11 +2,9 @@ package swingy.model;
 
 import swingy.controller.GameController;
 
-import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 
 public class InputHandler {
-    @NotNull
 	private static GameController gameController;
 
     public InputHandler(GameController gameController) {
@@ -15,14 +13,6 @@ public class InputHandler {
 
     public void startCreateHero() {
         gameController.consoleCreateHeroControls();
-    }
-
-    public boolean checkHeroName(String heroName) {
-        return heroName.length() > 0;
-    }
-
-    public boolean checkHeroClass(String heroClass) {
-        return heroClass.equals("1") || heroClass.equals("2") || heroClass.equals("3");
     }
 
     public void startGame() {

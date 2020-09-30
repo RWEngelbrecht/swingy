@@ -1,8 +1,16 @@
 package swingy;
 
 import java.security.InvalidParameterException;
+import java.util.Set;
 
 import swingy.model.UserInterface;
+import swingy.model.characters.Hero;
+import swingy.model.characters.Mage;
+
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 
 public class Swingy {
 

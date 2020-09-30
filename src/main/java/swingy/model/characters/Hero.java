@@ -3,14 +3,20 @@ package swingy.model.characters;
 import org.hibernate.validator.constraints.Length;
 import swingy.model.artifacts.Artifact;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.Set;
 
 // Superclass of all hero classes
 public abstract class Hero {
-    @Length(min=1)
-    protected static String name;
-    @NotNull
-    protected static String charClass;
+//    @Length(min=1,max=25)
+    @NotBlank(message = "name cannot be empty!")
+    protected String name;
+    protected String charClass;
     protected static Artifact weapon;
     protected static Artifact armor;
     protected static int hp;
@@ -20,8 +26,8 @@ public abstract class Hero {
     protected static int def;
 
     public Hero(String name, String charClass) {
-        Hero.name = name;
-        Hero.charClass = charClass;
+        this.name = name;
+        this.charClass = charClass;
     }
 
     public String getName() { return name; }

@@ -2,8 +2,6 @@ package swingy.view;
 
 import swingy.controller.GameController;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -69,9 +67,7 @@ public class ConsoleMenu {
 
     public String getHeroName() {
         flushConsole();
-        @NotBlank
-        @NotNull
-        String heroName = "0";
+        String heroName;
         System.out.println("Create new hero: ");
         System.out.println("Choose a name: ");
         try {
@@ -87,8 +83,6 @@ public class ConsoleMenu {
 
     public String getHeroClass() {
         flushConsole();
-        @NotBlank
-        @NotNull
         String heroClass = "0";
         System.out.println("Choose a class:" +
                 "\n\t 1 - Warrior" +

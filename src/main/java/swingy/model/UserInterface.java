@@ -5,8 +5,6 @@ import swingy.view.ConsoleMenu;
 import swingy.view.guimenu.GUIMenu;
 
 public class UserInterface {
-    private static GUIMenu frame;
-    private static ConsoleMenu consoleMenu;
     public int interfaceType;
 	private static GameController gameController;
 
@@ -24,8 +22,4 @@ public class UserInterface {
     }
 
     public int getInterfaceType() { return interfaceType; }
-
-    public GUIMenu getFrame() { return frame; }
-
-    public ConsoleMenu getConsoleMenu() { return consoleMenu; }
 }

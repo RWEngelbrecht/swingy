@@ -7,43 +7,35 @@ import swingy.model.artifacts.Weapon;
 import swingy.model.characters.Hero;
 import swingy.model.npcs.Mob;
 
-import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 // Keeps all information about current game i.e. the map, the hero
 public class Game {
-    @NotNull
     private static GameController gameController;
     private static MobFactory mobFactory = new MobFactory();
-    @NotNull
     private static Hero hero;
     private static Map map = null;
-    @NotNull
     private static ArrayList<ArrayList<String>> artifacts;
-    @NotNull
     private static ArrayList<String> enemies;
     private static Artifact currArtifact;
     private static Mob currMob;
     private static Dice dice = new Dice();
-    @NotNull
-    private static boolean isActive;
     private boolean onEnemy = false;
 
     public Game(GameController gameController) {
-        isActive = true;
         Game.gameController = gameController;
 
-        enemies = new ArrayList<String>(Arrays.asList(
+        enemies = new ArrayList<>(Arrays.asList(
                 "Null Pointer Exception", "Duck With a Knife", "Government Drone",
                 "Dalek", "Bag of Snapping Turtles"));
 
-        artifacts = new ArrayList<ArrayList<String>>();
+        artifacts = new ArrayList<>();
 
-        ArrayList<String> weapons = new ArrayList<String>(Arrays.asList(
+        ArrayList<String> weapons = new ArrayList<>(Arrays.asList(
                 "Spoon", "Brick", "Sharp Wit", "Lightsaber", "Pocket Knife"
         ));
-        ArrayList<String> armors = new ArrayList<String>(Arrays.asList(
+        ArrayList<String> armors = new ArrayList<>(Arrays.asList(
                 "Iron Kettle Helm", "Self Respect", "Chainmail Slipper",
                 "Steel Speedo", "Legendary Stone Mittens"
         ));
@@ -95,15 +87,12 @@ public class Game {
 
     public Hero getHero() { return hero; }
 
-    public int getHeroHp() { return hero.getHp(); }
     public int getMobHp() {
         if (currMob != null)
             return currMob.getHp();
         else
             return 0;
     }
-
-    public static boolean gameIsActive() { return isActive; }
 
     private Mob generateEnemy() {
         String mobString = enemies.get(dice.getZeroBound(enemies.size()));
@@ -174,7 +163,7 @@ public class Game {
         if (damage > 0) {
             currMob.takeDamage(damage);
             if (getMobHp() > 0)
-                return "You do " + Integer.toString(damage) + " damage to "+currMob.getMobName();
+                return "You do " + damage + " damage to "+currMob.getMobName();
             else {
                 onEnemy = false;
                 map.updateMap();
