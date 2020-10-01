@@ -32,6 +32,8 @@ public class GameController {
     private static ConsoleMenu consoleMenu;
     private static GUIMenu guiMenu;
     private static File saveFile;
+    private ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+    private Validator validator = factory.getValidator();
 
     public GameController(UserInterface userInterface) {
         controllerType = userInterface.getInterfaceType();
@@ -198,8 +200,6 @@ public class GameController {
 		String charClass = new String(dataHandler.getClass(characterClass));
 		Hero hero = heroFactory.newHero(characterName, charClass, "default", "default");
 
-		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        Validator validator = factory.getValidator();
         Set<ConstraintViolation<Hero>> constraintViolations = validator.validate(hero);
 
         if (constraintViolations.size() > 0) {
@@ -225,8 +225,24 @@ public class GameController {
 			loadMap.add(loadMapArr[i]);
 		}
 		Hero hero = heroFactory.loadHero(heroData);
-        game.addHero(hero);
-		game.loadMap(loadMap);
+
+        Set<ConstraintViolation<Hero>> constraintViolations = validator.validate(hero);
+
+        if (constraintViolations.size() > 0) {
+            for (ConstraintViolation<Hero> violation : constraintViolations) {
+                System.out.println(violation.getMessage());
+            }
+            if (controllerType == 0) {
+                consoleGenerateMainMenu();
+            } else if (controllerType == 1) {
+                guiMenu.dispose();
+                guiMenu = new GUIMenu("Swingy: Origin of the Infinite Revengening The Movie The Game", GameController.this);
+            }
+        } else {
+            game.addHero(hero);
+            game.loadMap(loadMap);
+        }
+
     }
 
     public void generateMap() {
